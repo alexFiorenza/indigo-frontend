@@ -1,6 +1,7 @@
 <div class="flex w-full justify-between px-8 py-4 fixed">
   <div>
     <ion-icon
+      (click)="openSidebar()"
       name="menu-outline"
       class="text-4xl text-indigoBlack-700 cursor-pointer"
     ></ion-icon>
@@ -15,7 +16,90 @@
       <span class="text-white">2</span>
     </div>
   </div>
-  <app-sidebar
-    class="left-0 top-0 fixed h-screen w-3/5 md:max-w-sm text-indigoBlack-500"
-  ></app-sidebar>
+  <div
+    #sidebar
+    class="left-0 top-0 fixed h-screen w-full md:max-w-sm text-indigoBlack-500"
+  >
+    <div
+      class="items-start bg-white w-full h-full flex flex-col px-6 sm:px-8 shadow-lg slide-in-left relative"
+    >
+      <ion-icon
+        (click)="closeSidebar()"
+        name="arrow-back-outline"
+        class="text-2xl absolute left-0 mx-4 my-2 cursor-pointer"
+      ></ion-icon>
+      <div class="w-full flex justify-center my-4">
+        <span
+          *ngIf="!this.userLogedIn"
+          class="font-Josefin font-light text-2xl mt-2 cursor-pointer focus:outline-none"
+          >Iniciar sesión</span
+        >
+        <div
+          class="w-full flex items-center justify-center"
+          *ngIf="this.userLogedIn"
+        >
+          <ion-icon name="person-circle-outline" class="text-6xl"></ion-icon>
+          <div class="flex flex-col items-start mx-2 justify-start">
+            <span class="font-Josefin text-indigoBlack-800 text-xl">{{
+              userLogedIn.name
+            }}</span>
+            <small class="font-Josefin text-indigoBlack-200 -mt-2"
+              >1 mes con nosotros</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="w-full lineHeight"></div>
+      <div class="w-full h-full flex flex-col font-Josefin relative" #menuList>
+        <div class="flex items-center mt-5" routerLinkActive="active">
+          <ion-icon name="home-outline" class="text-3xl"></ion-icon>
+          <span
+            class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
+            routerLink="home"
+            >Inicio</span
+          >
+        </div>
+        <div class="mt-8 flex items-center">
+          <ion-icon name="bag-outline" class="text-3xl"></ion-icon>
+          <span
+            class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
+            >Productos</span
+          >
+        </div>
+        <div class="mt-8 flex items-center">
+          <ion-icon name="heart-outline" class="text-3xl"></ion-icon>
+          <span
+            class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
+            >Favoritos</span
+          >
+        </div>
+        <div class="mt-8 flex items-center">
+          <ion-icon name="call-outline" class="text-3xl"></ion-icon>
+          <span
+            class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
+            >Contacto</span
+          >
+        </div>
+        <div class="mt-8 flex items-center">
+          <ion-icon name="settings-outline" class="text-3xl"></ion-icon>
+          <span
+            class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
+            >Configuración</span
+          >
+        </div>
+        <div
+          class="absolute adjustLine flex flex-col w-full"
+          *ngIf="this.userLogedIn"
+        >
+          <div class="w-full lineHeight"></div>
+          <div class="mt-4 flex items-center">
+            <ion-icon name="log-out-outline" class="text-4xl"></ion-icon>
+            <span class="font-Josefin font-light text-2xl ml-4 cursor-pointer"
+              >Cerrar sesión</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
