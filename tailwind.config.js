@@ -22,7 +22,11 @@ module.exports = {
       black: "#000",
       white: "#fff",
       indigoBlack: {
-        500: "#444444",
+        500: "#707070",
+        700: "#444444",
+      },
+      indigoPink: {
+        500: "#fdd5ea",
       },
       gray: {
         100: "#f7fafc",
@@ -261,6 +265,7 @@ module.exports = {
       default: "1",
     },
     fontFamily: {
+      Josefin: ["Josefin Sans"],
       sans: [
         "system-ui",
         "-apple-system",

@@ -1,18 +1,21 @@
-<div class="flex w-full justify-between px-8 py-4">
+<div class="flex w-full justify-between px-8 py-4 fixed">
   <div>
     <ion-icon
       name="menu-outline"
-      class="text-4xl text-indigoBlack-500"
+      class="text-4xl text-indigoBlack-700 cursor-pointer"
     ></ion-icon>
   </div>
 
   <div class="relative cursor-pointer focus:outline-none">
-    <ion-icon name="cart-outline" class="text-4xl text-indigoBlack-500">
+    <ion-icon name="cart-outline" class="text-4xl text-indigoBlack-700">
     </ion-icon>
     <div
-      class="absolute adjustCircle bg-red-600 rounded-full text-white text-center text-sm font-semibold"
+      class="font-Josefin absolute adjustCircle bg-indigoPink-500 rounded-full text-white text-center text-sm font-semibold"
     >
-      2
+      <span class="text-white">2</span>
     </div>
   </div>
+  <app-sidebar
+    class="left-0 top-0 fixed h-screen w-3/5 md:max-w-sm text-indigoBlack-500"
+  ></app-sidebar>
 </div>

@@ -1,0 +1,5 @@
+@mixin strokeIcon($width: 15px) {
+  ion-icon {
+    --ionicon-stroke-width: #{$width};
+  }
+}
