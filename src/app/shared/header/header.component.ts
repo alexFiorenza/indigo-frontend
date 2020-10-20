@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
   openSidebar() {
+
     this.sidebarComponent.nativeElement.classList.remove('slide-out-left');
     this.sidebarComponent.nativeElement.classList.remove('hidden');
   }
