@@ -22,6 +22,7 @@ module.exports = {
       black: "#000",
       white: "#fff",
       indigoBlack: {
+        100: "#B1B1B1",
         200: "#D2D2D2",
         500: "#707070",
         700: "#444444",
@@ -31,6 +32,7 @@ module.exports = {
       indigoPink: {
         500: "#fdd5ea",
         600: "#FBB6DB",
+        700: "#F086A3",
       },
       gray: {
         100: "#f7fafc",
