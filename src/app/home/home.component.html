@@ -1,32 +1,31 @@
 <app-header></app-header>
-<div class="w-full h-screen z-30 relative">
-  <div id="blur" class="w-full h-full bg-white absolute z-30"></div>
-  <img
-    class="object-cover absolute w-full h-full"
-    src="../../assets/sampleBg.png"
-    alt=""
-  />
-  <div
-    class="h-full w-full absolute z-40 flex items-center justify-items-start px-8 lg:px-32 lg:py-16"
-  >
-    <div class="flex flex-col items-start">
-      <h2
-        class="font-Josefin uppercase text-indigoBlack-700 text-5xl lg:text-6xl font-light"
-      >
-        indigo
-      </h2>
-      <p class="font-Josefin font-light max-w-sm lg:max-w-lg lg:text-xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi inventore
-        corporis repellendus qui esse dolorem placeat evenie.
-      </p>
-      <button
-        class="mt-4 px-16 lg:px-32 py-3 lg:text-xl text-lg bg-indigoPink-600 text-white font-Josefin focus:outline-none"
-      >
-        Ver más
-      </button>
+<swiper [config]="config">
+  <div class="slideHeight w-full z-30 relative" *ngFor="let slide of Slides">
+    <div id="blur" class="w-full h-full bg-white absolute z-30"></div>
+    <img class="object-cover absolute w-full h-full" [src]="slide.bg" alt="" />
+    <div
+      class="h-full w-full absolute z-40 flex items-center justify-items-start px-8 lg:px-32 lg:py-16"
+    >
+      <div class="flex flex-col items-start">
+        <h2
+          class="font-Josefin uppercase text-indigoBlack-700 text-5xl lg:text-6xl font-light"
+        >
+          {{ slide.title }}
+        </h2>
+        <p class="font-Josefin font-light max-w-sm lg:max-w-lg lg:text-xl">
+          {{ slide.description }}
+        </p>
+        <button
+          [ngStyle]="{ 'background-color': slide.color }"
+          class="mt-4 px-16 lg:px-32 py-3 lg:text-xl text-lg bg-indigoPink-600 text-white font-Josefin focus:outline-none"
+        >
+          {{ slide.button }}
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</swiper>
+
 <div class="my-8 flex justify-center w-full">
   <h2
     class="font-Josefin uppercase text-2xl lg:text-3xl text-indigoPink-700 font-light"
@@ -34,7 +33,7 @@
     Nuestra selección
   </h2>
 </div>
-<div class="w-full flex flex-col items-center" #selectionProducts>
+<div class="w-full flex flex-col items-center mb-20" #selectionProducts>
   <div
     class="w-5/6 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center"
   >
@@ -48,10 +47,19 @@
         <span class="uppercase font-Josefin text-indigoBlack-100">{{
           product.name
         }}</span>
-        <span class="font-Josefin text-indigoBlack-500">{{
-          product.price | currency
-        }}</span>
-        <!-- <span #sale *ngIf="this.product.sale > 0">{{ product.price }}</span> -->
+        <div class="flex" #priceContainer>
+          <span
+            [ngClass]="{ productDiscount: this.product.sale > 0 }"
+            class="font-Josefin relative text-indigoBlack-500"
+            >{{ product.price | currency }}</span
+          >
+          <span
+            class="ml-2 font-Josefin text-indigoBlack-500"
+            #sale
+            *ngIf="this.product.sale > 0"
+            >{{ product.price | sales: product.sale | currency }}</span
+          >
+        </div>
         <p
           *ngIf="!product.stock"
           class="font-Josefin uppercase text-indigoPink-700 font-light italic"

@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve & ngtw watch",
+    "start-host": "ng serve --host 192.168.0.13 & ngtw watch",
     "build": "ngtw build && ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,7 +22,9 @@
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
     "@angular/service-worker": "~9.0.2",
+    "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "~6.5.4",
+    "swiper": "^6.3.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
