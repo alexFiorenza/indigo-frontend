@@ -5,12 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'inicio',
     component: HomeComponent
   },
   {
     path: '',
-    component: HomeComponent
+    redirectTo: 'inicio',
+    pathMatch: 'full'
   }
 ];
 

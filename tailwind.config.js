@@ -34,6 +34,9 @@ module.exports = {
         600: "#FBB6DB",
         700: "#F086A3",
       },
+      indigoComplementary: {
+        100: "#B6DBFB",
+      },
       gray: {
         100: "#f7fafc",
         200: "#edf2f7",
@@ -165,6 +168,8 @@ module.exports = {
       48: "12rem",
       56: "14rem",
       64: "16rem",
+      72: "24rem",
+      80: "32rem",
     },
     backgroundColor: (theme) => theme("colors"),
     backgroundImage: {

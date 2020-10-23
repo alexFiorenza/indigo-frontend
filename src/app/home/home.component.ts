@@ -12,7 +12,17 @@ import { SwiperOptions } from 'swiper';
 export class HomeComponent implements OnInit, AfterContentInit {
   public products: Array<Product>;
   public Slides: Array<Slides>;
-  public config: SwiperOptions = {
+  public shoesConfigDesktop: SwiperOptions = {
+    direction: 'horizontal',
+    slidesPerView: 5,
+    navigation: true
+  };
+  public shoesConfigMobile: SwiperOptions = {
+    direction: 'horizontal',
+    slidesPerView: 1,
+    navigation: true
+  };
+  public homeConfigSlider: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
     pagination: true,
@@ -20,7 +30,6 @@ export class HomeComponent implements OnInit, AfterContentInit {
   };
   constructor() {
     this.Slides = slides;
-    console.log(this.Slides);
     this.products = products.array;
   }
 
