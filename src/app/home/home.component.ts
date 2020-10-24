@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit, AfterContentInit {
   public homeConfigSlider: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
-    pagination: true,
+    pagination: {
+      el: '.swiper-pagination',
+    },
     autoplay: true
   };
   constructor() {

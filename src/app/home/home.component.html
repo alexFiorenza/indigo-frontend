@@ -25,6 +25,7 @@
     </div>
   </div>
 </swiper>
+<div class="swiper-pagination"></div>
 
 <div class="mt-16 mb-10 flex justify-center w-full" #selectionTitle>
   <h2
@@ -78,17 +79,17 @@
   </h2>
 </div>
 <div
-  class="w-full relative h-72 md:h-80 bg-no-repeat bg-cover"
+  class="w-full relative h-72 md:h-80 bg-no-repeat bg-cover md:bg-cover"
   style="background-image: url(../../assets/vector-brush.svg)"
   #shoes
 >
   <div
     #containerDesktop
-    class="flex-col w-full h-full justify-center hidden items-center md:flex"
+    class="flex-col w-full h-full justify-center hidden items-center lg:flex"
   >
-    <swiper [config]="shoesConfigDesktop" class="my-16 w-3/4">
+    <swiper [config]="shoesConfigDesktop" class="my-16 xl:w-3/4 w-full">
       <div *ngFor="let p of products">
-        <div class="w-56 changeHeight relative cursor-pointer">
+        <div class="w-48 xl:w-56 changeHeight relative cursor-pointer">
           <div
             #info
             class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
@@ -117,19 +118,103 @@
   </div>
   <div
     #containerMobile
-    class="flex flex-col w-full h-full justify-center md:hidden"
+    class="flex flex-col w-full h-full justify-center lg:hidden"
   >
     <swiper [config]="shoesConfigMobile">
-      <div>slide1</div>
-      <div>slide2</div>
-      <div>slide3</div>
-      <div>slide4</div>
-      <div>slide5</div>
-      <div>slide6</div>
-      <div>slide7</div>
-      <div>slide8</div>
-      <div>slide9</div>
-      <div>slide10</div>
+      <div *ngFor="let p of products" class="flex w-full justify-center">
+        <div class="w-1/2 changeHeight flex relative cursor-pointer">
+          <div
+            #info
+            class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
+          >
+            <span class="uppercase text-xl">{{ p.name }}</span>
+            <span class="uppercase font-light">{{ p.price | currency }}</span>
+          </div>
+          <div
+            class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
+          ></div>
+          <img
+            [src]="p.image"
+            class="w-full h-full object-cover rounded-xl"
+            alt=""
+          />
+        </div>
+      </div>
     </swiper>
   </div>
+  <div class="w-full flex justify-center lg:hidden">
+    <button
+      class="px-24 bg-indigoComplementary-100 py-2 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
+    >
+      Ver más
+    </button>
+  </div>
+</div>
+<div
+  #aboutus
+  class="my-48 flex flex-col lg:flex-row w-full justify-center items-center"
+>
+  <img class="max-w-sm" src="../../assets/vector-indigo-logo.png" alt="" />
+  <div class="flex flex-col items-center">
+    <p
+      class="font-Josefin w-10/12 md:text-2xl max-w-5xl text-lg text-center text-indigoBlack-500 font-light"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In justo erat,
+      porttitor nec lacinia nec, sollicitudin id lorem. Ut a leo non mi
+      ultricies hendrerit in sit amet enim. Duis pretium accumsan dolor laoreet
+      ornare. Cras sit amet urna porta, dictum sem quis, fringilla leo.
+      Suspendisse et lacus pellentesque, ullamcorper nulla sit amet, lacinia
+      magna.
+    </p>
+    <div class="flex mt-4">
+      <a href="https://www.instagram.com/indigocalzados/" target="_blank">
+        <ion-icon
+          class="text-5xl text-indigoBlack-500"
+          name="logo-instagram"
+        ></ion-icon>
+      </a>
+      <a href="https://www.instagram.com/indigo_newway/" target="_blank">
+        <ion-icon
+          class="text-5xl text-indigoBlack-500 ml-8"
+          name="logo-instagram"
+        ></ion-icon>
+      </a>
+    </div>
+  </div>
+</div>
+<div #locations class="w-full relative mt-20 h-72 lg:h-80">
+  <div
+    class="absolute h-full flex flex-col items-center justify-center z-50 w-full"
+  >
+    <div class="w-5/6 max-w-3xl relative">
+      <div
+        class="w-full bg-white mb-4 py-6 px-2 rounded-md flex items-center borderPink"
+      >
+        <ion-icon name="location-outline" class="text-5xl"></ion-icon>
+        <span
+          class="font-Josefin text-sm text-indigoBlack-500 font-light ml-2 md:text-2xl"
+          >San nicolas 427- San Nicolas 674, Pergamino, Buenos Aires 2700</span
+        >
+      </div>
+    </div>
+    <div class="w-5/6 max-w-3xl">
+      <div class="bg-white py-6 px-2 rounded-md flex items-center">
+        <ion-icon
+          name="location-outline"
+          class="text-3xl md:text-5xl"
+        ></ion-icon>
+        <span
+          class="font-Josefin text-base text-indigoBlack-500 font-light ml-2 md:text-3xl"
+          >San Martín 679 - Rodríguez 749</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="z-30 w-full h-full absolute bg-indigoPink-400 opacity-75"></div>
+
+  <img
+    class="object-cover w-full h-full"
+    src="https://images.unsplash.com/photo-1532154078493-c1c3eef2023c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+    alt=""
+  />
 </div>
