@@ -1,0 +1,56 @@
+<div
+  class="w-full h-screen bg-indigoBlack-300 flex flex-col items-center justify-center"
+>
+  <h1
+    class="font-Josefin text-white absolute z-50 text-3xl uppercase top-0 mt-5 font-bold"
+  >
+    indigo
+  </h1>
+
+  <div
+    class="px-8 bg-white z-40 mb-16 flex-col flex items-center rounded-2xl py-4"
+  >
+    <h2 class="font-Josefin font-normal text-indigoBlack-500 text-3xl mb-4">
+      Iniciar sesion
+    </h2>
+    <form class="flex flex-col items-start w-full">
+      <div #email class="relative py-4 w-full">
+        <input
+          class="text-indigoBlack-200 font-Josefin font-normal w-full focus:outline-none"
+          placeholder="Email"
+        />
+        <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
+      </div>
+      <div #password class="relative py-4 w-full">
+        <input
+          class="text-indigoBlack-200 font-Josefin font-normal w-full focus:outline-none"
+          placeholder="Contraseña"
+        />
+        <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
+      </div>
+      <span class="font-Josefin text-indigoPink-700"
+        >Me olvide la contraseña</span
+      >
+    </form>
+    <div class="flex mt-12 flex-col items-center">
+      <button
+        class="font-Josefin text-lg text-white font-normal bg-indigoPink-800 px-24 py-6 rounded-full"
+      >
+        Entrar
+      </button>
+      <span class="font-Josefin text-indigoBlack-200 mt-4"
+        >Volver a inicio</span
+      >
+    </div>
+  </div>
+  <div #registerSection class="flex flex-col items-center">
+    <span class="font-Josefin text-indigoBlack-500 text-xl"
+      >¿No tenes una cuenta?</span
+    >
+    <span class="uppercase font-Josefin text-indigoPink-600 text-xl"
+      >Registrate</span
+    >
+  </div>
+
+  <div class="w-full pinkBg bg-indigoPink-800 absolute z-30 top-0"></div>
+</div>

@@ -24,6 +24,7 @@ module.exports = {
       indigoBlack: {
         100: "#B1B1B1",
         200: "#D2D2D2",
+        300: "#F6F6F6",
         500: "#707070",
         700: "#444444",
         800: "#4f4f4f",
@@ -34,6 +35,7 @@ module.exports = {
         500: "#fdd5ea",
         600: "#FBB6DB",
         700: "#F086A3",
+        800: "#FCC6E3",
       },
       indigoComplementary: {
         100: "#B6DBFB",

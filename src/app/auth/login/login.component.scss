@@ -1,0 +1,15 @@
+.pinkBg {
+  height: 50%;
+  border-bottom-right-radius: 30%;
+  border-bottom-left-radius: 30%;
+}
+.lineInput {
+  background-color: #d2d2d2;
+  height: 0.1px;
+}
+input::placeholder {
+  color: #d2d2d2;
+}
+.placeTitle {
+  top: 50px;
+}

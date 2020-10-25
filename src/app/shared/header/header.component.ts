@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('sidebar') private sidebarComponent: ElementRef;
   public userLogedIn: user;
   constructor() {
-    this.userLogedIn = mocks.user1;
+    // this.userLogedIn = mocks.user1;
   }
 
   ngOnInit(): void {
