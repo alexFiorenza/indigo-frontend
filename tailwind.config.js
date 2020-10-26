@@ -29,6 +29,7 @@ module.exports = {
         700: "#444444",
         800: "#4f4f4f",
         900: "#2F2F2F",
+        1000: "#4F4F4F",
       },
       indigoPink: {
         400: "#FEEFF7",

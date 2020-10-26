@@ -13,3 +13,9 @@ input::placeholder {
 .placeTitle {
   top: 50px;
 }
+input:focus + .lineInput {
+  background-color: #fbb6db;
+}
+.btnBorder {
+  border: 0.5px #b1b1b1 solid;
+}

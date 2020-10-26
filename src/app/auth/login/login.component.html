@@ -1,56 +1,95 @@
-<div
-  class="w-full h-screen bg-indigoBlack-300 flex flex-col items-center justify-center"
->
-  <h1
-    class="font-Josefin text-white absolute z-50 text-3xl uppercase top-0 mt-5 font-bold"
-  >
-    indigo
-  </h1>
-
+<div class="w-full h-full lg:flex">
   <div
-    class="px-8 bg-white z-40 mb-16 flex-col flex items-center rounded-2xl py-4"
+    class="bg-indigoBlack-300 w-1/2 h-screen hidden lg:flex justify-center items-center"
   >
-    <h2 class="font-Josefin font-normal text-indigoBlack-500 text-3xl mb-4">
-      Iniciar sesion
-    </h2>
-    <form class="flex flex-col items-start w-full">
-      <div #email class="relative py-4 w-full">
-        <input
-          class="text-indigoBlack-200 font-Josefin font-normal w-full focus:outline-none"
-          placeholder="Email"
-        />
-        <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
-      </div>
-      <div #password class="relative py-4 w-full">
-        <input
-          class="text-indigoBlack-200 font-Josefin font-normal w-full focus:outline-none"
-          placeholder="Contraseña"
-        />
-        <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
-      </div>
-      <span class="font-Josefin text-indigoPink-700"
-        >Me olvide la contraseña</span
-      >
-    </form>
-    <div class="flex mt-12 flex-col items-center">
+    <img src="../../../assets/loginSvg.svg" class="max-w-2xl w-11/12" alt="" />
+  </div>
+  <div
+    class="w-full h-screen bg-indigoBlack-300 flex flex-col items-center justify-center lg:items-start lg:w-1/2 lg:bg-white relative"
+  >
+    <div
+      #registerDesktop
+      class="lg:flex absolute top-0 right-0 my-2 mx-4 items-center hidden"
+    >
+      <h3 class="font-Josefin text-indigoBlack-100 mx-4">
+        ¿No tenes una cuenta?
+      </h3>
       <button
-        class="font-Josefin text-lg text-white font-normal bg-indigoPink-800 px-24 py-6 rounded-full"
+        class="uppercase font-Josefin text-xs text-indigoBlack-100 btnBorder px-10 py-2 rounded-full font-bold focus:outline-none"
       >
-        Entrar
+        Registrate
       </button>
-      <span class="font-Josefin text-indigoBlack-200 mt-4"
-        >Volver a inicio</span
+    </div>
+    <h1
+      class="font-Josefin text-white absolute z-50 text-3xl uppercase top-0 mt-5 font-bold lg:hidden"
+    >
+      indigo
+    </h1>
+
+    <div
+      class="px-8 bg-white z-40 mb-16 flex-col flex items-center lg:items-start rounded-2xl py-4 lg:ml-12"
+    >
+      <h2
+        class="font-Josefin font-normal text-indigoBlack-500 text-3xl mb-4 lg:mb-0 lg:text-indigoBlack-1000 lg:text-4xl"
+      >
+        Iniciar sesion
+      </h2>
+      <p class="font-Josefin hidden lg:block mb-4 text-indigoBlack-200">
+        Ingresa contraseña y correo electrónico
+      </p>
+      <form
+        class="flex flex-col items-start w-full"
+        [formGroup]="this.form"
+        (ngSubmit)="onSubmit()"
+      >
+        <div #email class="relative py-4 w-full">
+          <input
+            formControlName="email"
+            class="text-indigoPink-700 font-Josefin font-normal w-full focus:outline-none"
+            placeholder="Email"
+          />
+          <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
+        </div>
+        <div #password class="relative py-4 w-full">
+          <input
+            formControlName="password"
+            type="password"
+            class="text-indigoPink-700 font-Josefin font-normal w-full focus:outline-none"
+            placeholder="Contraseña"
+          />
+          <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
+        </div>
+        <span class="font-Josefin text-indigoPink-700 text-sm opacity-50"
+          >Me olvide la contraseña</span
+        >
+        <div class="flex mt-12 flex-col items-center lg:w-full">
+          <button
+            type="submit"
+            class="focus:outline-none font-Josefin text-lg text-white font-normal bg-indigoPink-800 px-24 py-6 rounded-full lg:w-full lg:px-0 lg:py-3"
+          >
+            Entrar
+          </button>
+          <span
+            routerLink="/inicio"
+            class="cursor-pointer font-Josefin text-indigoBlack-200 mt-4 focus:outline-none"
+            >Volver a inicio</span
+          >
+        </div>
+      </form>
+    </div>
+    <div #registerSection class="flex flex-col items-center lg:hidden">
+      <span class="font-Josefin text-indigoBlack-500 text-xl"
+        >¿No tenes una cuenta?</span
+      >
+      <span
+        routerLink="/registro"
+        class="uppercase font-Josefin text-indigoPink-600 text-xl"
+        >Registrate</span
       >
     </div>
-  </div>
-  <div #registerSection class="flex flex-col items-center">
-    <span class="font-Josefin text-indigoBlack-500 text-xl"
-      >¿No tenes una cuenta?</span
-    >
-    <span class="uppercase font-Josefin text-indigoPink-600 text-xl"
-      >Registrate</span
-    >
-  </div>
 
-  <div class="w-full pinkBg bg-indigoPink-800 absolute z-30 top-0"></div>
+    <div
+      class="w-full pinkBg bg-indigoPink-800 absolute z-30 top-0 lg:hidden"
+    ></div>
+  </div>
 </div>

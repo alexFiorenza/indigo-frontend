@@ -13,10 +13,6 @@ const routes: Routes = [
     path: '',
     redirectTo: 'inicio',
     pathMatch: 'full'
-  },
-  {
-    path: 'ingresar',
-    component: LoginComponent
   }
 ];
 @NgModule({
