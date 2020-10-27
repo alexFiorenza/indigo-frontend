@@ -1,0 +1,71 @@
+<div class="w-full h-screen">
+  <div
+    class="w-full gradientBackground top-0 flex justify-center items-center relative"
+  >
+    <h2 class="font-Josefin text-4xl uppercase text-white font-bold">indigo</h2>
+    <span
+      class="font-Josefin font-light absolute bottom-0 right-0 mx-4 my-3 text-white text-3xl"
+      >Registro</span
+    >
+  </div>
+
+  <div class="bg-indigoBlack-300 w-full h-full flex flex-col justify-center">
+    <form
+      class="w-full flex flex-col flex-wrap justify-center items-center mt-32"
+      [formGroup]="this.form"
+    >
+      <div
+        class="bg-white px-4 py-4 flex items-center rounded-3xl shadow-lg w-11/12 mb-6"
+      >
+        <ion-icon
+          name="person-outline"
+          class="text-3xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-200 textl-lg opacity-75"
+          placeholder="Nombre completo"
+        />
+      </div>
+      <div
+        class="bg-white px-4 py-4 flex items-center rounded-3xl shadow-lg w-11/12 mb-6"
+      >
+        <ion-icon
+          name="mail-outline"
+          class="text-3xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="email"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-200 textl-lg opacity-75"
+          placeholder="Correo electronico"
+        />
+      </div>
+      <div
+        class="bg-white px-4 py-4 flex items-center rounded-3xl shadow-lg w-11/12 mb-6"
+      >
+        <ion-icon
+          name="key-outline"
+          class="text-3xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="password"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-200 textl-lg opacity-75"
+          placeholder="Contraseña"
+        />
+      </div>
+      <div
+        class="bg-white px-4 py-4 flex items-center rounded-3xl shadow-lg w-11/12 mb-6"
+      >
+        <ion-icon
+          name="repeat-outline"
+          class="text-3xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="password"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-200 textl-lg opacity-75"
+          placeholder="Repetir contraseña"
+        />
+      </div>
+    </form>
+  </div>
+</div>
