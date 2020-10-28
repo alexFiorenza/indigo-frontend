@@ -1,22 +1,51 @@
-<div class="w-full h-screen">
+<div class="w-full h-screen lg:flex">
   <div
-    class="w-full gradientBackground borderRadiusBG absolute h-56 top-0 flex justify-center items-center"
+    class="w-full lg:h-full lg:w-1/2 rounded-bl-full lg:rounded-none gradientBackground absolute lg:static h-56 top-0 flex lg:flex-col justify-center items-center lg:items-center"
   >
-    <h2 class="font-Josefin text-4xl uppercase text-white font-bold">indigo</h2>
+    <h2
+      class="font-Josefin text-4xl uppercase text-white font-bold lg:text-5xl lg:mr-8 lg:mb-8"
+    >
+      indigo
+    </h2>
     <span
-      class="font-Josefin font-light absolute bottom-0 right-0 mx-4 my-3 text-white text-3xl"
+      class="font-Josefin font-light absolute bottom-0 right-0 mx-4 my-3 text-white text-3xl lg:hidden"
       >Registro</span
     >
+    <img
+      src="../../../assets/signInSvg.svg"
+      class="max-w-md hidden lg:block"
+      alt=""
+    />
   </div>
 
-  <div class="bg-indigoBlack-300 w-full h-full flex flex-col">
+  <div
+    class="bg-indigoBlack-300 w-full lg:w-1/2 h-full flex flex-col lg:justify-center"
+  >
+    <div
+      #infoDesktop
+      class="hidden lg:flex flex-col mb-8 w-full max-w-xl items-center"
+    >
+      <h2
+        class="font-Josefin text-3xl w-4/5 text-indigoBlack-800 font-semibold"
+      >
+        Registrarse
+      </h2>
+      <span
+        class="font-Josefin text-lg w-4/5 text-indigoBlack-200 font-semibold"
+        >Registra tus datos para comenzar a comprar</span
+      >
+    </div>
     <form
-      class="w-full flex flex-col flex-wrap justify-center items-center mt-64"
+      class="w-full flex flex-col flex-wrap justify-center items-center mt-64 lg:mt-0 lg:max-w-xl"
       [formGroup]="this.form"
       (ngSubmit)="onSubmit()"
     >
       <div #name class="mb-6 w-4/5 flex flex-col justify-start items-start">
         <div
+          [ngClass]="{
+            'wrong-input':
+              this.form.get('name').touched && this.form.get('name').invalid
+          }"
           class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
         >
           <ion-icon
@@ -26,7 +55,7 @@
           <input
             type="text"
             formControlName="name"
-            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75"
+            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
             placeholder="Nombre completo"
           />
         </div>
@@ -38,6 +67,10 @@
       </div>
       <div #mail class="mb-6 w-4/5 flex flex-col justify-start items-start">
         <div
+          [ngClass]="{
+            'wrong-input':
+              this.form.get('email').touched && this.form.get('email').invalid
+          }"
           class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
         >
           <ion-icon
@@ -47,7 +80,7 @@
           <input
             type="text"
             formControlName="email"
-            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75"
+            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
             placeholder="Correo electronico"
           />
         </div>
@@ -61,6 +94,11 @@
       </div>
       <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
         <div
+          [ngClass]="{
+            'wrong-input':
+              this.form.get('password').touched &&
+              this.form.get('password').invalid
+          }"
           class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
         >
           <ion-icon
@@ -70,7 +108,7 @@
           <input
             type="password"
             formControlName="password"
-            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75"
+            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
             placeholder="Contraseña"
           />
         </div>
@@ -85,6 +123,13 @@
       </div>
       <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
         <div
+          [ngClass]="{
+            'wrong-input':
+              this.form.get('password').value !==
+                this.form.get('repeatedPassword').value &&
+              this.form.get('password').touched &&
+              this.form.get('repeatedPassword').touched
+          }"
           class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
         >
           <ion-icon
@@ -94,7 +139,7 @@
           <input
             type="password"
             formControlName="repeatedPassword"
-            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75"
+            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
             placeholder="Repetir contraseña"
           />
         </div>
@@ -103,7 +148,7 @@
             this.form.get('password').value !==
               this.form.get('repeatedPassword').value &&
             this.form.get('password').touched &&
-              this.form.get('repeatedPassword').touched
+            this.form.get('repeatedPassword').touched
           "
           class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
           >*Las contraseñas no coinciden*</span
@@ -111,6 +156,10 @@
       </div>
       <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
         <div
+          [ngClass]="{
+            'wrong-input':
+              this.form.get('phone').touched && this.form.get('phone').invalid
+          }"
           class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
         >
           <ion-icon
@@ -120,7 +169,7 @@
           <input
             type="number"
             formControlName="phone"
-            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75"
+            class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
             placeholder="Numero de contacto"
           />
         </div>
@@ -135,13 +184,15 @@
       <button
         [ngClass]="{ 'opacity-25': this.form.invalid }"
         [disabled]="this.form.invalid"
-        class="w-4/5 gradientBackground py-3 font-Josefin text-white rounded-full shadow-md focus:outline-none"
+        class="w-4/5 gradientBackground py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
       >
         Siguiente
       </button>
-      <div class="flex font-Josefin text-sm mt-4">
+      <div class="flex font-Josefin text-sm my-4">
         <p class="text-indigoBlack-500 px-2">¿Ya sos un miembro?</p>
-        <span class="text-indigoPink-700" routerLink="/ingresar"
+        <span
+          class="text-indigoPink-700 focus:outline-none cursor-pointer"
+          routerLink="/ingresar"
           >Inicia sesión</span
         >
       </div>
