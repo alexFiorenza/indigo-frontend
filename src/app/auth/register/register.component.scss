@@ -1,14 +1,10 @@
 .gradientBackground {
-  height: 30%;
-  position: absolute;
-
   background: transparent linear-gradient(0deg, #fbb6db 0%, #f086a3 100%)
     no-repeat padding-box;
+}
+.borderRadiusBG {
   border-radius: 0px 0px 0px 150px;
 }
 input::placeholder {
   color: #d2d2d2;
-}
-.adjustMargin {
-  margin-top: 30%;
 }

@@ -45,11 +45,25 @@
       >
         <div #email class="relative py-4 w-full">
           <input
+            type="email"
             formControlName="email"
             class="text-indigoPink-700 font-Josefin font-normal w-full focus:outline-none"
             placeholder="Email"
           />
-          <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
+          <div
+            [ngClass]="{
+              hasError:
+                this.form.get('email').invalid && this.form.get('email').touched
+            }"
+            class="w-full bg-indigoBlack-200 lineInput opacity-50"
+          ></div>
+          <span
+            class="text-red-500 text-xs"
+            *ngIf="
+              this.form.get('email').invalid && this.form.get('email').touched
+            "
+            >*El email no es valido*</span
+          >
         </div>
         <div #password class="relative py-4 w-full">
           <input
@@ -58,7 +72,22 @@
             class="text-indigoPink-700 font-Josefin font-normal w-full focus:outline-none"
             placeholder="Contraseña"
           />
-          <div class="w-full bg-indigoBlack-200 lineInput opacity-50"></div>
+          <div
+            [ngClass]="{
+              hasError:
+                this.form.get('password').invalid &&
+                this.form.get('password').touched
+            }"
+            class="w-full bg-indigoBlack-200 lineInput opacity-50"
+          ></div>
+          <span
+            class="text-red-500 text-xs"
+            *ngIf="
+              this.form.get('password').invalid &&
+              this.form.get('password').touched
+            "
+            >*La contraseña no es correcta*</span
+          >
         </div>
         <span class="font-Josefin text-indigoPink-700 text-sm opacity-50"
           >Me olvide la contraseña</span
