@@ -22,3 +22,14 @@ input:focus + .lineInput {
 .hasError {
   background-color: #ff6060;
 }
+.changeWidth {
+  width: 50%;
+  transition: 0.5s ease-in;
+}
+/*
+  Set the color of the icon
+*/
+svg path,
+svg rect {
+  fill: #ffffff;
+}

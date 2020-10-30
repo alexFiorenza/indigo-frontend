@@ -80,7 +80,7 @@
             >Contacto</span
           >
         </div>
-        <div class="mt-8 flex items-center">
+        <div class="mt-8 flex items-center" *ngIf="this.userLogedIn">
           <ion-icon name="settings-outline" class="text-3xl"></ion-icon>
           <span
             class="text-xl ml-4 font-light focus:outline-none cursor-pointer"

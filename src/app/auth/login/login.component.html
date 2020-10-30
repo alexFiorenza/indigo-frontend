@@ -28,7 +28,7 @@
     </h1>
 
     <div
-      class="px-8 bg-white z-40 mb-16 flex-col flex items-center lg:items-start rounded-2xl py-4 lg:ml-12"
+      class="px-10 bg-white z-40 mb-16 flex-col flex items-center lg:items-start rounded-2xl py-4 lg:ml-12"
     >
       <h2
         class="font-Josefin font-normal text-indigoBlack-500 text-3xl mb-4 lg:mb-0 lg:text-indigoBlack-1000 lg:text-4xl"
@@ -92,12 +92,48 @@
         <span class="font-Josefin text-indigoPink-700 text-sm opacity-50"
           >Me olvide la contraseña</span
         >
-        <div class="flex mt-12 flex-col items-center lg:w-full">
+        <div
+          class="flex mt-12 flex-col items-center justify-center lg:w-full w-full"
+        >
           <button
+            [ngClass]="{ 'opacity-25': this.form.invalid }"
+            [disabled]="this.form.invalid"
             type="submit"
-            class="focus:outline-none font-Josefin text-lg text-white font-normal bg-indigoPink-800 px-24 py-6 rounded-full lg:w-full lg:px-0 lg:py-3"
+            #btnSubmit
+            class="focus:outline-none font-Josefin text-lg text-white font-normal bg-indigoPink-800 w-full py-6 rounded-full lg:w-full lg:px-0 lg:py-3 flex justify-center"
           >
-            Entrar
+            <div class="hidden" title="1" #loader>
+              <svg
+                version="1.1"
+                id="loader-1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="40px"
+                height="40px"
+                viewBox="0 0 50 50"
+                style="enable-background: new 0 0 50 50"
+                xml:space="preserve"
+              >
+                <path
+                  fill="#000"
+                  d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"
+                >
+                  <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+
+            <span #textBtn>Entrar</span>
           </button>
           <span
             routerLink="/inicio"
