@@ -4,7 +4,7 @@ const slide1: Slides = {
     // tslint:disable-next-line: max-line-length
     description: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi inventore corporis repellendus qui esse dolorem placeat evenie. ',
     button: 'Conocer',
-    bg: '../../assets/sampleBg.png',
+    image: '../../assets/sampleBg.png',
     color: '#FBB6DB',
     wordsColor: '#ffff'
 };
@@ -13,7 +13,7 @@ const slide2: Slides = {
     // tslint:disable-next-line: max-line-length
     description: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi inventore corporis repellendus qui esse dolorem placeat evenie. ',
     button: 'Probar',
-    bg: '../../assets/sampleBg.png',
+    image: '../../assets/sampleBg.png',
     color: '#2DC3F7',
     wordsColor: '#ffff'
 };
@@ -22,7 +22,7 @@ const slide3: Slides = {
     // tslint:disable-next-line: max-line-length
     description: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi inventore corporis repellendus qui esse dolorem placeat evenie. ',
     button: 'Probar',
-    bg: '../../assets/sampleBg.png',
+    image: '../../assets/sampleBg.png',
     color: '#F72D86',
     wordsColor: '#ffff'
 };

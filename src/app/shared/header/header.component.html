@@ -90,6 +90,7 @@
         <div class="flex mt-8 items-center" *ngIf="this.userLogedIn">
           <ion-icon name="log-out-outline" class="text-3xl"></ion-icon>
           <span
+            (click)="logOut()"
             class="font-Josefin font-light text-xl ml-4 cursor-pointer focus:outline-none"
             >Cerrar sesión</span
           >

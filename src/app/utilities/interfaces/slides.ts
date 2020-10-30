@@ -1,6 +1,6 @@
 export interface Slides {
     title: string;
-    bg: string;
+    image: string;
     description?: string;
     button?: string;
     color?: string;

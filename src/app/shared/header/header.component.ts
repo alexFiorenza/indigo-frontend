@@ -1,3 +1,4 @@
+import { UserService } from './../../core/services/http/api/user/user.service';
 import { user } from './../../utilities/interfaces/user';
 import { mocks } from './../../utilities/mocks/user';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -9,8 +10,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @ViewChild('sidebar') private sidebarComponent: ElementRef;
   public userLogedIn: user;
-  constructor() {
-    // this.userLogedIn = mocks.user1;
+  constructor(private userService: UserService) {
+    this.userLogedIn = this.userService.loadPayload();
   }
 
   ngOnInit(): void {
@@ -25,5 +26,9 @@ export class HeaderComponent implements OnInit {
     setTimeout(() => {
       this.sidebarComponent.nativeElement.classList.add('hidden');
     }, 500);
+  }
+  logOut() {
+    this.userService.clearSession();
+    window.location.reload();
   }
 }

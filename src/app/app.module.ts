@@ -1,5 +1,5 @@
+import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from './home/core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';

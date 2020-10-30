@@ -1,3 +1,4 @@
+import { UserService } from './../core/services/http/api/user/user.service';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RouterModule } from '@angular/router';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';

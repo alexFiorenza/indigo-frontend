@@ -1,3 +1,4 @@
+import { UserService } from './services/http/api/user/user.service';
 import { GovernmentService } from './services/http/government/government.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,9 +9,6 @@ import { CommonModule } from '@angular/common';
   declarations: [],
   imports: [
     CommonModule,
-  ],
-  providers: [
-    GovernmentService
   ]
 })
 export class CoreModule { }
