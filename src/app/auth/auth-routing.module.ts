@@ -1,3 +1,5 @@
+import { CheckLocationComponent } from './register/check-location/check-location.component';
+import { UserDataComponent } from './register/user-data/user-data.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
@@ -11,7 +13,22 @@ const AUTH_ROUTES: Routes = [
     },
     {
         path: 'registro',
-        component: RegisterComponent
+        component: RegisterComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: 'datos',
+                pathMatch: 'full'
+            },
+            {
+                path: 'datos',
+                component: UserDataComponent
+            },
+            {
+                path: 'ubicacion',
+                component: CheckLocationComponent
+            }
+        ]
     }
 ];
 @NgModule({

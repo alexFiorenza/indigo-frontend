@@ -1,0 +1,170 @@
+<div class="w-full h-full">
+  <div
+    #infoDesktop
+    class="hidden lg:flex flex-col mb-8 w-full max-w-xl items-center"
+  >
+    <h2 class="font-Josefin text-3xl w-4/5 text-indigoBlack-800 font-semibold">
+      Registrarse
+    </h2>
+    <span class="font-Josefin text-lg w-4/5 text-indigoBlack-200 font-semibold"
+      >Registra tus datos para comenzar a comprar</span
+    >
+  </div>
+  <form
+    class="w-full flex flex-col flex-wrap justify-center items-center mt-64 lg:mt-0 lg:max-w-xl"
+    [formGroup]="this.form"
+    (ngSubmit)="onSubmit()"
+  >
+    <div #name class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('name').touched && this.form.get('name').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="person-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          formControlName="name"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Nombre completo"
+        />
+      </div>
+      <span
+        *ngIf="this.form.get('name').touched && this.form.get('name').invalid"
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*El nombre no es correcto*</span
+      >
+    </div>
+    <div #mail class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('email').touched && this.form.get('email').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="mail-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          formControlName="email"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Correo electronico"
+        />
+      </div>
+      <span
+        *ngIf="this.form.get('email').touched && this.form.get('email').invalid"
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*El email no es correcto*</span
+      >
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('password').touched &&
+            this.form.get('password').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="key-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="password"
+          formControlName="password"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Contraseña"
+        />
+      </div>
+      <span
+        *ngIf="
+          this.form.get('password').touched && this.form.get('password').invalid
+        "
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*La contraseña no es correcta*</span
+      >
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('password').value !==
+              this.form.get('repeatedPassword').value &&
+            this.form.get('password').touched &&
+            this.form.get('repeatedPassword').touched
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="repeat-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="password"
+          formControlName="repeatedPassword"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Repetir contraseña"
+        />
+      </div>
+      <span
+        *ngIf="
+          this.form.get('password').value !==
+            this.form.get('repeatedPassword').value &&
+          this.form.get('password').touched &&
+          this.form.get('repeatedPassword').touched
+        "
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*Las contraseñas no coinciden*</span
+      >
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('phone').touched && this.form.get('phone').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="call-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="number"
+          formControlName="phone"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Numero de contacto"
+        />
+      </div>
+      <span
+        *ngIf="this.form.get('phone').touched && this.form.get('phone').invalid"
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*El numero de telefono no es correcto*</span
+      >
+    </div>
+    <button
+      [ngClass]="{ 'opacity-25': this.form.invalid }"
+      [disabled]="this.form.invalid"
+      class="w-4/5 gradientBackground py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
+    >
+      Siguiente
+    </button>
+    <div class="flex font-Josefin text-sm my-4">
+      <p class="text-indigoBlack-500 px-2">¿Ya sos un miembro?</p>
+      <span
+        class="text-indigoPink-700 focus:outline-none cursor-pointer"
+        routerLink="/ingresar"
+        >Inicia sesión</span
+      >
+    </div>
+  </form>
+</div>

@@ -12,11 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   logIn(dataToSend): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/user/login`, dataToSend).pipe(
-      map((r: any) => {
-        return r.response;
-      })
-    );
+    return this.http.post(`${environment.apiUrl}/user/login`, dataToSend);
   }
   loadToken(): string {
     return localStorage.getItem('token');

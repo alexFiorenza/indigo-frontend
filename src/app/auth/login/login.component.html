@@ -100,7 +100,7 @@
             [disabled]="this.form.invalid"
             type="submit"
             #btnSubmit
-            class="focus:outline-none font-Josefin text-lg text-white font-normal bg-indigoPink-800 w-full py-6 rounded-full lg:w-full lg:px-0 lg:py-3 flex justify-center"
+            class="focus:outline-none font-Josefin text-lg text-white font-normal bg-indigoPink-800 w-full items-center py-6 rounded-full lg:w-full lg:px-0 lg:py-3 flex justify-center"
           >
             <div class="hidden" title="1" #loader>
               <svg
@@ -132,7 +132,11 @@
                 </path>
               </svg>
             </div>
-
+            <ion-icon
+              #sucessCheck
+              name="checkmark-outline"
+              class="text-white text-3xl scale-in-center hidden"
+            ></ion-icon>
             <span #textBtn>Entrar</span>
           </button>
           <span

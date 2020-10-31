@@ -1,0 +1,203 @@
+<div class="w-full h-full">
+  <div
+    #infoDesktop
+    class="hidden lg:flex flex-col mb-8 w-full max-w-xl items-center"
+  >
+    <h2 class="font-Josefin text-3xl w-4/5 text-indigoBlack-800 font-semibold">
+      Registrarse
+    </h2>
+    <span class="font-Josefin text-lg w-4/5 text-indigoBlack-200 font-semibold"
+      >Registra tus datos para comenzar a comprar</span
+    >
+  </div>
+  <form
+    class="w-full flex flex-col flex-wrap justify-center items-center mt-64 lg:mt-0 lg:max-w-xl"
+    [formGroup]="this.form"
+    (ngSubmit)="onSubmit()"
+  >
+    <div #name class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('province').touched &&
+            this.form.get('province').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="map-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <select
+          formControlName="province"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+        >
+          <option value="" disabled selected>Selecciona una provincia</option>
+          <option *ngFor="let p of provinces" [value]="p.nombre">
+            {{ p.nombre }}
+          </option>
+        </select>
+      </div>
+      <span
+        *ngIf="
+          this.form.get('province').touched && this.form.get('province').invalid
+        "
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*La provincia no es correcta*</span
+      >
+    </div>
+    <div #mail class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('town').touched && this.form.get('town').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="location-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <select
+          formControlName="town"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Barrio"
+        ></select>
+      </div>
+      <span
+        *ngIf="this.form.get('town').touched && this.form.get('town').invalid"
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*El barrio es obligatorio*</span
+      >
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('street').touched && this.form.get('street').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="navigate-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          formControlName="street"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Calle"
+        />
+      </div>
+      <span
+        *ngIf="
+          this.form.get('street').touched && this.form.get('street').invalid
+        "
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*Introducir una calle valida*</span
+      >
+    </div>
+
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="navigate-circle-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          formControlName="instructions"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Entre calles"
+        />
+      </div>
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('numberStreet').touched &&
+            this.form.get('numberStreet').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="pin-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="number"
+          formControlName="numberStreet"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Altura"
+        />
+      </div>
+      <span
+        *ngIf="
+          this.form.get('numberStreet').touched &&
+          this.form.get('numberStreet').invalid
+        "
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*Introducir una calle valida*</span
+      >
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="business-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          formControlName="street"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Piso/Depto"
+        />
+      </div>
+    </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        [ngClass]="{
+          'wrong-input':
+            this.form.get('cp').touched && this.form.get('cp').invalid
+        }"
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="keypad-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="number"
+          formControlName="cp"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Codigo postal"
+        />
+      </div>
+      <span
+        *ngIf="this.form.get('cp').touched && this.form.get('cp').invalid"
+        class="text-indigoPink-700 font-Josefin text-sm mt-2 px-4"
+        >*El codigo postal no es correcto*</span
+      >
+    </div>
+    <button
+      [ngClass]="{ 'opacity-25': this.form.invalid }"
+      [disabled]="this.form.invalid"
+      class="w-4/5 gradientBackground py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
+    >
+      Siguiente
+    </button>
+    <div class="flex font-Josefin text-sm my-4">
+      <p class="text-indigoBlack-500 px-2">¿Ya sos un miembro?</p>
+      <span
+        class="text-indigoPink-700 focus:outline-none cursor-pointer"
+        routerLink="/ingresar"
+        >Inicia sesión</span
+      >
+    </div>
+  </form>
+</div>

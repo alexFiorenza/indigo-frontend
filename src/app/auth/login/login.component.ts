@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('btnSubmit') private btnSubmit: ElementRef;
   @ViewChild('loader') private loader: ElementRef;
   @ViewChild('textBtn') private textBtn: ElementRef;
+  @ViewChild('sucessCheck') private sucessCheck: ElementRef;
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -26,14 +27,22 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit() {
+    const dataToSend = this.form.value;
     this.textBtn.nativeElement.classList.add('hidden');
     this.loader.nativeElement.classList.remove('hidden');
     this.btnSubmit.nativeElement.classList.add('changeWidth');
+    this.userService.logIn(dataToSend).subscribe(data => {
+      this.userService.saveUserSession(data.response.payload, data.response.token);
+      if (data.status) {
+        this.loader.nativeElement.classList.add('hidden');
+        this.sucessCheck.nativeElement.classList.remove('hidden');
+        setTimeout(() => {
+          this.router.navigate(['/inicio']);
+        }, 1000);
+      }
+    });
 
-    // const dataToSend = this.form.value;
-    // this.userService.logIn(dataToSend).subscribe(data => {
-    //   this.userService.saveUserSession(data.payload, data.token);
-    //   this.router.navigate(['/inicio']);
-    // });
+
+
   }
 }

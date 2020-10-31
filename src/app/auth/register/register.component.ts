@@ -11,23 +11,13 @@ import { DOCUMENT } from '@angular/common';
 export class RegisterComponent implements OnInit {
   public form: FormGroup;
   public repeatedPassword;
-  constructor(private formBuilder: FormBuilder, private location: GovernmentService,
+  constructor(private formBuilder: FormBuilder,
     // tslint:disable-next-line: align
     @Inject(DOCUMENT) private document, private renderer: Renderer2) {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      repeatedPassword: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.maxLength(12)]],
-      phone: ['', [Validators.required]]
-    });
+
   }
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'bg-indigoBlack-300');
   }
-  onSubmit() {
-    this.location.getAllProvinces().subscribe(data => {
-      console.log(data);
-    });
-  }
+
 }
