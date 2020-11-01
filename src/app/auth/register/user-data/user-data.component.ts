@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-data.component.scss']
 })
 export class UserDataComponent implements OnInit {
+  public step = 'user-data';
   public form: FormGroup;
   public repeatedPassword;
   constructor(private formBuilder: FormBuilder, private router: Router) {

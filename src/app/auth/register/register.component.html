@@ -11,16 +11,12 @@
       class="font-Josefin font-light absolute bottom-0 right-0 mx-4 my-3 text-white text-3xl lg:hidden"
       >Registro</span
     >
-    <img
-      src="../../../assets/signInSvg.svg"
-      class="max-w-md hidden lg:block"
-      alt=""
-    />
+    <img [src]="this.imgUrl" class="max-w-md hidden lg:block" alt="" />
   </div>
 
   <div
     class="bg-indigoBlack-300 w-full lg:w-1/2 h-full flex flex-col lg:justify-center"
   >
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="componentAdded($event)"></router-outlet>
   </div>
 </div>

@@ -11,6 +11,7 @@
     >
   </div>
   <form
+    *ngIf="this.form"
     class="w-full flex flex-col flex-wrap justify-center items-center mt-64 lg:mt-0 lg:max-w-xl"
     [formGroup]="this.form"
     (ngSubmit)="onSubmit()"
@@ -29,10 +30,13 @@
           class="text-2xl text-indigoBlack-100"
         ></ion-icon>
         <select
+          (ngModelChange)="selectedProvince($event)"
           formControlName="province"
           class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
         >
-          <option value="" disabled selected>Selecciona una provincia</option>
+          <option value="" disabled *ngIf="this.defaultProvince">
+            {{ this.defaultProvince.nombre }}
+          </option>
           <option *ngFor="let p of provinces" [value]="p.nombre">
             {{ p.nombre }}
           </option>
@@ -62,7 +66,12 @@
           formControlName="town"
           class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
           placeholder="Barrio"
-        ></select>
+        >
+          <option value="" disabled>Selecciona un barrio</option>
+          <option *ngFor="let t of towns" [value]="t.nombre">
+            {{ t.nombre }}
+          </option>
+        </select>
       </div>
       <span
         *ngIf="this.form.get('town').touched && this.form.get('town').invalid"
@@ -97,23 +106,6 @@
         >*Introducir una calle valida*</span
       >
     </div>
-
-    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
-      <div
-        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
-      >
-        <ion-icon
-          name="navigate-circle-outline"
-          class="text-2xl text-indigoBlack-100"
-        ></ion-icon>
-        <input
-          type="text"
-          formControlName="instructions"
-          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
-          placeholder="Entre calles"
-        />
-      </div>
-    </div>
     <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
       <div
         [ngClass]="{
@@ -131,7 +123,7 @@
           type="number"
           formControlName="numberStreet"
           class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
-          placeholder="Altura"
+          placeholder="Numero "
         />
       </div>
       <span
@@ -143,6 +135,23 @@
         >*Introducir una calle valida*</span
       >
     </div>
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+      <div
+        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+      >
+        <ion-icon
+          name="navigate-circle-outline"
+          class="text-2xl text-indigoBlack-100"
+        ></ion-icon>
+        <input
+          type="text"
+          formControlName="instructions"
+          class="focus:outline-none px-3 font-Josefin text-indigoBlack-500 text-sm opacity-75 w-full"
+          placeholder="Entre calles"
+        />
+      </div>
+    </div>
+
     <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
       <div
         class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
@@ -189,7 +198,7 @@
       [disabled]="this.form.invalid"
       class="w-4/5 gradientBackground py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
     >
-      Siguiente
+      Registrarse
     </button>
     <div class="flex font-Josefin text-sm my-4">
       <p class="text-indigoBlack-500 px-2">¿Ya sos un miembro?</p>

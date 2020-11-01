@@ -13,10 +13,12 @@ export class GovernmentService {
   getAllProvinces(): Observable<any> {
     return this._http.get('https://apis.datos.gob.ar/georef/api/provincias').pipe(
       map((p: any) => p.provincias)
-    )
+    );
   }
-  getMunicipality(id: string) {
-    //TODO (query) https://apis.datos.gob.ar/georef/api/municipios?provincia=6&campos=id,nombre&max=100
+  getDepartment(id: string): Observable<any> {
+    return this._http.get(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${id}&campos=id,nombre&max=150`).pipe(
+      map((p: any) => p.departamentos)
 
+    )
   }
 }

@@ -11,6 +11,7 @@ import { DOCUMENT } from '@angular/common';
 export class RegisterComponent implements OnInit {
   public form: FormGroup;
   public repeatedPassword;
+  public imgUrl: string;
   constructor(private formBuilder: FormBuilder,
     // tslint:disable-next-line: align
     @Inject(DOCUMENT) private document, private renderer: Renderer2) {
@@ -19,5 +20,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'bg-indigoBlack-300');
   }
+  componentAdded(event) {
+    this.imgUrl = `../../../assets/${event.step}.svg`;
 
+  }
 }
