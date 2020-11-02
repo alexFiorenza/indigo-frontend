@@ -3,9 +3,11 @@ export interface user {
     email: string;
     role: string;
     province: string;
-    municipality: string;
+    town: string;
     cp: number;
     _id?: number;
     phone: number;
+    numberStreet: number;
+    building: string;
     date?: string;
 };

@@ -1,3 +1,4 @@
+import { LocationGuard } from './../core/guards/location.guard';
 import { CheckLocationComponent } from './register/check-location/check-location.component';
 import { UserDataComponent } from './register/user-data/user-data.component';
 import { RegisterComponent } from './register/register.component';
@@ -26,6 +27,7 @@ const AUTH_ROUTES: Routes = [
             },
             {
                 path: 'ubicacion',
+                canActivate: [LocationGuard],
                 component: CheckLocationComponent
             }
         ]
