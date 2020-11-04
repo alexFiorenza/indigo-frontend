@@ -28,4 +28,7 @@ export class UserService {
   clearSession() {
     localStorage.clear();
   }
+  registerUser(userData: user) {
+    return this.http.post(`${environment.apiUrl}/user/register`, userData);
+  }
 }

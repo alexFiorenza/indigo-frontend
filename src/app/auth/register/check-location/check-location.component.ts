@@ -1,3 +1,5 @@
+import { UserService } from './../../../core/services/http/api/user/user.service';
+import { user } from './../../../utilities/interfaces/user';
 import { GovernmentService } from './../../../core/services/http/government/government.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,12 +16,15 @@ export class CheckLocationComponent implements OnInit {
   public provinces: Array<any>;
   public defaultProvince;
   public towns: Array<any>;
-
-  constructor(private router: Router, private formBuilder: FormBuilder, private government: GovernmentService) {
+  public userData;
+  public user: user;
+  constructor(private router: Router, private formBuilder: FormBuilder, private government: GovernmentService,
+    private userService: UserService) {
     mapbox.accessToken = 'pk.eyJ1IjoiYWxleC1maW9yZW56YSIsImEiOiJja2dyYmlyazYwMHkwMnRtdG9jdHl6c2l5In0.um6LLxRsN4HofOHuPCvQNA';
+    this.userData = this.router.getCurrentNavigation().extras.state;
     this.government.getAllProvinces().subscribe((p: any) => {
       this.provinces = p;
-      this.defaultProvince = p[4]
+      this.defaultProvince = p[4];
       this.form = this.formBuilder.group({
         province: [this.defaultProvince.nombre, [Validators.required]],
         town: ['', [Validators.required]],
@@ -36,10 +41,13 @@ export class CheckLocationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
   }
   onSubmit() {
+    this.user = this.userData;
+    Object.assign(this.user, this.form.value);
+    this.userService.registerUser(this.user).subscribe((res: any) => {
+      console.log(res);
+    });
   }
   selectedProvince(province) {
     const selectedProvince: any = this.provinces.filter((p: any) => {
@@ -50,6 +58,5 @@ export class CheckLocationComponent implements OnInit {
     this.government.getDepartment(selectedProvince[0].id).subscribe(departaments => {
       this.towns = departaments;
     });
-
   }
 }

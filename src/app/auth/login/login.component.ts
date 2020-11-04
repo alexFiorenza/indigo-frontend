@@ -1,9 +1,7 @@
+import { ManageComponentsService } from './../../shared/components/manageComponents/manage-components.service';
 import { UserService } from './../../core/services/http/api/user/user.service';
-import { environment } from './../../../environments/environment';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -12,11 +10,12 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   public form: FormGroup;
-  @ViewChild('btnSubmit') private btnSubmit: ElementRef;
-  @ViewChild('loader') private loader: ElementRef;
-  @ViewChild('textBtn') private textBtn: ElementRef;
-  @ViewChild('sucessCheck') private sucessCheck: ElementRef;
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
+  @ViewChild('textBtn') public textBtn: ElementRef;
+  @ViewChild('loader', { read: ViewContainerRef }) loader;
+  public status = false;
+
+  constructor(private formBuilder: FormBuilder, private userService: UserService,
+    private router: Router, private loaders: ManageComponentsService) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.maxLength(12)]]
@@ -25,24 +24,21 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
   onSubmit() {
     const dataToSend = this.form.value;
-    this.textBtn.nativeElement.classList.add('hidden');
-    this.loader.nativeElement.classList.remove('hidden');
-    this.btnSubmit.nativeElement.classList.add('changeWidth');
+    const componentRef = this.loaders.instantiateBtnLoader(this.loader, this.textBtn, this.status);
     this.userService.logIn(dataToSend).subscribe(data => {
       this.userService.saveUserSession(data.response.payload, data.response.token);
       if (data.status) {
-        this.loader.nativeElement.classList.add('hidden');
-        this.sucessCheck.nativeElement.classList.remove('hidden');
+        this.status = true;
+        componentRef.instance.status = this.status
         setTimeout(() => {
           this.router.navigate(['/inicio']);
         }, 1000);
       }
     });
-
-
-
   }
+
 }

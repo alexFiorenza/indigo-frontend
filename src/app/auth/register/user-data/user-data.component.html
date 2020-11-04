@@ -3,10 +3,13 @@
     #infoDesktop
     class="hidden lg:flex flex-col mb-8 w-full max-w-xl items-center"
   >
-    <h2 class="font-Josefin text-3xl w-4/5 text-indigoBlack-800 font-semibold">
+    <h2
+      class="font-Josefin md:text-xl lg:text-3xl w-4/5 text-indigoBlack-800 font-semibold"
+    >
       Registrarse
     </h2>
-    <span class="font-Josefin text-lg w-4/5 text-indigoBlack-200 font-semibold"
+    <span
+      class="font-Josefin md:text-sm lg:text-lg w-4/5 text-indigoBlack-200 font-semibold"
       >Registra tus datos para comenzar a comprar</span
     >
   </div>
@@ -21,7 +24,7 @@
           'wrong-input':
             this.form.get('name').touched && this.form.get('name').invalid
         }"
-        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+        class="bg-white md:py-1 px-4 lg:py-2 py-2 flex items-center rounded-3xl shadow-lg w-full"
       >
         <ion-icon
           name="person-outline"
@@ -46,7 +49,7 @@
           'wrong-input':
             this.form.get('email').touched && this.form.get('email').invalid
         }"
-        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+        class="bg-white md:py-1 px-4 lg:py-2 py-2 flex items-center rounded-3xl shadow-lg w-full"
       >
         <ion-icon
           name="mail-outline"
@@ -65,14 +68,14 @@
         >*El email no es correcto*</span
       >
     </div>
-    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start" #password>
       <div
         [ngClass]="{
           'wrong-input':
             this.form.get('password').touched &&
             this.form.get('password').invalid
         }"
-        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+        class="bg-white md:py-1 px-4 lg:py-2 py-2 flex items-center rounded-3xl shadow-lg w-full"
       >
         <ion-icon
           name="key-outline"
@@ -93,7 +96,10 @@
         >*La contraseña no es correcta*</span
       >
     </div>
-    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+    <div
+      class="mb-6 w-4/5 flex flex-col justify-start items-start"
+      #repeatPassword
+    >
       <div
         [ngClass]="{
           'wrong-input':
@@ -102,7 +108,7 @@
             this.form.get('password').touched &&
             this.form.get('repeatedPassword').touched
         }"
-        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+        class="bg-white md:py-1 px-4 lg:py-2 py-2 flex items-center rounded-3xl shadow-lg w-full"
       >
         <ion-icon
           name="repeat-outline"
@@ -126,13 +132,13 @@
         >*Las contraseñas no coinciden*</span
       >
     </div>
-    <div class="mb-6 w-4/5 flex flex-col justify-start items-start">
+    <div class="mb-6 w-4/5 flex flex-col justify-start items-start" #phone>
       <div
         [ngClass]="{
           'wrong-input':
             this.form.get('phone').touched && this.form.get('phone').invalid
         }"
-        class="bg-white px-4 py-2 flex items-center rounded-3xl shadow-lg w-full"
+        class="bg-white px-4 md:py-1 lg:py-2 py-2 flex items-center rounded-3xl shadow-lg w-full"
       >
         <ion-icon
           name="call-outline"
@@ -154,7 +160,7 @@
     <button
       [ngClass]="{ 'opacity-25': this.form.invalid }"
       [disabled]="this.form.invalid"
-      class="w-4/5 gradientBackground py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
+      class="w-4/5 gradientBackground py-3 md:py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
     >
       Siguiente
     </button>

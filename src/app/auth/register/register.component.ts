@@ -22,6 +22,5 @@ export class RegisterComponent implements OnInit {
   }
   componentAdded(event) {
     this.imgUrl = `../../../assets/${event.step}.svg`;
-
   }
 }

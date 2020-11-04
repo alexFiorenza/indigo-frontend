@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { UserDataComponent } from './register/user-data/user-data.component';
 import { CheckLocationComponent } from './register/check-location/check-location.component';
 import { UserService } from './../core/services/http/api/user/user.service';
@@ -17,7 +18,8 @@ import { RegisterComponent } from './register/register.component';
     RouterModule,
     AuthRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   exports: [
     LoginComponent
