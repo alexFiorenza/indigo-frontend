@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   public form: FormGroup;
   @ViewChild('textBtn') public textBtn: ElementRef;
   @ViewChild('loader', { read: ViewContainerRef }) loader;
-  public status = false;
+  public status = 'progress';
 
   constructor(private formBuilder: FormBuilder, private userService: UserService,
     private router: Router, private loaders: ManageComponentsService) {
@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
     this.userService.logIn(dataToSend).subscribe(data => {
       this.userService.saveUserSession(data.response.payload, data.response.token);
       if (data.status) {
-        this.status = true;
-        componentRef.instance.status = this.status
+        this.status = 'completed';
+        componentRef.instance.status = this.status;
         setTimeout(() => {
           this.router.navigate(['/inicio']);
         }, 1000);

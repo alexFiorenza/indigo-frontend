@@ -1,9 +1,9 @@
-import { slides } from './../utilities/mocks/slides';
-import { Slides } from './../utilities/interfaces/slides';
-import { products } from './../utilities/mocks/product';
+import { Slides } from './../../shared/utilities/interfaces/slides';
+import { products } from './../../shared/utilities/mocks/product';
+import { Product } from './../../shared/utilities/interfaces/product';
 import { AfterContentInit, Component, OnInit } from '@angular/core';
-import { Product } from '../utilities/interfaces/product';
 import { SwiperOptions } from 'swiper';
+import { slides } from 'src/app/shared/utilities/mocks/slides';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

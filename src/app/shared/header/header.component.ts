@@ -1,6 +1,5 @@
+import { User } from './../utilities/interfaces/user';
 import { UserService } from './../../core/services/http/api/user/user.service';
-import { user } from './../../utilities/interfaces/user';
-import { mocks } from './../../utilities/mocks/user';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-header',
@@ -9,7 +8,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('sidebar') private sidebarComponent: ElementRef;
-  public userLogedIn: user;
+  public userLogedIn: User;
   constructor(private userService: UserService) {
     this.userLogedIn = this.userService.loadPayload();
   }

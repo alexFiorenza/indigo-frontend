@@ -198,7 +198,8 @@
       [disabled]="this.form.invalid"
       class="w-4/5 gradientBackground py-3 lg:py-5 lg:rounded-3xl font-Josefin text-white rounded-full shadow-md focus:outline-none"
     >
-      Registrarse
+      <span #textBtn>Registrarse</span>
+      <template #loader></template>
     </button>
     <span
       routerLink="/registro/datos"

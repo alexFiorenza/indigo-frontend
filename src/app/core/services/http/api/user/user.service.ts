@@ -1,4 +1,4 @@
-import { user } from './../../../../../utilities/interfaces/user';
+import { User } from './../../../../../shared/utilities/interfaces/user';
 import { environment } from './../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -17,7 +17,7 @@ export class UserService {
   loadToken(): string {
     return localStorage.getItem('token');
   }
-  loadPayload(): user {
+  loadPayload(): User {
     return JSON.parse(localStorage.getItem('payload'));
   }
   saveUserSession(payload, token) {
@@ -28,7 +28,7 @@ export class UserService {
   clearSession() {
     localStorage.clear();
   }
-  registerUser(userData: user) {
+  registerUser(userData: User) {
     return this.http.post(`${environment.apiUrl}/user/register`, userData);
   }
 }
