@@ -1,3 +1,20 @@
-.body-background {
+@import "../../shared/utilities/stylesUtilities.scss";
+.bodyBackground {
   background-color: #f3f3f3;
+}
+
+@include strokeIcon;
+
+.search::placeholder {
+  color: #b1b1b1;
+}
+.filtersContainer {
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}
+.productRound {
+  border-radius: 70px;
+}
+.borderLeft {
+  border-left: 30px #fcc6e3 solid;
 }

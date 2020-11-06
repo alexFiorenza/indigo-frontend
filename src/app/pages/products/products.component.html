@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="h-screen w-screen body-background">
+<div class="h-screen w-screen bodyBackground">
   <div class="h-72 justify-center items-center hidden md:flex">
     <h1 class="absolute font-Josefin text-6xl font-semibold">Tienda</h1>
     <img
@@ -8,5 +8,44 @@
       alt=""
     />
   </div>
-  <div #products></div>
+  <div class="w-full flex flex-col pt-20 items-center justify-center">
+    <div class="w-11/12 bg-white rounded-2xl py-4 px-4 flex">
+      <ion-icon
+        name="search-outline"
+        class="text-3xl text-indigoBlack-100"
+      ></ion-icon>
+      <input
+        type="text"
+        class="w-full px-2 text-lg font-Josefin font-light focus:outline-none text-indigoBlack-100 search"
+        placeholder="¿Qué estas buscando?"
+      />
+    </div>
+    <div #filterTags class="w-11/12 flex mt-4">
+      <span
+        class="px-4 py-2 font-Josefin text-white bg-indigoPink-600 rounded-full"
+        >Menor precio</span
+      >
+    </div>
+  </div>
+  <div #products class="w-full items-center flex flex-col relative mt-4">
+    <div class="w-10/12 mt-4 h-72 my-4 z-30">
+      <img
+        src="../../../assets/sampleShoe1.png"
+        class="h-full object-cover productRound borderLeft"
+        alt=""
+      />
+    </div>
+  </div>
+  <div
+    #filters
+    class="w-full bg-white h-24 filtersContainer fixed bottom-0 z-40 flex flex-col items-center"
+  >
+    <ion-icon
+      name="chevron-up-outline"
+      class="text-indigoBlack-100 text-4xl mt-2"
+    ></ion-icon>
+    <span class="text-2xl font-Josefin text-indigoBlack-100"
+      >Filtrar productos</span
+    >
+  </div>
 </div>
