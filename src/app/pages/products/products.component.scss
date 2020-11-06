@@ -1,9 +1,9 @@
 @import "../../shared/utilities/stylesUtilities.scss";
+@include strokeIcon;
+
 .bodyBackground {
   background-color: #f3f3f3;
 }
-
-@include strokeIcon;
 
 .search::placeholder {
   color: #b1b1b1;
@@ -11,10 +11,22 @@
 .filtersContainer {
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
+  transition: 1s ease-in-out;
 }
 .productRound {
   border-radius: 70px;
 }
 .borderLeft {
   border-left: 30px #fcc6e3 solid;
+}
+.normalizeHeight {
+  transition: 0.4s ease-in;
+  height: 93%;
+}
+.rotateArrow90 {
+  transition: 0.4s ease-in;
+  transform: rotateZ(180deg);
+}
+.defaultRotationArrow {
+  transform: rotateZ(0deg);
 }

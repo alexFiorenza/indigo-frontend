@@ -38,9 +38,12 @@
   </div>
   <div
     #filters
+    id="filtersContainer"
     class="w-full bg-white h-24 filtersContainer fixed bottom-0 z-40 flex flex-col items-center"
   >
     <ion-icon
+      #icon
+      (click)="toggleMenu()"
       name="chevron-up-outline"
       class="text-indigoBlack-100 text-4xl mt-2"
     ></ion-icon>
