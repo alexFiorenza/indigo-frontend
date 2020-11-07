@@ -13,13 +13,11 @@ const routes: Routes = [
   {
     path: 'productos',
     component: ProductsComponent,
-    children: [
-      {
-        path: ':id',
-        component: SingleProductComponent
-      }
-    ]
   },
+    {
+      path: 'productos/:id',
+      component: SingleProductComponent
+    },
   {
     path: '',
     redirectTo: 'inicio',

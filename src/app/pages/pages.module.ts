@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SharedModule } from './../shared/shared.module';
 import { HeaderComponent } from './../shared/header/header.component';
@@ -18,6 +19,7 @@ import { SingleProductComponent } from './single-product/single-product.componen
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule,
     SwiperModule
   ],
   exports: [

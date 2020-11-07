@@ -1,0 +1,13 @@
+@import "../../shared/utilities/stylesUtilities.scss";
+@include strokeIcon;
+.productImages {
+  height: 60%;
+}
+.productInfo {
+  height: 65%;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}
+.lineHeight {
+  height: 0.5px;
+}

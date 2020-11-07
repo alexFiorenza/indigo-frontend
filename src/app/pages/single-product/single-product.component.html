@@ -1,1 +1,29 @@
-<p>single-product works!</p>
+<app-header></app-header>
+<div>
+    <div #imageContainer class="productImages top-0 w-full relative">
+        <img src="../../../assets/sampleShoe1.png" class="opacity-75 absolute object-cover  z-20" alt="">
+    </div>
+    <div #productInfo class="w-full absolute z-30 bottom-0 productInfo bg-white px-12 font-Josefin">
+        <div class="flex  flex-col  w-full mt-8">
+            <div class="w-full flex  justify-between">
+                <div #info class="flex flex-col">
+                    <h3 class="text-indigoBlack-400 text-2xl">Zapatillas </h3>
+                    <span class="text-indigoBlack-200">${{2000 }}</span>
+                </div>
+                <div #icons class="flex flex-col justify-between">
+                    <ion-icon name="share-social-outline" class="text-xl mb-3" ></ion-icon>
+                    <ion-icon name="heart-outline" class="text-xl"></ion-icon>
+                </div>
+            </div>
+            <div class="w-full bg-black  lineHeight mt-3"></div>
+            <div #availableProduct>
+                <div #color>
+
+                </div>
+                <div #size>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
