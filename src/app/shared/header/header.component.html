@@ -1,10 +1,16 @@
 <div class="flex w-full px-4 justify-between py-4 fixed z-50">
   <ion-icon
     (click)="openSidebar()"
+    #hamburguerMenu
     name="menu-outline"
     class="text-4xl text-indigoBlack-900 cursor-pointer"
   ></ion-icon>
-
+  <ion-icon
+    (click)="redirectToProducts()"
+    name="chevron-back-outline"
+    #singleProduct
+    class="hidden text-4xl text-indigoBlack-900 cursor-pointer"
+  ></ion-icon>
   <div class="relative cursor-pointer focus:outline-none">
     <ion-icon #cart name="cart-outline" class="text-4xl text-indigoBlack-900">
     </ion-icon>
