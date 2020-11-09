@@ -1,5 +1,9 @@
+import { environment } from './../../../environments/environment';
+import { ProductsService } from './../../core/services/http/api/products/products.service';
+import { UserService } from './../../core/services/http/api/user/user.service';
 import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Product } from 'src/app/shared/utilities/interfaces/product';
 
 @Component({
   selector: 'app-products',
@@ -10,13 +14,30 @@ export class ProductsComponent implements OnInit {
   @ViewChild('filters') private filters: ElementRef;
   @ViewChild('icon') private icon: ElementRef;
   private opened = false;
-  constructor(@Inject(DOCUMENT) private document, private r: Renderer2) {
-    this.r.addClass(document.body, 'bodyBackground');
+  public products: Array<Product>;
+  private totalPages: Number;
+  public apiUrl: string;
+  public production = environment.production;
+  constructor(@Inject(DOCUMENT) public document, private r: Renderer2, private productService: ProductsService) {
+    this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
   }
-
   ngOnInit(): void {
+    if (!this.production) {
+      this.apiUrl = `${environment.uploadsUrl}/`;
+    } else {
+      //do staff with gcp service
+
+    }
+
+    this.productService.getProducts(1, 10).subscribe(resp => {
+      this.products = resp.response.products;
+      this.totalPages = resp.response.totalPages;
+      console.log(this.totalPages);
+      console.log(this.products);
+    });
   }
   toggleMenu() {
+
     if (!this.opened) {
       this.icon.nativeElement.classList.remove('defaultRotationArrow');
       this.opened = true;

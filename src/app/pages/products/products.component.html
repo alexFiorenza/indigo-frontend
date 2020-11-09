@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="h-screen w-screen bodyBackground">
+<div class="h-screen w-screen">
   <div class="h-72 justify-center items-center hidden md:flex">
     <h1 class="absolute font-Josefin text-6xl font-semibold">Tienda</h1>
     <img
@@ -27,11 +27,15 @@
       >
     </div>
   </div>
-  <div #products class="w-full items-center flex flex-col relative mt-4">
-    <div class="w-10/12 mt-4 h-72 my-4 z-30">
+  <div
+    #productsContainer
+    class="w-full items-center flex flex-col relative mt-4"
+  >
+    <div class="w-10/12 mt-4 h-72 my-4 z-30" *ngFor="let p of products">
       <img
-      routerLink="/productos/id"
-        src="../../../assets/sampleShoe1.png"
+        *ngIf="!this.production && this.p.image.length > 0"
+        [routerLink]="'/productos/' + p._id"
+        [src]="this.apiUrl + p.image[0]"
         class="h-full object-cover productRound borderLeft cursor-pointer"
         alt=""
       />

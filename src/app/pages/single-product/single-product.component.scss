@@ -1,7 +1,7 @@
 @import "../../shared/utilities/stylesUtilities.scss";
 @include strokeIcon;
 .productImages {
-  height: 60%;
+  height: 100vh !important;
 }
 .productInfo {
   height: 65%;

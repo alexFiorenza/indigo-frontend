@@ -1,12 +1,17 @@
 <app-header></app-header>
-<div>
-  <div #imageContainer class="productImages top-0 w-full relative">
-    <img
-      src="../../../assets/sampleShoe1.png"
-      class="opacity-75 absolute object-cover z-20"
-      alt=""
-    />
-  </div>
+<div *ngIf="this.product">
+  <swiper #imageContainer [config]="this.config">
+    <div
+      *ngFor="let slide of this.product.image"
+      class="productImages top-0 w-full relative"
+    >
+      <img
+        [src]="this.apiUrl + slide"
+        class="opacity-75 absolute object-cover z-20"
+        alt=""
+      />
+    </div>
+  </swiper>
   <div
     #productInfo
     class="w-full absolute z-30 bottom-0 productInfo bg-white px-8 font-Josefin"
@@ -14,8 +19,8 @@
     <div class="flex flex-col w-full mt-8">
       <div class="w-full flex justify-between px-2">
         <div #info class="flex flex-col">
-          <h3 class="text-indigoBlack-400 text-2xl">Zapatillas</h3>
-          <span class="text-indigoBlack-200">${{ 2000 }}</span>
+          <h3 class="text-indigoBlack-400 text-2xl">{{ this.product.name }}</h3>
+          <span class="text-indigoBlack-200">${{ this.product.price }}</span>
         </div>
         <div #icons class="flex flex-col justify-between">
           <ion-icon name="share-social-outline" class="text-xl mb-3"></ion-icon>
@@ -27,29 +32,30 @@
         <div #color class="mt-4 flex justify-between">
           <span class="font-light text-2xl text-indigoBlack-200">Color</span>
           <div class="flex">
-            <span class="w-8 mx-2 h-8 bg-yellow-400 rounded-full"></span>
-            <span class="w-8 h-8 bg-gray-900 rounded-full"></span>
+            <div *ngFor="let c of product.color" class="mx-2">
+              <div
+                *ngIf="this.c.available"
+                [ngStyle]="{ 'background-color': c.color }"
+                class="h-8 w-8 rounded-full"
+              ></div>
+            </div>
           </div>
         </div>
         <div #size class="mt-4 flex justify-between">
           <span class="font-light text-2xl text-indigoBlack-200">Talles</span>
           <div class="flex">
-            <span
-              class="w-10 mx-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
-            >
-              39</span
-            >
-            <span
-              class="w-10 mx-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
-            >
-              40</span
-            >
+            <div *ngFor="let s of product.sizes">
+              <span
+                *ngIf="s.available"
+                class="w-10 mx-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
+                >{{ s.size }}</span
+              >
+            </div>
           </div>
         </div>
       </div>
       <p class="font-light mt-6 text-sm text-indigoBlack-500">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe
-        distinctio earum officiis impedit! Odio ducimus quibusdam .
+        {{ this.product.description }}
       </p>
       <div class="w-full lineHeight mt-3 opacity-25"></div>
       <span class="text-indigoBlack-500 font-light my-5"

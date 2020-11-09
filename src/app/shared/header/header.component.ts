@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from './../utilities/interfaces/user';
 import { UserService } from './../../core/services/http/api/user/user.service';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
@@ -12,15 +12,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('singleProduct') private singleProduct: ElementRef;
   @ViewChild('hamburguerMenu') private hamburguerMenu: ElementRef;
   public userLogedIn: User;
-  public onSingleProduct;
-  constructor(private userService: UserService, private route: Router) {
+  constructor(private userService: UserService, private route: Router, private activatedRoute: ActivatedRoute) {
     this.userLogedIn = this.userService.loadPayload();
   }
   ngAfterViewInit(): void {
-    if (this.route.url === '/productos/id') {
-      this.singleProduct.nativeElement.classList.remove('hidden');
-      this.hamburguerMenu.nativeElement.classList.add('hidden');
-    }
+    this.activatedRoute.params.subscribe((params: Params) => {
+      if (params.id) {
+        this.singleProduct.nativeElement.classList.remove('hidden');
+        this.hamburguerMenu.nativeElement.classList.add('hidden');
+      }
+    });
   }
 
   ngOnInit(): void {

@@ -1,5 +1,9 @@
+import { SwiperOptions } from 'swiper';
+import { environment } from './../../../environments/environment';
+import { ProductsService } from './../../core/services/http/api/products/products.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Product } from 'src/app/shared/utilities/interfaces/product';
 
 @Component({
   selector: 'app-single-product',
@@ -8,9 +12,24 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class SingleProductComponent implements OnInit {
   public productId: string;
-  constructor(private activatedRoute: ActivatedRoute) {
+  public product: Product;
+  public apiUrl: string;
+  public production = environment.production;
+  public config: SwiperOptions = {
+    direction: 'horizontal',
+    slidesPerView: 1,
+    autoplay: true
+  }
+  constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) {
     this.activatedRoute.params.subscribe((params: Params) => {
-      console.log(params);
+      this.productService.getSingleProduct(params.id).subscribe((resp: any) => {
+        this.product = resp.response;
+        if (!this.production) {
+          this.apiUrl = `${environment.uploadsUrl}/`;
+        } else {
+          //do staff with gcp service
+        }
+      })
     });
   }
   ngOnInit(): void {

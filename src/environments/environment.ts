@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.0.13:3000/api'
+  apiUrl: 'http://192.168.0.13:3000/api',
+  uploadsUrl: 'http://192.168.0.13:3000/public'
 };
 
 /*
