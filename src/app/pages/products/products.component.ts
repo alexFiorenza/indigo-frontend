@@ -26,7 +26,6 @@ export class ProductsComponent implements OnInit {
       this.apiUrl = `${environment.uploadsUrl}/`;
     } else {
       //do staff with gcp service
-
     }
 
     this.productService.getProducts(1, 10).subscribe(resp => {

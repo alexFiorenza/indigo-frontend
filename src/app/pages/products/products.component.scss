@@ -30,3 +30,15 @@
 .defaultRotationArrow {
   transform: rotateZ(0deg);
 }
+@media (min-width: 1024px) {
+  .productRound {
+    border-radius: 0px;
+  }
+  .borderLeft {
+    border-left: 0px;
+  }
+  .filtersContainer {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}

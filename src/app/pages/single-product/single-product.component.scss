@@ -12,3 +12,11 @@
   height: 0.1px;
   background-color: black;
 }
+@media (min-width: 1024px) {
+  .productInfo {
+    height: auto;
+  }
+}
+.productHeight {
+  height: 80%;
+}

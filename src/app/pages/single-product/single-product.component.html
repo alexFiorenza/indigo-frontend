@@ -1,6 +1,9 @@
 <app-header></app-header>
-<div *ngIf="this.product">
-  <swiper #imageContainer [config]="this.config">
+<div
+  *ngIf="this.product"
+  class="lg:flex w-full h-screen justify-center items-center"
+>
+  <swiper #imageContainer [config]="this.config" class="lg:hidden">
     <div
       *ngFor="let slide of this.product.image"
       class="productImages top-0 w-full relative"
@@ -12,11 +15,31 @@
       />
     </div>
   </swiper>
+  <div #imagesViewer class="hidden lg:flex">
+    <div #imagesPreview class="flex flex-col gap-12">
+      <div #container *ngFor="let img of this.product.image">
+        <img
+          class="w-40 opacity-25"
+          *ngIf="!this.production && this.product.image.length > 0"
+          [src]="this.apiUrl + img"
+          alt=""
+        />
+      </div>
+    </div>
+    <div #selectedImage>
+      <img
+        class="w-80 productHeight object-cover mx-10"
+        *ngIf="!this.production && this.product.image.length > 0"
+        [src]="this.apiUrl + this.product.image[0]"
+        alt=""
+      />
+    </div>
+  </div>
   <div
     #productInfo
-    class="w-full absolute z-30 bottom-0 productInfo bg-white px-8 font-Josefin"
+    class="lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-30 bottom-0 productInfo bg-white px-8 font-Josefin"
   >
-    <div class="flex flex-col w-full mt-8">
+    <div class="flex flex-col w-full mt-8 lg:mt-0">
       <div class="w-full flex justify-between px-2">
         <div #info class="flex flex-col">
           <h3 class="text-indigoBlack-400 text-2xl">{{ this.product.name }}</h3>
