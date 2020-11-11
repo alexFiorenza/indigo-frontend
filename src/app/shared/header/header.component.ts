@@ -1,3 +1,6 @@
+import { map } from 'rxjs/operators';
+import { CartService } from './../../core/services/cart/cart.service';
+import { Observable } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from './../utilities/interfaces/user';
 import { UserService } from './../../core/services/http/api/user/user.service';
@@ -12,7 +15,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('singleProduct') private singleProduct: ElementRef;
   @ViewChild('hamburguerMenu') private hamburguerMenu: ElementRef;
   public userLogedIn: User;
-  constructor(private userService: UserService, private route: Router, private activatedRoute: ActivatedRoute) {
+  public $total: Observable<number>;
+  constructor(private userService: UserService, private route: Router, private activatedRoute: ActivatedRoute,
+    private cartService: CartService) {
     this.userLogedIn = this.userService.loadPayload();
   }
   ngAfterViewInit(): void {
@@ -25,7 +30,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.$total = this.cartService.$cart.pipe(
+      map(p => p.length)
+    )
   }
 
   openSidebar() {

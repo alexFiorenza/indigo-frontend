@@ -77,6 +77,7 @@
             <div *ngFor="let c of product.color" class="mr-2">
               <div
                 *ngIf="this.c.available"
+                (click)="selectColor($event)"
                 [ngStyle]="{ 'background-color': c.color }"
                 class="h-8 w-8 rounded-full cursor-pointer mb-2"
               ></div>
@@ -95,6 +96,7 @@
           <div class="flex">
             <div *ngFor="let s of product.sizes">
               <span
+                (click)="selectSize($event)"
                 *ngIf="s.available"
                 class="cursor-pointer w-10 mr-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
                 >{{ s.size }}</span
@@ -118,6 +120,13 @@
     </div>
 
     <button
+      [ngClass]="{
+        'opacity-25':
+          this.selectedSize === undefined && this.selectedColor === undefined
+      }"
+      [disabled]="
+        this.selectedSize === undefined && !this.selectedColor === undefined
+      "
       (click)="addToCart('#ffff', 43)"
       class="mb-6 w-full lg:mt-5 bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
     >

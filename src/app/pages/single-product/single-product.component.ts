@@ -18,7 +18,8 @@ export class SingleProductComponent implements OnInit {
   public product: Product;
   public apiUrl: string;
   public production = environment.production;
-
+  public selectedColor: string;
+  public selectedSize: string;
   public config: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
@@ -39,8 +40,36 @@ export class SingleProductComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+
   }
   addToCart(colorSelected, sizeSelected) {
+    const productToAdd = { ...this.product };
+    Object.assign(productToAdd, {
+      color: colorSelected,
+      sizes: sizeSelected
+    });
+    this.cartService.addNewProduct(productToAdd);
+  }
+  selectColor(event) {
+    const hex = this.getRGBValues(event.currentTarget.style.backgroundColor)
+    const red = hex[0];
+    const green = hex[1];
+    const blue = hex[2];
+    this.selectedColor = this.rgbToHex(red, green, blue)
+
+  }
+  selectSize(event) {
+    const size = event.currentTarget.textContent;
+    this.selectedSize = size;
+  }
+  rgbToHex(r, g, b) {
+    // tslint:disable-next-line: no-bitwise
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+  getRGBValues(str) {
+    let sep = str.indexOf(',') > -1 ? ',' : ' ';
+    console.log(sep);
+    return str.substr(4).split(')')[0].split(sep).map(Number);
 
   }
 }

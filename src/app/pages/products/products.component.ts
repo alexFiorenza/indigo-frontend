@@ -1,7 +1,7 @@
-import { environment } from "./../../../environments/environment";
-import { ProductsService } from "./../../core/services/http/api/products/products.service";
-import { UserService } from "./../../core/services/http/api/user/user.service";
-import { DOCUMENT } from "@angular/common";
+import { environment } from './../../../environments/environment';
+import { ProductsService } from './../../core/services/http/api/products/products.service';
+import { UserService } from './../../core/services/http/api/user/user.service';
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,17 +9,17 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
-} from "@angular/core";
-import { Product } from "src/app/shared/utilities/interfaces/product";
+} from '@angular/core';
+import { Product } from 'src/app/shared/utilities/interfaces/product';
 
 @Component({
-  selector: "app-products",
-  templateUrl: "./products.component.html",
-  styleUrls: ["./products.component.scss"],
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  @ViewChild("filters") private filters: ElementRef;
-  @ViewChild("icon") private icon: ElementRef;
+  @ViewChild('filters') private filters: ElementRef;
+  @ViewChild('icon') private icon: ElementRef;
   private opened = false;
   public products: Array<Product>;
   private totalPages: Number;
@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit {
     private r: Renderer2,
     private productService: ProductsService
   ) {
-    this.r.setStyle(document.body, "background-color", " #f3f3f3");
+    this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
   }
   ngOnInit(): void {
     if (!this.production) {
@@ -39,26 +39,24 @@ export class ProductsComponent implements OnInit {
       // do staff with gcp service
     }
     this.productService.getProducts(1, 10).subscribe((resp) => {
-      console.log("reached");
+      console.log('reached');
       this.products = resp.response.products;
       this.totalPages = resp.response.totalPages;
-      console.log(this.totalPages);
-      console.log(this.products);
     });
   }
   toggleMenu() {
     if (!this.opened) {
-      this.icon.nativeElement.classList.remove("defaultRotationArrow");
+      this.icon.nativeElement.classList.remove('defaultRotationArrow');
       this.opened = true;
-      this.filters.nativeElement.classList.add("normalizeHeight");
-      this.icon.nativeElement.classList.add("rotateArrow90");
+      this.filters.nativeElement.classList.add('normalizeHeight');
+      this.icon.nativeElement.classList.add('rotateArrow90');
     } else {
-      this.filters.nativeElement.classList.remove("normalizeHeight");
+      this.filters.nativeElement.classList.remove('normalizeHeight');
       setTimeout(() => {
-        this.icon.nativeElement.classList.remove("rotateArrow90");
+        this.icon.nativeElement.classList.remove('rotateArrow90');
       }, 400);
-      this.filters.nativeElement.classList.add("h-24");
-      this.icon.nativeElement.classList.add("defaultRotationArrow");
+      this.filters.nativeElement.classList.add('h-24');
+      this.icon.nativeElement.classList.add('defaultRotationArrow');
 
       this.opened = false;
     }
