@@ -6,11 +6,11 @@
   <swiper #imageContainer [config]="this.config" class="lg:hidden">
     <div
       *ngFor="let slide of this.product.image"
-      class="productImages top-0 w-full relative"
+      class="productImages top-0 relative overflow-hidden"
     >
       <img
         [src]="this.apiUrl + slide"
-        class="opacity-75 absolute object-cover z-20"
+        class="opacity-75 absolute object-cover z-20 w-screen"
         alt=""
       />
     </div>
@@ -28,7 +28,7 @@
     </div>
     <div #selectedImage>
       <img
-        class="w-80 productHeight object-cover mx-10"
+        class="w-72 productHeight object-cover mx-10"
         *ngIf="!this.production && this.product.image.length > 0"
         [src]="this.apiUrl + this.product.image[0]"
         alt=""
@@ -46,54 +46,88 @@
           <span class="text-indigoBlack-200">${{ this.product.price }}</span>
         </div>
         <div #icons class="flex flex-col justify-between">
-          <ion-icon name="share-social-outline" class="text-xl mb-3"></ion-icon>
-          <ion-icon name="heart-outline" class="text-xl"></ion-icon>
+          <ion-icon
+            name="share-social-outline"
+            class="text-xl mb-3 lg:hidden"
+          ></ion-icon>
+          <ion-icon
+            name="heart-outline"
+            class="text-xl lg:text-3xl cursor-pointer"
+          ></ion-icon>
         </div>
       </div>
-      <div class="w-full lineHeight mt-3 opacity-50"></div>
+      <div class="w-full lineHeight mt-3 opacity-25"></div>
+      <div class="font-Josefin my-4 hidden lg:block">
+        <span class="font-light text-indigoBlack-400 text-2xl"
+          >Detalles del producto</span
+        >
+        <p class="text-indigoBlack-400">{{ this.product.description }}</p>
+      </div>
+      <span class="font-Josefin font-light text-indigoBlack-400 hidden lg:block"
+        >Selecciona un Color</span
+      >
+      <div class="w-full lineHeight opacity-25"></div>
+
       <div #availableProduct>
         <div #color class="mt-4 flex justify-between">
-          <span class="font-light text-2xl text-indigoBlack-200">Color</span>
+          <span class="font-light text-2xl text-indigoBlack-200 lg:hidden"
+            >Color</span
+          >
           <div class="flex">
-            <div *ngFor="let c of product.color" class="mx-2">
+            <div *ngFor="let c of product.color" class="mr-2">
               <div
                 *ngIf="this.c.available"
                 [ngStyle]="{ 'background-color': c.color }"
-                class="h-8 w-8 rounded-full"
+                class="h-8 w-8 rounded-full cursor-pointer mb-2"
               ></div>
             </div>
           </div>
         </div>
+        <span
+          class="font-Josefin font-light text-indigoBlack-400 hidden lg:block"
+          >Selecciona un Talle</span
+        >
+        <div class="w-full lineHeight opacity-25 mb-4 hidden lg:block"></div>
         <div #size class="mt-4 flex justify-between">
-          <span class="font-light text-2xl text-indigoBlack-200">Talles</span>
+          <span class="font-light text-2xl text-indigoBlack-200 lg:hidden"
+            >Talles</span
+          >
           <div class="flex">
             <div *ngFor="let s of product.sizes">
               <span
                 *ngIf="s.available"
-                class="w-10 mx-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
+                class="cursor-pointer w-10 mr-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
                 >{{ s.size }}</span
               >
             </div>
           </div>
         </div>
       </div>
-      <p class="font-light mt-6 text-sm text-indigoBlack-500">
+      <p class="font-light mt-6 text-sm text-indigoBlack-500 lg:hidden">
         {{ this.product.description }}
       </p>
-      <div class="w-full lineHeight mt-3 opacity-25"></div>
-      <span class="text-indigoBlack-500 font-light my-5"
+
+      <div class="w-full lineHeight mt-3 opacity-25 lg:hidden"></div>
+      <span class="text-indigoBlack-500 font-light my-5 lg:hidden"
         >Compras y reembolsos</span
       >
-      <div class="w-full lineHeight opacity-25"></div>
-      <span class="text-indigoBlack-500 font-light my-5"
+      <div class="w-full lineHeight opacity-25 lg:hidden"></div>
+      <span class="text-indigoBlack-500 font-light my-5 lg:hidden"
         >Terminos y condiciones</span
       >
     </div>
 
     <button
-      class="mb-6 w-full bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
+      (click)="addToCart('#ffff', 43)"
+      class="mb-6 w-full lg:mt-5 bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
     >
       Añadir al carrito
     </button>
+    <div
+      class="text-3xl hidden lg:flex w-full justify-center items-center text-indigoBlack-1000 font-thin"
+    >
+      <ion-icon name="share-social-outline"></ion-icon>
+      <span class="ml-2">Compartir</span>
+    </div>
   </div>
 </div>

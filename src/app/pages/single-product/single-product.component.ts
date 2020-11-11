@@ -1,3 +1,4 @@
+import { CartService } from './../../core/services/cart/cart.service';
 import { DOCUMENT } from '@angular/common';
 import { SwiperOptions } from 'swiper';
 import { environment } from './../../../environments/environment';
@@ -5,6 +6,7 @@ import { ProductsService } from './../../core/services/http/api/products/product
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/utilities/interfaces/product';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-single-product',
@@ -16,13 +18,14 @@ export class SingleProductComponent implements OnInit {
   public product: Product;
   public apiUrl: string;
   public production = environment.production;
+
   public config: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
     autoplay: true
   }
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService,
-    @Inject(DOCUMENT) private _document, private r: Renderer2) {
+    @Inject(DOCUMENT) private _document, private r: Renderer2, private cartService: CartService) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.activatedRoute.params.subscribe((params: Params) => {
       this.productService.getSingleProduct(params.id).subscribe((resp: any) => {
@@ -36,5 +39,8 @@ export class SingleProductComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+  }
+  addToCart(colorSelected, sizeSelected) {
+
   }
 }
