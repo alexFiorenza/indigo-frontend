@@ -20,9 +20,22 @@
 .productHeight {
   height: 80%;
 }
-.selectedColor {
-  border: 2px solid black;
-}
+
 .selectedSize {
-  border: 2px solid pink;
+  transition: 0.2s ease-in;
+  opacity: 0.2;
+}
+.changeStroke {
+  @include strokeIcon(50px);
+}
+.checks {
+  animation: 0.5s changeHeight;
+}
+@keyframes changeHeight {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

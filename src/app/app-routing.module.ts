@@ -1,3 +1,4 @@
+import { CartComponent } from './pages/cart/cart.component';
 import { SingleProductComponent } from './pages/single-product/single-product.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'productos/:id',
     component: SingleProductComponent,
+  },
+  {
+    path: 'carrito',
+    component: CartComponent
   },
   {
     path: '',
