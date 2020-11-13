@@ -17,6 +17,7 @@ export class SingleProductComponent implements OnInit {
   public product: Product;
   public apiUrl: string;
   public production = environment.production;
+  public currentImage;
   public selectedColor: string;
   public selectedSize: string;
   public lastSelectedColor;
@@ -42,10 +43,16 @@ export class SingleProductComponent implements OnInit {
         } else {
           //do staff with gcp service
         }
+        this.currentImage = `${this.apiUrl}${this.product.image[0]}`;
       });
     });
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+  }
+  changeCurrentImage(index: number) {
+    this.currentImage = `${this.apiUrl}${this.product.image[index]}`;
+  }
   addToCart() {
     const productToAdd = { ...this.product };
     Object.assign(productToAdd, {

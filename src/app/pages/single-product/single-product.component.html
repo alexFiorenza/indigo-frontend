@@ -1,4 +1,5 @@
 <app-header></app-header>
+<div #alert class="absolute top-0 mt-16"></div>
 <div
   *ngIf="this.product"
   class="lg:flex w-full h-screen justify-center items-center"
@@ -18,22 +19,21 @@
   <div class="items-start flex">
     <div #imagesViewer class="hidden lg:flex">
       <div #imagesPreview class="flex flex-col gap-12">
-        <div #container *ngFor="let img of this.product.image">
-          <pinch-zoom>
-            <img
-              class="w-40 opacity-25"
-              *ngIf="!this.production && this.product.image.length > 0"
-              [src]="this.apiUrl + img"
-              alt=""
-            />
-          </pinch-zoom>
+        <div #container *ngFor="let img of this.product.image; let i = index">
+          <img
+            (click)="changeCurrentImage(i)"
+            class="w-40 opacity-25 cursor-pointer"
+            *ngIf="!this.production && this.product.image.length > 0"
+            [src]="this.apiUrl + img"
+            alt=""
+          />
         </div>
       </div>
       <div #selectedImage class="ml-12">
         <img
-          class="w-80 productHeight object-cover"
+          class="w-80 productHeight object-cover zoomImg"
           *ngIf="!this.production && this.product.image.length > 0"
-          [src]="this.apiUrl + this.product.image[0]"
+          [src]="this.currentImage"
           alt=""
         />
       </div>
@@ -130,19 +130,23 @@
           >Terminos y condiciones</span
         >
       </div>
-
+      <span
+        *ngIf="!this.selectedColor || !this.selectedSize"
+        class="w-full flex justify-center text-red-400 lg:mt-5"
+        >*Por favor selecciona un color y talle*</span
+      >
       <button
         [ngClass]="{
           'opacity-25': !this.selectedColor || !this.selectedSize
         }"
         [disabled]="!this.selectedColor || !this.selectedSize"
         (click)="addToCart()"
-        class="mb-6 w-full lg:mt-5 bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
+        class="mb-6 w-full bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
       >
         Añadir al carrito
       </button>
       <div
-        class="text-3xl hidden lg:flex w-full justify-center items-center text-indigoBlack-1000 font-thin"
+        class="text-xl hidden lg:flex w-full justify-center items-center text-indigoBlack-1000 font-thin"
       >
         <ion-icon name="share-social-outline"></ion-icon>
         <span class="ml-2">Compartir</span>

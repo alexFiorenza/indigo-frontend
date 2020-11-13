@@ -20,6 +20,7 @@ import { Product } from 'src/app/shared/utilities/interfaces/product';
 export class ProductsComponent implements OnInit {
   @ViewChild('filters') private filters: ElementRef;
   @ViewChild('icon') private icon: ElementRef;
+  @ViewChild('filtersTexts') private filtersTexts: ElementRef;
   private opened = false;
   public products: Array<Product>;
   private totalPages: Number;
@@ -46,19 +47,30 @@ export class ProductsComponent implements OnInit {
   }
   toggleMenu() {
     if (!this.opened) {
+
       this.icon.nativeElement.classList.remove('defaultRotationArrow');
       this.opened = true;
       this.filters.nativeElement.classList.add('normalizeHeight');
       this.icon.nativeElement.classList.add('rotateArrow90');
+      setTimeout(() => {
+        this.filtersTexts.nativeElement.classList.remove('hidden');
+        this.filtersTexts.nativeElement.classList.add('flex');
+
+      }, 400);
     } else {
       this.filters.nativeElement.classList.remove('normalizeHeight');
       setTimeout(() => {
         this.icon.nativeElement.classList.remove('rotateArrow90');
+        this.filtersTexts.nativeElement.classList.remove('flex');
+        this.filtersTexts.nativeElement.classList.add('hidden');
       }, 400);
       this.filters.nativeElement.classList.add('h-24');
       this.icon.nativeElement.classList.add('defaultRotationArrow');
 
       this.opened = false;
     }
+  }
+  filter(container) {
+
   }
 }

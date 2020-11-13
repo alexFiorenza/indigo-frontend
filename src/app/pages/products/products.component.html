@@ -1,5 +1,9 @@
 <app-header></app-header>
-
+<div class="w-screen flex justify-center font-Josefin">
+  <div #alert class="bg-indigoPink-500 absolute top-0 px-12 py-3 rounded-lg">
+    sadasdas
+  </div>
+</div>
 <div class="h-72 justify-center items-center hidden md:flex w-full">
   <h1 class="absolute font-Josefin text-6xl font-semibold">Tienda</h1>
   <img
@@ -34,7 +38,7 @@
     <div
       #filters
       id="filtersContainer"
-      class="w-full lg:shadow-md lg:mt-6 lg:max-w-sm lg:w-11/12 bg-white lg:py-4 lg:h-auto h-24 filtersContainer lg:static fixed bottom-0 z-40 flex flex-col lg:items-start items-center"
+      class="lg:mb-12 w-full lg:shadow-md lg:mt-6 lg:max-w-sm lg:w-11/12 bg-white lg:py-4 lg:h-auto h-24 filtersContainer lg:static fixed bottom-0 z-40 flex flex-col lg:items-start items-center"
     >
       <ion-icon
         #icon
@@ -49,6 +53,82 @@
         class="hidden lg:block text-2xl font-Josefin font-light text-indigoBlack-100 px-4"
         >Filtros</span
       >
+      <div
+        #filtersTexts
+        class="flex-col font-Josefin hidden filtersTextAnimation lg:flex text-indigoBlack-200 w-4/5 lg:w-full lg:px-8 text-xl lg:text-lg"
+      >
+        <div class="my-3 lg:my-1 flex items-center">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span>Menor precio</span>
+        </div>
+        <div class="my-3 flex items-center lg:my-1">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2"
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span>Mayor precio</span>
+        </div>
+        <div class="my-3 lg:my-1 flex items-center">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2"
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span>Niño</span>
+        </div>
+        <div class="my-3 lg:my-1 flex items-center">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2"
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span></span>
+
+          Hombre
+        </div>
+        <div class="my-3 lg:my-1 flex items-center">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2"
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span> Mujer</span>
+        </div>
+        <div class="my-3 lg:my-1 flex items-center">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2"
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span>Disponible</span>
+        </div>
+        <div class="my-3 lg:my-1 flex items-center">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            class="mx-2"
+            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
+          />
+          <span>Más vendidas</span>
+        </div>
+      </div>
     </div>
   </div>
   <div
