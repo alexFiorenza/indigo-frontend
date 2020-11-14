@@ -1,5 +1,19 @@
 <app-header></app-header>
-<div #alert class="absolute top-0 mt-16"></div>
+<div class="w-screen flex justify-center font-Josefin z-50">
+  <div
+    #alert
+    class="hidden slide-in-top bg-indigoPink-500 absolute flex-col items-center top-0 w-11/12 max-w-lg py-6 rounded-lg z-50 mt-2 justify-center"
+  >
+    <span class="text-white lg:text-lg font-semibold"
+      >¡Producto agregado correctamente al carrito!</span
+    >
+    <span
+      routerLink="/carrito"
+      class="underline cursor-pointer text-white font-bold focus:outline-none"
+      >Ver aquí</span
+    >
+  </div>
+</div>
 <div
   *ngIf="this.product"
   class="lg:flex w-full h-screen justify-center items-center"
@@ -29,9 +43,9 @@
           />
         </div>
       </div>
-      <div #selectedImage class="ml-12">
+      <div #selectedImage class="ml-12 overflow-hidden productHeight">
         <img
-          class="w-80 productHeight object-cover zoomImg"
+          class="w-80 zoom object-cover zoomImg"
           *ngIf="!this.production && this.product.image.length > 0"
           [src]="this.currentImage"
           alt=""
@@ -40,7 +54,7 @@
     </div>
     <div
       #productInfo
-      class="lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-30 bottom-0 productInfo bg-white px-8 font-Josefin lg:mx-8"
+      class="lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-10 bottom-0 productInfo bg-white px-8 font-Josefin lg:mx-8"
     >
       <div class="flex flex-col w-full mt-8 lg:mt-0">
         <div class="w-full flex justify-between px-2">
@@ -141,7 +155,7 @@
         }"
         [disabled]="!this.selectedColor || !this.selectedSize"
         (click)="addToCart()"
-        class="mb-6 w-full bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
+        class="mb-6 mt-2 w-full bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
       >
         Añadir al carrito
       </button>
@@ -149,7 +163,9 @@
         class="text-xl hidden lg:flex w-full justify-center items-center text-indigoBlack-1000 font-thin"
       >
         <ion-icon name="share-social-outline"></ion-icon>
-        <span class="ml-2">Compartir</span>
+        <span class="ml-2 cursor-pointer" ngxClipboard (click)="share()"
+          >Compartir</span
+        >
       </div>
     </div>
   </div>

@@ -1,11 +1,13 @@
+import { Order } from './../../shared/utilities/interfaces/order';
 import { CartService } from './../../core/services/cart/cart.service';
 import { DOCUMENT } from '@angular/common';
 import { SwiperOptions } from 'swiper';
 import { environment } from './../../../environments/environment';
 import { ProductsService } from './../../core/services/http/api/products/products.service';
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/utilities/interfaces/product';
+import { ClipboardService } from 'ngx-clipboard'
 
 @Component({
   selector: 'app-single-product',
@@ -14,7 +16,7 @@ import { Product } from 'src/app/shared/utilities/interfaces/product';
 })
 export class SingleProductComponent implements OnInit {
   public productId: string;
-  public product: Product;
+  public product: Order;
   public apiUrl: string;
   public production = environment.production;
   public currentImage;
@@ -22,6 +24,8 @@ export class SingleProductComponent implements OnInit {
   public selectedSize: string;
   public lastSelectedColor;
   public lastSelectedSize;
+  private zoomMade = false;
+  @ViewChild('alert') private alert: ElementRef;
   public config: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
@@ -32,7 +36,8 @@ export class SingleProductComponent implements OnInit {
     private productService: ProductsService,
     @Inject(DOCUMENT) private _document,
     private r: Renderer2,
-    private cartService: CartService
+    private cartService: CartService,
+    private clipboardService: ClipboardService
   ) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -60,6 +65,7 @@ export class SingleProductComponent implements OnInit {
       sizes: this.selectedSize,
     });
     this.cartService.addNewProduct(productToAdd);
+    this.showAlert();
   }
   selectColor(event) {
     if (this.lastSelectedColor) {
@@ -91,5 +97,18 @@ export class SingleProductComponent implements OnInit {
   getRGBValues(str) {
     const sep = str.indexOf(',') > -1 ? ',' : ' ';
     return str.substr(4).split(')')[0].split(sep).map(Number);
+  }
+  showAlert() {
+
+    this.alert.nativeElement.classList.remove('hidden');
+    this.alert.nativeElement.classList.add('flex');
+    setTimeout(() => {
+      this.alert.nativeElement.classList.add('hidden');
+      this.alert.nativeElement.classList.remove('flex');
+    }, 3500);
+  }
+  share() {
+    const url = window.location.href
+    this.clipboardService.copy(url);
   }
 }

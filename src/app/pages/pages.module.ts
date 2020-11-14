@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products/products.component';
 import { SingleProductComponent } from './single-product/single-product.component';
 import { CartComponent } from './cart/cart.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 
@@ -22,7 +23,8 @@ import { CartComponent } from './cart/cart.component';
     CommonModule,
     SharedModule,
     RouterModule,
-    SwiperModule
+    SwiperModule,
+    ClipboardModule
   ],
   exports: [
     HomeComponent,

@@ -31,6 +31,12 @@
 .checks {
   animation: 0.5s changeHeight;
 }
+.slide-in-top {
+  animation: slide-in-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.zoomImg {
+  cursor: zoom-in;
+}
 @keyframes changeHeight {
   0% {
     transform: scale(0.5);
@@ -39,6 +45,22 @@
     transform: scale(1);
   }
 }
-.zoomImg {
-  cursor: zoom-in;
+
+@keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.zoom {
+  transition: 0.5s ease-in;
+}
+.zoom:hover {
+  transform: scale(1.5);
 }
