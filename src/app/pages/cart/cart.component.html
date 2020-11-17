@@ -1,38 +1,134 @@
 <app-header></app-header>
-<div class="w-full py-10">
-  <div
-    #productsContainer
-    class="w-full h-full flex flex-col items-center justify-center mt-12"
-  >
+<div class="w-full lg:flex justify-center items-center">
+  <div class="w-full lg:w-3/4 py-10 lg:max-w-4xl l lg:flex">
     <div
-      *ngFor="let product of products"
-      class="w-11/12 bg-white flex shadow-md rounded-3xl my-6"
+      *ngIf="this.products.length <= 0"
+      class="w-full flex justify-center items-center font-Josefin flex-col mt-24"
     >
-      <img
-        [src]="uploadsUrl + product.image[0]"
-        class="w-3/12 imgRounded imgMaxHeight object-cover"
-        alt=""
-      />
-      <div class="w-3/4 font-Josefin">
-        <div class="w-full flex justify-between px-3 text-lg mt-3">
-          <span class="text-indigoBlack-500">{{ product.name }}</span>
-          <ion-icon name="heart-outline"></ion-icon>
-        </div>
-        <span class="text-indigoBlack-500 px-3 text-sm font-light">{{
-          product.description
-        }}</span>
-        <div class="px-3 mt-8 text-xs mb-3 flex">
-          <div
-            class="mr-2 w-16 px-3 py-1 priceBg rounded-full text-white flex justify-center"
-          >
-            ${{ product.price }}
+      <img class="w-64" src="../../../assets/cart-shopping.svg" alt="" />
+      <span class="text-indigoBlack-200 my-5"
+        >Al parecer no has cargado ningun producto</span
+      >
+      <button
+        routerLink="/productos"
+        class="w-4/5 text-white bg-indigoPink-800 py-4 rounded-2xl cursor-pointer focus:outline-none"
+      >
+        Comprar
+      </button>
+    </div>
+    <div
+      *ngIf="this.products.length > 0"
+      #productsContainer
+      class="w-full h-full flex flex-col items-center justify-center mt-12 lg:mt-0"
+    >
+      <div
+        *ngFor="let product of products"
+        class="w-11/12 bg-white flex shadow-md rounded-3xl my-6"
+      >
+        <img
+          [src]="uploadsUrl + product.image[0]"
+          class="w-3/12 imgRounded imgMaxHeight object-cover"
+          alt=""
+        />
+        <div class="w-3/4 font-Josefin">
+          <div class="w-full flex justify-between px-3 text-lg mt-3">
+            <span class="text-indigoBlack-500">{{ product.name }}</span>
+            <ion-icon name="heart-outline"></ion-icon>
           </div>
-          <div
-            class="w-12 mr-2 px-3 py-1 sizeBg rounded-full text-white flex justify-center"
-          >
-            ${{ product.sizes }}
+          <span class="text-indigoBlack-500 px-3 text-sm font-light">{{
+            product.description
+          }}</span>
+          <div class="px-3 mt-8 text-xs mb-3 flex">
+            <div
+              class="mr-2 w-16 px-3 py-1 priceBg rounded-full text-white flex justify-center"
+            >
+              ${{ product.price }}
+            </div>
+            <div
+              class="w-12 mr-2 px-3 py-1 sizeBg rounded-full text-white flex justify-center"
+            >
+              ${{ product.sizes }}
+            </div>
           </div>
         </div>
+      </div>
+      <div
+        #addNewProduct
+        routerLink="/productos"
+        class="focus:outline-none border cursor-pointer font-Josefin border-indigoBlack-200 h-32 w-11/12 mt-4 flex flex-col justify-center items-center"
+      >
+        <ion-icon
+          name="add-circle-outline"
+          class="text-5xl text-indigoBlack-100"
+        ></ion-icon>
+        <span class="text-indigoBlack-100">Añadir otro producto</span>
+      </div>
+    </div>
+    <div
+      *ngIf="this.products.length > 0"
+      class="lg:relative lg:w-1/2 fixed w-full flex flex-col justify-center items-center bg-white priceContainer bottom-0 font-Josefin py-4 lg:mt-5"
+    >
+      <div
+        #price
+        class="w-8/12 lg:w-5/6 flex flex-col items-start py-2 infoPriceHeight"
+        *ngIf="this.user"
+      >
+        <div class="w-full lg:flex justify-center hidden">
+          <span class="font-Josefin">Resumen de compra</span>
+        </div>
+        <div
+          class="lineHeight w-full opacity-25 mt-2 mb-8 hidden lg:block"
+        ></div>
+        <div
+          class="w-full flex justify-between my-1 items-center text-indigoBlack-200 font-light lg:text-sm"
+        >
+          <p *ngIf="this.user" class="0 cursor-pointer">Costo de envio</p>
+          <span *ngIf="this.user">$500</span>
+        </div>
+
+        <div
+          class="w-full flex justify-between my-1 items-center font-light lg:text-sm"
+        >
+          <p class="text-indigoBlack-200 cursor-pointer">Subtotal</p>
+          <span class="text-indigoBlack-200">$500</span>
+        </div>
+        <div
+          class="w-full flex justify-between text-3xl items-center font-semibold"
+        >
+          <p class="text-indigoBlack-400 cursor-pointer">Total</p>
+          <span class="text-indigoBlack-400">$500</span>
+        </div>
+        <button
+          class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
+        >
+          Siguiente
+        </button>
+        <div class="w-full flex justify-center">
+          <span
+            routerLink="/productos"
+            class="hidden lg:block text-indigoBlack-200 cursor-pointer focus:outline-none"
+            >Seguir comprando</span
+          >
+        </div>
+      </div>
+      <div
+        #dataValidation
+        class="font-Josefin w-8/12 flex flex-col items-center py-2 text-lg"
+        *ngIf="!this.user"
+      >
+        <p class="text-indigoBlack-500 font-light">
+          Necesitamos
+          <span class="font-normal text-indigoPink-700">validar tus datos</span>
+        </p>
+        <p class="text-indigoBlack-500 font-light my-3">
+          Inicia sesion por favor
+        </p>
+        <button
+          routerLink="/ingresar"
+          class="text-white font-semibold bg-indigoPink-700 w-full py-4 rounded-2xl focus:outline-none"
+        >
+          Inicia sesión
+        </button>
       </div>
     </div>
   </div>

@@ -108,7 +108,7 @@ export class SingleProductComponent implements OnInit {
     }, 3500);
   }
   share() {
-    const url = window.location.href
+    const url = window.location.href;
     this.clipboardService.copy(url);
   }
 }

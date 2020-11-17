@@ -15,3 +15,19 @@ $size-bg: #b6dbfb;
 .sizeBg {
   background-color: $size-bg;
 }
+.priceContainer {
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}
+.lineHeight {
+  height: 0.1px;
+  background-color: black;
+}
+@media (min-width: 1024px) {
+  .priceContainer {
+    border-radius: 20px;
+  }
+}
+.infoPriceHeight {
+  max-height: 300px;
+}
