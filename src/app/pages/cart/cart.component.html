@@ -11,7 +11,7 @@
       >
       <button
         routerLink="/productos"
-        class="w-4/5 text-white bg-indigoPink-800 py-4 rounded-2xl cursor-pointer focus:outline-none"
+        class="w-4/5 max-w-sm text-white bg-indigoPink-800 py-4 rounded-2xl cursor-pointer focus:outline-none"
       >
         Comprar
       </button>
@@ -83,20 +83,20 @@
           class="w-full flex justify-between my-1 items-center text-indigoBlack-200 font-light lg:text-sm"
         >
           <p *ngIf="this.user" class="0 cursor-pointer">Costo de envio</p>
-          <span *ngIf="this.user">$500</span>
+          <span *ngIf="this.user">${{ this.costSend }}</span>
         </div>
 
         <div
           class="w-full flex justify-between my-1 items-center font-light lg:text-sm"
         >
           <p class="text-indigoBlack-200 cursor-pointer">Subtotal</p>
-          <span class="text-indigoBlack-200">$500</span>
+          <span class="text-indigoBlack-200">${{ this.productsPrice }}</span>
         </div>
         <div
           class="w-full flex justify-between text-3xl items-center font-semibold"
         >
-          <p class="text-indigoBlack-400 cursor-pointer">Total</p>
-          <span class="text-indigoBlack-400">$500</span>
+          <p class="text-indigoBlack-400">Total</p>
+          <span class="text-indigoBlack-400">${{ this.total }}</span>
         </div>
         <button
           class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
@@ -113,7 +113,7 @@
       </div>
       <div
         #dataValidation
-        class="font-Josefin w-8/12 flex flex-col items-center py-2 text-lg"
+        class="font-Josefin lg:w-11/12 w-8/12 flex flex-col items-center py-2 text-lg"
         *ngIf="!this.user"
       >
         <p class="text-indigoBlack-500 font-light">
