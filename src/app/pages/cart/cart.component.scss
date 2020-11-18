@@ -1,20 +1,6 @@
 @import "../../shared/utilities/stylesUtilities.scss";
 @include strokeIcon;
-$price-bg: #f086a3;
-$size-bg: #b6dbfb;
-.imgRounded {
-  border-top-left-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem;
-}
-.imgMaxHeight {
-  max-height: 150px;
-}
-.priceBg {
-  background-color: $price-bg;
-}
-.sizeBg {
-  background-color: $size-bg;
-}
+
 .priceContainer {
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;

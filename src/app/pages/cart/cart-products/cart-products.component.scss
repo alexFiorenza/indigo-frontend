@@ -1,0 +1,20 @@
+@import "../../../shared/utilities/stylesUtilities.scss";
+@include strokeIcon;
+$price-bg: #f086a3;
+$size-bg: #b6dbfb;
+.imgMaxHeight {
+  max-height: 150px;
+}
+.imgRounded {
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+}
+.priceBg {
+  background-color: $price-bg;
+}
+.sizeBg {
+  background-color: $size-bg;
+}
+.deleteText {
+  right: 30px;
+}

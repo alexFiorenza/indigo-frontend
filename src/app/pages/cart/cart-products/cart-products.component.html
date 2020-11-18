@@ -1,0 +1,54 @@
+<div
+  *ngIf="this.products.length > 0"
+  #productsContainer
+  class="w-full h-full flex flex-col items-center mt-12 lg:mt-0"
+>
+  <div
+    *ngFor="let product of products"
+    class="flex-col flex items-center relative"
+  >
+    <span
+      class="absolute deleteText hidden lg:block text-indigoPink-700 font-Josefin font-light cursor-pointer"
+      >Eliminar</span
+    >
+    <div class="w-11/12 bg-white flex shadow-md rounded-3xl my-6">
+      <img
+        [src]="uploadsUrl + product.image[0]"
+        class="w-3/12 imgRounded imgMaxHeight object-cover"
+        alt=""
+      />
+      <div class="w-3/4 font-Josefin">
+        <div class="w-full flex justify-between px-3 text-lg mt-3">
+          <span class="text-indigoBlack-500">{{ product.name }}</span>
+          <ion-icon name="heart-outline"></ion-icon>
+        </div>
+        <span class="text-indigoBlack-500 px-3 text-sm font-light">{{
+          product.description
+        }}</span>
+        <div class="px-3 mt-8 text-xs mb-3 flex">
+          <div
+            class="mr-2 w-16 px-3 py-1 priceBg rounded-full text-white flex justify-center"
+          >
+            ${{ product.price }}
+          </div>
+          <div
+            class="w-12 mr-2 px-3 py-1 sizeBg rounded-full text-white flex justify-center"
+          >
+            ${{ product.sizes }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    #addNewProduct
+    routerLink="/productos"
+    class="focus:outline-none border cursor-pointer font-Josefin border-indigoBlack-200 h-32 w-11/12 mt-4 flex flex-col justify-center items-center"
+  >
+    <ion-icon
+      name="add-circle-outline"
+      class="text-5xl text-indigoBlack-100"
+    ></ion-icon>
+    <span class="text-indigoBlack-100">Añadir otro producto</span>
+  </div>
+</div>

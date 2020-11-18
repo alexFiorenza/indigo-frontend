@@ -20,10 +20,6 @@ const routes: Routes = [
     component: SingleProductComponent,
   },
   {
-    path: 'carrito',
-    component: CartComponent
-  },
-  {
     path: '',
     redirectTo: 'inicio',
     pathMatch: 'full',

@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from "./../../core/services/http/api/user/user.service";
 import { Order } from "./../../shared/utilities/interfaces/order";
 import { environment } from "./../../../environments/environment";
@@ -18,35 +20,24 @@ export class CartComponent implements OnInit {
   public productsPrice: number = 0;
   public costSend: number = 0;
   public total: number = 0;
+  public title: string;
   public user;
   constructor(
     private cartService: CartService,
     @Inject(DOCUMENT) private document,
     private r: Renderer2,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.r.setStyle(document.body, "background-color", "#f3f3f3");
     this.products = this.cartService.getProducts();
     this.calculateCostProduct();
-    console.log(this.productsPrice);
-    // this.products = [{
-    //   categories: ['hombre', 'zapatilla'],
-    //   color: '#f9e79f',
-    //   description: 'Zapatillas con cordones',
-    //   homeView: false,
-    //   // tslint:disable-next-line: max-line-length
-    //   image: ['sampleShoe3-5fa8aa0398619f8e60d154e5.png', 'sampleShoe1-5fa8aa0398619f8e60d154e5.png', 'sampleShoe2-5fa8aa0398619f8e60d154e5.png'],
-    //   name: 'Zapatillas 3',
-    //   price: 450,
-    //   sale: 0,
-    //   sizes: '42',
-    //   stock: true,
-    //   top: false,
 
-    //   _id: '5fa8aa0398619f8e60d154e5'
-    // }]
+    this.activatedRoute.children.forEach((r: any) => {
+      this.title = r.url.value[0].path;
+    })
     this.user = this.userService.loadPayload();
   }
   calculateCostProduct() {
@@ -55,5 +46,5 @@ export class CartComponent implements OnInit {
     });
     this.total += this.productsPrice + this.costSend;
   }
-  calculateSendCost() {}
+  calculateSendCost() { }
 }

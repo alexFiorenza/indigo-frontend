@@ -1,7 +1,6 @@
 import { RouterModule } from '@angular/router';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SharedModule } from './../shared/shared.module';
-import { HeaderComponent } from './../shared/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,6 +8,8 @@ import { ProductsComponent } from './products/products.component';
 import { SingleProductComponent } from './single-product/single-product.component';
 import { CartComponent } from './cart/cart.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { UserDataComponent } from './cart/user-data/user-data.component';
+import { CartProductsComponent } from './cart/cart-products/cart-products.component';
 
 
 
@@ -17,7 +18,9 @@ import { ClipboardModule } from 'ngx-clipboard';
     HomeComponent,
     ProductsComponent,
     SingleProductComponent,
-    CartComponent
+    CartComponent,
+    UserDataComponent,
+    CartProductsComponent,
   ],
   imports: [
     CommonModule,

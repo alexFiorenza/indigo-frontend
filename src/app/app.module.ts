@@ -1,3 +1,4 @@
+import { PagesRoutingModule } from './pages/pages-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +32,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PagesModule,
     AuthModule,
     CoreModule,
+    PagesRoutingModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
