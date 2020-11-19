@@ -4,10 +4,11 @@
   class="w-full h-full flex flex-col items-center mt-12 lg:mt-0"
 >
   <div
-    *ngFor="let product of products"
+    *ngFor="let product of products; let i = index"
     class="flex-col flex items-center relative"
   >
     <span
+      (click)="deleteProduct(i)"
       class="absolute deleteText hidden lg:block text-indigoPink-700 font-Josefin font-light cursor-pointer"
       >Eliminar</span
     >

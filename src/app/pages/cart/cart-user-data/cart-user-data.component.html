@@ -1,0 +1,41 @@
+<div
+  class="w-screen max-w-lg font-Josefin justify-center items-center flex flex-col"
+>
+  <div class="flex flex-col justify-start items-start w-10/12" #name>
+    <label class="uppercase font-semibold text-lg text-indigoBlack-800 my-2"
+      >Nombre</label
+    >
+    <div
+      class="w-full py-4 rounded-xl shadow-lg text-indigoBlack-200 px-4 bg-white"
+    >
+      {{ this.user.name }}
+    </div>
+  </div>
+  <div #direction class="flex flex-col w-10/12 my-2">
+    <label class="uppercase font-semibold text-lg text-indigoBlack-800 my-2"
+      >Dirección</label
+    >
+    <div class="w-full flex flex-wrap lg:flex-no-wrap">
+      <div
+        class="w-full lg:mr-2 my-2 lg:my-0 lg:w-1/2 py-4 rounded-xl shadow-lg text-indigoBlack-200 px-2 bg-white"
+      >
+        {{ this.user.province }}
+      </div>
+      <div
+        class="lg:w-1/2 lg:mx-0 w-full my-2 lg:my-0 py-4 rounded-xl shadow-lg text-indigoBlack-200 px-2 bg-white"
+      >
+        {{ this.user.town }}
+      </div>
+    </div>
+    <div
+      class="w-full py-4 rounded-xl shadow-lg my-4 text-indigoBlack-200 px-2 bg-white"
+    >
+      {{ this.user.street + this.user.numberStreet }}
+    </div>
+    <div class="w-full flex justify-center items-center">
+      <span class="updateDataText font-Josefin font-semibold cursor-pointer"
+        >Quiero actualizar mis datos</span
+      >
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
 import { CartProductsComponent } from './cart/cart-products/cart-products.component';
 import { CartComponent } from './cart/cart.component';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'productos',
         component: CartProductsComponent
+      },
+      {
+        path: 'datos',
+        component: CartUserDataComponent
       }
     ]
   }

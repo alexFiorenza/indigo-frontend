@@ -20,4 +20,7 @@ export class CartService {
   getProducts(): Array<Order> {
     return this.cart.getValue();
   }
+  deleteOneProduct(index: number) {
+    this.cart.getValue().splice(index);
+  }
 }

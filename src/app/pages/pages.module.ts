@@ -8,8 +8,8 @@ import { ProductsComponent } from './products/products.component';
 import { SingleProductComponent } from './single-product/single-product.component';
 import { CartComponent } from './cart/cart.component';
 import { ClipboardModule } from 'ngx-clipboard';
-import { UserDataComponent } from './cart/user-data/user-data.component';
 import { CartProductsComponent } from './cart/cart-products/cart-products.component';
+import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
 
 
 
@@ -19,8 +19,8 @@ import { CartProductsComponent } from './cart/cart-products/cart-products.compon
     ProductsComponent,
     SingleProductComponent,
     CartComponent,
-    UserDataComponent,
     CartProductsComponent,
+    CartUserDataComponent,
   ],
   imports: [
     CommonModule,

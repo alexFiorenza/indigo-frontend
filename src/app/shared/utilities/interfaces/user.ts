@@ -7,6 +7,7 @@ export interface User {
     cp: number;
     _id?: number;
     phone: number;
+    street: string;
     numberStreet: number;
     building: string;
     date?: string;
