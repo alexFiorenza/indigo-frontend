@@ -38,10 +38,13 @@ export class CartComponent implements OnInit {
     this.activatedRoute.children.forEach((r: any) => {
       this.title = r.url.value[0].path;
     });
-    this.router.events.subscribe(val => {
-      //TODO Change title in router-outlet user data component
-      console.log(val);
-    })
+    this.router.events.subscribe((val: any) => {
+      if (val.url === '/carrito/datos') {
+        this.title = '¿Estos datos son correctos?';
+      } else {
+        this.title = 'productos';
+      }
+    });
     this.user = this.userService.loadPayload();
   }
   calculateCostProduct() {

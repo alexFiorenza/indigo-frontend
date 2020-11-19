@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <div class="w-full lg:flex justify-center items-center">
   <div class="w-full lg:w-3/4 py-10 lg:max-w-4xl l lg:flex">
     <div
@@ -18,7 +19,8 @@
     </div>
     <div *ngIf="this.products.length > 0">
       <h3
-        class="font-Josefin capitalize text-4xl hidden lg:block px-6 text-indigoBlack-500 font-light"
+        [ngClass]="{ dataFont: this.title !== 'productos' }"
+        class="font-Josefin capitalize text-4xl hidden lg:block px-8 text-indigoBlack-500 mt-4"
       >
         {{ this.title }}
       </h3>
@@ -62,13 +64,21 @@
           routerLink="/carrito/datos"
           class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
         >
-          Siguiente
+          <span *ngIf="this.title === 'productos'">Siguiente</span>
+          <span *ngIf="this.title !== 'productos'">Comprar</span>
         </button>
         <div class="w-full flex justify-center">
           <span
+            *ngIf="this.title === 'productos'"
             routerLink="/productos"
             class="hidden lg:block text-indigoBlack-200 cursor-pointer focus:outline-none"
             >Seguir comprando</span
+          >
+          <span
+            *ngIf="this.title !== 'productos'"
+            routerLink="/carrito/productos"
+            class="hidden lg:block text-indigoBlack-200 cursor-pointer focus:outline-none"
+            >Volver atras</span
           >
         </div>
       </div>

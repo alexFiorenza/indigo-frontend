@@ -1,12 +1,15 @@
 <div
-  class="w-screen max-w-lg font-Josefin justify-center items-center flex flex-col"
+  class="w-screen lg:max-w-lg font-Josefin justify-center items-center flex flex-col"
 >
-  <div class="flex flex-col justify-start items-start w-10/12" #name>
+  <div
+    class="flex flex-col justify-start items-start w-10/12 mt-5 lg:mt-0"
+    #name
+  >
     <label class="uppercase font-semibold text-lg text-indigoBlack-800 my-2"
       >Nombre</label
     >
     <div
-      class="w-full py-4 rounded-xl shadow-lg text-indigoBlack-200 px-4 bg-white"
+      class="w-full py-4 rounded-xl shadow-lg text-indigoBlack-200 px-4 bg-white capitalize"
     >
       {{ this.user.name }}
     </div>
