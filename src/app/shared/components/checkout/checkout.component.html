@@ -1,16 +1,106 @@
-<!--Mercado pago form-->
-<form action="/procesar-pago" method="POST">
-  <button
-    type="button"
-    (click)="onBuy()"
-    class="mercadopago-button"
-    id="mercadopago-button"
+<div class="w-full font-Josefin flex flex-col lg:hidden px-4">
+  <small class="text-xs text-indigoBlack-400 font-semibold">Precio total</small>
+  <span class="text-5xl text-indigoPink-700 mt-1 mb-4">{{
+    this.price | currency
+  }}</span>
+</div>
+<form method="post" id="paymentForm" class="px-4">
+  <label for="cardNumber" class="font-Josefin text-indigoBlack-400 text-xs mb-4"
+    >Número de tarjeta</label
   >
-    Buy now
-  </button>
-</form>
-<!-- <form method="post" id="paymentForm">
-  <h3>Detalles del comprador</h3>
+  <div class="bg-white w-full flex rounded-lg py-3 px-3 my-2 borderInputs">
+    <input
+      type="number"
+      id="cardNumber"
+      data-checkout="cardNumber"
+      class="bg-white text-indigoBlack-200 my-1 font-semibold focus:outline-none"
+      placeholder="*****************"
+      onselectstart="return false"
+      onpaste="return false"
+      oncopy="return false"
+      oncut="return false"
+      ondrag="return false"
+      ondrop="return false"
+      autocomplete="off"
+    />
+  </div>
+  <div class="w-full mt-8 mb-1 flex">
+    <div class="font-Josefin text-indigoBlack-400 text-sm w-1/2 mb-4">
+      Fecha de vencimiento
+    </div>
+    <div
+      for="securityCode"
+      class="w-1/2 font-Josefin text-indigoBlack-400 text-xs mb-4"
+    >
+      CVV
+    </div>
+  </div>
+
+  <div class="flex w-full">
+    <div
+      class="w-1/2 bg-white flex py-3 rounded-lg mr-2 font-Josefin borderInputs"
+    >
+      <input
+        type="number"
+        class="w-1/2 text-right text-indigoBlack-200 px-2 focus:outline-none"
+        placeholder="MM"
+        id="cardExpirationMonth"
+        data-checkout="cardExpirationMonth"
+        onselectstart="return false"
+        onpaste="return false"
+        oncopy="return false"
+        oncut="return false"
+        ondrag="return false"
+        ondrop="return false"
+        autocomplete="off"
+      />
+      <span class="date-separator text-indigoBlack-200">/</span>
+      <input
+        type="number"
+        class="w-1/2 text-indigoBlack-200 px-2 focus:outline-none"
+        placeholder="YY"
+        id="cardExpirationYear"
+        data-checkout="cardExpirationYear"
+        onselectstart="return false"
+        onpaste="return false"
+        oncopy="return false"
+        oncut="return false"
+        ondrag="return false"
+        ondrop="return false"
+        autocomplete="off"
+      />
+    </div>
+    <div class="w-1/2 bg-white py-3 rounded-lg px-3 borderInputs">
+      <input
+        id="securityCode"
+        data-checkout="securityCode"
+        type="number"
+        class="focus:outline-none w-full text-indigoBlack-200"
+        onselectstart="return false"
+        placeholder="****"
+        onpaste="return false"
+        oncopy="return false"
+        oncut="return false"
+        ondrag="return false"
+        ondrop="return false"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+  <div class="w-full flex flex-col font-Josefin my-6">
+    <label
+      for="cardholderName"
+      class="font-Josefin text-indigoBlack-400 text-xs mb-4"
+      >Titular de la tarjeta</label
+    >
+    <input
+      id="cardholderName"
+      data-checkout="cardholderName"
+      type="text"
+      class="py-3 px-3 bg-white text-indigoBlack-200 rounded-lg focus:outline-none borderInputs"
+      placeholder="Tu nombre y apellido"
+    />
+  </div>
   <div>
     <div>
       <label for="docType">Tipo de documento</label>
@@ -31,74 +121,10 @@
       />
     </div>
   </div>
-  <h3>Detalles de la tarjeta</h3>
   <div>
-    <div>
-      <label for="cardholderName">Titular de la tarjeta</label>
-      <input id="cardholderName" data-checkout="cardholderName" type="text" />
-    </div>
-    <div>
-      <label for="">Fecha de vencimiento</label>
-      <div>
-        <input
-          type="text"
-          placeholder="MM"
-          id="cardExpirationMonth"
-          data-checkout="cardExpirationMonth"
-          onselectstart="return false"
-          onpaste="return false"
-          oncopy="return false"
-          oncut="return false"
-          ondrag="return false"
-          ondrop="return false"
-          autocomplete="off"
-        />
-        <span class="date-separator">/</span>
-        <input
-          type="text"
-          placeholder="YY"
-          id="cardExpirationYear"
-          data-checkout="cardExpirationYear"
-          onselectstart="return false"
-          onpaste="return false"
-          oncopy="return false"
-          oncut="return false"
-          ondrag="return false"
-          ondrop="return false"
-          autocomplete="off"
-        />
-      </div>
-    </div>
-    <div>
-      <label for="cardNumber">Número de la tarjeta</label>
-      <input
-        type="text"
-        id="cardNumber"
-        data-checkout="cardNumber"
-        onselectstart="return false"
-        onpaste="return false"
-        oncopy="return false"
-        oncut="return false"
-        ondrag="return false"
-        ondrop="return false"
-        autocomplete="off"
-      />
-    </div>
-    <div>
-      <label for="securityCode">Código de seguridad</label>
-      <input
-        id="securityCode"
-        data-checkout="securityCode"
-        type="text"
-        onselectstart="return false"
-        onpaste="return false"
-        oncopy="return false"
-        oncut="return false"
-        ondrag="return false"
-        ondrop="return false"
-        autocomplete="off"
-      />
-    </div>
+    <div></div>
+    <div></div>
+
     <div id="issuerInput">
       <label for="issuer">Banco emisor</label>
       <select id="issuer" name="issuer" data-checkout="issuer"></select>
@@ -121,4 +147,4 @@
       <br />
     </div>
   </div>
-</form> -->
+</form>
