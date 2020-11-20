@@ -25,12 +25,7 @@
         placeholder="¿Qué estas buscando?"
       />
     </div>
-    <div #filterTags class="w-11/12 lg:max-w-sm flex mt-4">
-      <span
-        class="px-4 py-2 font-Josefin text-white bg-indigoPink-600 rounded-full lg:text-xs lg:py-1"
-        >Menor precio</span
-      >
-    </div>
+    <div #filterTags class="w-11/12 lg:max-w-sm flex mt-4"></div>
     <div
       #filters
       id="filtersContainer"
@@ -55,22 +50,24 @@
       >
         <div class="my-3 lg:my-1 flex items-center">
           <input
+            (click)="createTagFilter(lessPrice)"
             type="checkbox"
             name=""
             id=""
             class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
           />
-          <span>Menor precio</span>
+          <span #lessPrice>Menor precio</span>
         </div>
         <div class="my-3 flex items-center lg:my-1">
           <input
+            (click)="createTagFilter(maxPrice)"
             type="checkbox"
             name=""
             id=""
             class="mx-2"
             class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
           />
-          <span>Mayor precio</span>
+          <span #maxPrice>Mayor precio</span>
         </div>
         <div class="my-3 lg:my-1 flex items-center">
           <input

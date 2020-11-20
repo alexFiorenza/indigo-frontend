@@ -1,3 +1,4 @@
+import { CheckoutComponent } from './shared/components/checkout/checkout.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { SingleProductComponent } from './pages/single-product/single-product.component';
 import { ProductsComponent } from './pages/products/products.component';
@@ -24,6 +25,10 @@ const routes: Routes = [
     redirectTo: 'inicio',
     pathMatch: 'full',
   },
+  {
+    path: 'checkout',
+    component: CheckoutComponent
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

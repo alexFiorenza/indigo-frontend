@@ -11,6 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Product } from 'src/app/shared/utilities/interfaces/product';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products',
@@ -21,11 +22,13 @@ export class ProductsComponent implements OnInit {
   @ViewChild('filters') private filters: ElementRef;
   @ViewChild('icon') private icon: ElementRef;
   @ViewChild('filtersTexts') private filtersTexts: ElementRef;
+  @ViewChild('filterTags') private tags: ElementRef;
   private opened = false;
   public products: Array<Product>;
   private totalPages: Number;
   public apiUrl: string;
   public production = environment.production;
+  private currentFilters = [];
   constructor(
     @Inject(DOCUMENT) public document,
     private r: Renderer2,
@@ -70,7 +73,21 @@ export class ProductsComponent implements OnInit {
       this.opened = false;
     }
   }
-  filter(container) {
-
+  //TODO create filters product
+  createTagFilter(text: HTMLElement) {
+    const filterText = text.textContent;
+    const index = this.currentFilters.indexOf(filterText);
+    console.log(index);
+    if (index > 0) {
+      this.currentFilters.splice(index);
+      console.log(this.currentFilters);
+    } else {
+      const tag = `<span
+      class="px-4 py-2 font-Josefin text-white bg-indigoPink-600 rounded-full lg:text-xs lg:py-1"
+      >${filterText}</span
+    >`;
+      this.tags.nativeElement += tag;
+      this.currentFilters.push(filterText);
+    }
   }
 }

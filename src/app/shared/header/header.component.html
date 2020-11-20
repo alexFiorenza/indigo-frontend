@@ -70,6 +70,18 @@
             >Inicio</span
           >
         </div>
+        <div
+          *ngIf="this.userLogedIn && this.userLogedIn.role === 'admin'"
+          class="flex items-center mt-5"
+          routerLinkActive="active"
+        >
+          <ion-icon name="people-outline" class="text-3xl"></ion-icon>
+          <span
+            class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
+            routerLink="/administrar"
+            >Administrar</span
+          >
+        </div>
         <div class="mt-8 flex items-center" routerLinkActive="active">
           <ion-icon name="bag-outline" class="text-3xl"></ion-icon>
           <span
