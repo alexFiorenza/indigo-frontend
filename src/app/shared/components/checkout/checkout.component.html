@@ -1,10 +1,10 @@
 <div class="w-full font-Josefin flex flex-col lg:hidden px-4">
   <small class="text-xs text-indigoBlack-400 font-semibold">Precio total</small>
   <span class="text-5xl text-indigoPink-700 mt-1 mb-4">{{
-    this.price | currency
+    this.transactionAmount | currency
   }}</span>
 </div>
-<form method="post" id="paymentForm" class="px-4">
+<form method="post" id="paymentForm" class="px-4" [formGroup]="this.form">
   <label for="cardNumber" class="font-Josefin text-indigoBlack-400 text-xs mb-4"
     >Número de tarjeta</label
   >
@@ -12,6 +12,8 @@
     <input
       type="number"
       id="cardNumber"
+      (ngModelChange)="checkCreditCardNumber()"
+      formControlName="creditCardNumber"
       data-checkout="cardNumber"
       class="bg-white text-indigoBlack-200 my-1 font-semibold focus:outline-none"
       placeholder="*****************"
@@ -45,6 +47,7 @@
         class="w-1/2 text-right text-indigoBlack-200 px-2 focus:outline-none"
         placeholder="MM"
         id="cardExpirationMonth"
+        formControlName="expireDateMM"
         data-checkout="cardExpirationMonth"
         onselectstart="return false"
         onpaste="return false"
@@ -60,6 +63,7 @@
         class="w-1/2 text-indigoBlack-200 px-2 focus:outline-none"
         placeholder="YY"
         id="cardExpirationYear"
+        formControlName="expireDateYY"
         data-checkout="cardExpirationYear"
         onselectstart="return false"
         onpaste="return false"
@@ -74,6 +78,7 @@
       <input
         id="securityCode"
         data-checkout="securityCode"
+        formControlName="securityCode"
         type="number"
         class="focus:outline-none w-full text-indigoBlack-200"
         onselectstart="return false"
@@ -127,6 +132,8 @@
       <input
         id="docNumber"
         name="docNumber"
+        formControlName="docNumber"
+        placeholder="25249210"
         data-checkout="securityCode"
         type="number"
         class="focus:outline-none w-full text-indigoBlack-200"
@@ -135,16 +142,34 @@
   </div>
 
   <div>
-    <div></div>
-    <div></div>
-
     <div id="issuerInput">
       <label for="issuer">Banco emisor</label>
-      <select id="issuer" name="issuer" data-checkout="issuer"></select>
+      <select
+        (ngModelChange)="getInstallments($event)"
+        id="issuer"
+        name="issuer"
+        data-checkout="issuer"
+        formControlName="selectedIssuer"
+      >
+        <option value="" disabled>Selecciona un banco</option>
+        <option [value]="issuer.id" *ngFor="let issuer of issuers">
+          {{ issuer.name }}
+        </option>
+      </select>
     </div>
     <div>
       <label for="installments">Cuotas</label>
-      <select type="text" id="installments" name="installments"></select>
+      <select
+        type="text"
+        id="installments"
+        name="installments"
+        formControlName="installments"
+      >
+        <option value="" disabled>Cantidad de cuotas</option>
+        <option [value]="i.installments" *ngFor="let i of installments">
+          {{ i.recommended_message }}
+        </option>
+      </select>
     </div>
     <div>
       <input
@@ -153,7 +178,12 @@
         id="transactionAmount"
         value="100"
       />
-      <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
+      <input
+        type="hidden"
+        name="paymentMethodId"
+        id="paymentMethodId"
+        formControlName="paymentMethodId"
+      />
       <input type="hidden" name="description" id="description" />
       <br />
       <button type="submit">Pagar</button>

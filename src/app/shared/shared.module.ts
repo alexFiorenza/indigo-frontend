@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderBtnComponent } from './components/loader-btn/loader-btn.component';
 import { SalesPipe } from './pipes/sales.pipe';
 import { RouterModule } from '@angular/router';
@@ -11,6 +12,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
