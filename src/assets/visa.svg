@@ -1,0 +1,49 @@
+<svg id="Cards" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="71" height="52" viewBox="0 0 71 52">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: #f5f5f5;
+      }
+
+      .cls-2, .cls-5 {
+        fill: #3355a6;
+      }
+
+      .cls-3, .cls-6 {
+        fill: #ff9724;
+      }
+
+      .cls-4 {
+        fill-opacity: 0;
+        filter: url(#filter);
+      }
+
+      .cls-5, .cls-6, .cls-7 {
+        fill-rule: evenodd;
+      }
+
+      .cls-7 {
+        fill: #fff;
+        opacity: 0.1;
+      }
+    </style>
+    <filter id="filter" x="6" y="5" width="56" height="38" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="6" y="5" width="56" height="38" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTYiIGhlaWdodD0iMzgiIHZpZXdCb3g9IjAgMCA1NiAzOCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgb3BhY2l0eTogMC40OwogICAgICAgIGZpbGw6IHVybCgjcmFkaWFsLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0icmFkaWFsLWdyYWRpZW50IiBjeD0iMjgiIGN5PSIxOSIgcj0iMTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMS41IiBzdG9wLWNvbG9yPSIjZmZmIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9IjU2IiBoZWlnaHQ9IjM4Ii8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" mode="overlay" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Retina">
+    <g id="Visa">
+      <rect class="cls-1" x="6" y="15" width="56" height="18"/>
+      <path id="Blue" class="cls-2" d="M9,5H59a3,3,0,0,1,3,3v7a0,0,0,0,1,0,0H6a0,0,0,0,1,0,0V8A3,3,0,0,1,9,5Z"/>
+      <path id="Orange" class="cls-3" d="M6,33H62a0,0,0,0,1,0,0v7a3,3,0,0,1-3,3H9a3,3,0,0,1-3-3V33A0,0,0,0,1,6,33Z"/>
+      <rect id="Highlight" class="cls-4" x="6" y="5" width="56" height="38" rx="3" ry="3"/>
+      <g id="Visa_Logo" data-name="Visa Logo">
+        <path id="Visa-2" data-name="Visa" class="cls-5" d="M39.663,20.572a15.586,15.586,0,0,1-.3,1.574,5.091,5.091,0,0,0-1.951-.345,1.021,1.021,0,0,0-1.1.614c-0.009.453,0.814,0.723,1.272,0.921a2.393,2.393,0,0,1,1.781,1.8,2.178,2.178,0,0,1-.764,1.766c-1.156.989-3.721,1.093-5.471,0.461q0.164-.792.3-1.613a5.573,5.573,0,0,0,2.629.5,0.99,0.99,0,0,0,1.018-.729c-0.02-.527-1.107-0.84-1.654-1.113a2.17,2.17,0,0,1-1.4-1.651,1.984,1.984,0,0,1,.509-1.382C35.435,20.362,37.758,20,39.663,20.572Zm-10.108,7.08,1.33-7.219h2.176l-1.33,7.219H29.555Zm-1.819-7.233c-0.75,1.6-1.39,3.3-2.163,4.876l-0.227-.947,0-.011L25.381,24.5a4.324,4.324,0,0,0-.818-1.4l-0.029-.034c-0.064-.074-0.132-0.146-0.2-0.218q-0.062-.066-0.127-0.131a7.857,7.857,0,0,0-1.84-1.329L24.3,27.636h2.333c1.1-2.436,2.283-4.792,3.393-7.218h-2.29ZM47,27.674H45.007c-0.129-.344-0.165-0.772-0.3-1.113H42l-0.509,1.113H39.2l2.969-6.181c0.131-.271.367-0.642,0.467-0.806a1.347,1.347,0,0,1,.982-0.269h1.647Zm-3.3-5.256L42.589,25.1h1.792Z"/>
+        <path id="Orange_" data-name="Orange " class="cls-6" d="M23.515,20.467H20v0.154c2.023,0.355,4.578,1.88,5.246,3.852l-0.754-3.3A0.886,0.886,0,0,0,23.515,20.467Zm-1,0H19v0.154c2.023,0.355,4.578,1.88,5.246,3.852l-0.754-3.3A0.886,0.886,0,0,0,22.515,20.467Z"/>
+      </g>
+      <path id="Glare" class="cls-7" d="M9.075,43.01A3.11,3.11,0,0,1,6,39.868V8.147A3.11,3.11,0,0,1,9.075,5h49.88a3.11,3.11,0,0,1,3.077,3.143"/>
+    </g>
+  </g>
+</svg>

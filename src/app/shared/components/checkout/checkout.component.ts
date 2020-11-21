@@ -16,6 +16,7 @@ export class CheckoutComponent implements OnInit {
   public defaultIssuer;
   public installments: Array<any> = [];
   public defaultInstallments;
+  public creditCardThumbnail;
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
   private mpScript = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js';
   constructor(private r: Renderer2, @Inject(DOCUMENT) public document, private formBuilder: FormBuilder) {
@@ -24,10 +25,10 @@ export class CheckoutComponent implements OnInit {
       creditCardNumber: ['', Validators.required],
       expireDateMM: ['', Validators.required, Validators.maxLength(2)],
       expireDateYY: ['', Validators.required, Validators.maxLength(2)],
-      owner: ['', Validators.required],
+      cardholderName: ['', Validators.required],
       securityCode: ['', Validators.required],
-      docType: ['', Validators.required],
-      docNumber: ['', Validators.required],
+      docType: [''],
+      docNumber: [''],
       paymentMethodId: ['', Validators.required],
       selectedIssuer: ['', Validators.required],
       installments: ['', Validators.required]
@@ -41,9 +42,23 @@ export class CheckoutComponent implements OnInit {
         const bin = cardnumber.substring(0, 6);
         this.mpPaymentMethod(bin).then((value) => {
           this.paymentMethod = value.response;
+          switch (this.paymentMethod.id) {
+            case 'master':
+              this.creditCardThumbnail = '../../../../assets/mastercard.svg';
+              break;
+            case 'amex':
+              this.creditCardThumbnail = '../../../../assets/amex.svg';
+              break;
+            default:
+              this.creditCardThumbnail = '../../../../assets/visa.svg';
+              break;
+          }
+          console.log(this.paymentMethod);
           this.setPaymentMethod();
         }).catch((err) => {
-          //TODO show invalid credit card number in form
+          this.form.get('creditCardNumber').setErrors({
+            error: 'Credit card not identified'
+          });
           console.log(err);
         });
       }
@@ -69,7 +84,9 @@ export class CheckoutComponent implements OnInit {
     this.getIssuers(this.paymentMethod.id).then(value => {
       this.setIssuers(value.response);
     }).catch(err => {
-      //TODO show invalid credit card number in form
+      this.form.get('creditCardNumber').setErrors({
+        error: 'Issuers not found'
+      });
       console.log(err);
     });
   }
@@ -114,7 +131,6 @@ export class CheckoutComponent implements OnInit {
 
   setInstallments(status, response) {
     if (status === 200) {
-      // (document.getElementById('installments') as any).options.length = 0;
       console.log(response);
       this.installments = response[0].payer_costs;
       this.defaultInstallments = this.installments[0].recommended_message;

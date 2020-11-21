@@ -1,0 +1,34 @@
+<svg id="Cards" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="72" height="52" viewBox="0 0 72 52">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #4cbaea;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        opacity: 0.1;
+      }
+    </style>
+    <filter id="filter" x="8" y="5" width="56" height="38" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="8" y="5" width="56" height="38" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTYiIGhlaWdodD0iMzgiIHZpZXdCb3g9IjAgMCA1NiAzOCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgb3BhY2l0eTogMC40OwogICAgICAgIGZpbGw6IHVybCgjcmFkaWFsLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0icmFkaWFsLWdyYWRpZW50IiBjeD0iMjgiIGN5PSIxOSIgcj0iMTkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMS41IiBzdG9wLWNvbG9yPSIjZmZmIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9IjU2IiBoZWlnaHQ9IjM4Ii8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" mode="overlay" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Retina">
+    <g id="Amex">
+      <path id="Rounded_Rectangle_3" data-name="Rounded Rectangle 3" class="cls-1" d="M11.075,5H60.923A3.11,3.11,0,0,1,64,8.147v31.72a3.11,3.11,0,0,1-3.077,3.143H11.075A3.11,3.11,0,0,1,8,39.868V8.147A3.11,3.11,0,0,1,11.075,5Z"/>
+      <path id="Amex_Logo" data-name="Amex Logo" class="cls-2" d="M32.079,21.831c-0.385-.889-0.755-1.727-1.108-2.573A0.348,0.348,0,0,0,30.6,19H20a0.364,0.364,0,0,0-.39.269L15,30h5.526a0.3,0.3,0,0,0,.194-0.169c0.2-.472.388-0.954,0.594-1.425a0.322,0.322,0,0,1,.223-0.166h1.237a0.251,0.251,0,0,1,.282.193c0.162,0.428.355,0.844,0.506,1.276a0.369,0.369,0,0,0,.416.29q11.934-.011,23.869,0a0.872,0.872,0,0,0,.736-0.349c0.4-.464.821-0.947,1.247-1.411,0.462,0.528.91,1.078,1.349,1.592a0.414,0.414,0,0,0,.348.168H57.8c-1.631-1.833-3.237-3.663-4.848-5.472C54.631,22.693,58,19,58,19H51.566a0.451,0.451,0,0,0-.285.141c-0.474.505-.937,1.021-1.412,1.544-0.433-.513-0.857-1.009-1.272-1.512A0.4,0.4,0,0,0,48.253,19H33.505a0.288,0.288,0,0,0-.3.215Zm2.247-1.056a0.338,0.338,0,0,1,.182-0.2h2.951v7.884H35.594V22.424c-0.019-.005-1.814,4-2.607,5.837a0.277,0.277,0,0,1-.306.2H31.492a0.274,0.274,0,0,1-.3-0.2l-2.61-5.872v6.076H25.049a0.3,0.3,0,0,1-.331-0.232c-0.176-.466-0.371-0.925-0.55-1.391a0.223,0.223,0,0,0-.247-0.168q-1.747.009-3.493,0a0.221,0.221,0,0,0-.246.168q-0.278.72-.581,1.43a0.332,0.332,0,0,1-.185.193c-0.621.013-1.242,0-1.9,0l3.224-7.671a0.292,0.292,0,0,1,.321-0.214q1.152,0.014,2.3,0a0.291,0.291,0,0,1,.318.218L26.73,27.92V20.577h2.818a0.283,0.283,0,0,1,.306.2l2.319,5.13Zm20.052,7.686H52.349a0.7,0.7,0,0,1-.617-0.284s-1.966-2.282-2.006-2.344c0,0-1.762,1.95-2.267,2.494a0.421,0.421,0,0,1-.266.134H39.082V20.577h8.232a0.515,0.515,0,0,1,.449.213c0.644,0.79,1.3,1.57,1.968,2.37l2.26-2.459a0.372,0.372,0,0,1,.221-0.125c0.743-.008,1.487,0,2.294,0-1.22,1.337-2.4,2.639-3.6,3.951C52.056,25.82,53.2,27.141,54.378,28.462ZM20.915,25.037h2.516l-1.259-3.128Zm24.4-4.09v1.274H40.918v1.4H45.31V25.25H40.918v1.563H45.31V28c1.106-1.188,2.136-2.332,3.212-3.488L45.31,20.919C45.293,20.929,45.328,20.938,45.31,20.947Z"/>
+      <path id="Glare" class="cls-3" d="M11.075,43.01A3.11,3.11,0,0,1,8,39.868V8.147A3.11,3.11,0,0,1,11.075,5h49.88a3.11,3.11,0,0,1,3.077,3.143"/>
+    </g>
+  </g>
+</svg>
