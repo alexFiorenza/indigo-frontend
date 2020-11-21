@@ -101,26 +101,39 @@
       placeholder="Tu nombre y apellido"
     />
   </div>
-  <div>
-    <div>
-      <label for="docType">Tipo de documento</label>
+  <div class="w-full mt-8 mb-1 flex">
+    <div class="font-Josefin text-indigoBlack-400 text-sm w-1/2 mb-4">
+      Tipo de documento
+    </div>
+    <div
+      for="securityCode"
+      class="w-1/2 font-Josefin text-indigoBlack-400 text-xs mb-4"
+    >
+      Número de documento
+    </div>
+  </div>
+  <div class="flex w-full">
+    <div class="w-1/2 bg-white py-3 rounded-lg px-3 borderInputs">
       <select
         id="docType"
         name="docType"
         data-checkout="docType"
         type="text"
+        class="focus:outline-none w-full text-indigoBlack-200"
       ></select>
     </div>
-    <div>
-      <label for="docNumber">Número de documento</label>
+
+    <div class="w-1/2 bg-white py-3 rounded-lg px-3 borderInputs ml-2">
       <input
         id="docNumber"
         name="docNumber"
-        data-checkout="docNumber"
-        type="text"
+        data-checkout="securityCode"
+        type="number"
+        class="focus:outline-none w-full text-indigoBlack-200"
       />
     </div>
   </div>
+
   <div>
     <div></div>
     <div></div>
