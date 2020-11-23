@@ -61,11 +61,18 @@
           <span class="text-indigoBlack-400">${{ this.total }}</span>
         </div>
         <button
+          *ngIf="this.title === 'productos'"
           routerLink="/carrito/datos"
           class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
         >
-          <span *ngIf="this.title === 'productos'">Siguiente</span>
-          <span *ngIf="this.title !== 'productos'">Comprar</span>
+          Siguiente
+        </button>
+        <button
+          *ngIf="this.title !== 'productos'"
+          (click)="checkout()"
+          class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
+        >
+          Comprar
         </button>
         <div class="w-full flex justify-center">
           <span

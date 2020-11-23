@@ -1,3 +1,4 @@
+import { CheckoutGuard } from './core/guards/checkout.guard';
 import { CheckoutComponent } from './shared/components/checkout/checkout.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { SingleProductComponent } from './pages/single-product/single-product.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    component: CheckoutComponent
+    component: CheckoutComponent,
+    canActivate: [CheckoutGuard]
   }
 ];
 @NgModule({

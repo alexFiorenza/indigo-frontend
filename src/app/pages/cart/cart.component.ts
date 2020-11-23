@@ -5,7 +5,6 @@ import { environment } from './../../../environments/environment';
 import { DOCUMENT } from '@angular/common';
 import { CartService } from './../../core/services/cart/cart.service';
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart',
@@ -54,4 +53,12 @@ export class CartComponent implements OnInit {
     this.total += this.productsPrice + this.costSend;
   }
   calculateSendCost() { }
+  checkout() {
+    this.router.navigateByUrl('checkout', {
+      state: {
+        price: this.total
+      }
+    });
+  }
+
 }

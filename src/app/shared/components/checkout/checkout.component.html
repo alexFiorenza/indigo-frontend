@@ -1,11 +1,23 @@
-<div class="w-full font-Josefin flex flex-col lg:hidden px-4">
+<div class="w-full font-Josefin flex flex-col lg:hidden px-4 mt-10">
   <small class="text-xs text-indigoBlack-400 font-semibold">Precio total</small>
   <span class="text-5xl text-indigoPink-700 mt-1 mb-4">{{
     this.transactionAmount | currency
   }}</span>
 </div>
-<form method="post" id="paymentForm" class="px-4" [formGroup]="this.form">
-  <label for="cardNumber" class="font-Josefin text-indigoBlack-400 text-xs mb-4"
+<form
+  (ngSubmit)="onFormSubmit()"
+  id="paymentForm"
+  class="px-4 lg:max-w-lg"
+  [formGroup]="this.form"
+>
+  <label
+    [ngClass]="{
+      titleWrongInput:
+        this.form.get('creditCardNumber').touched &&
+        this.form.get('creditCardNumber').invalid
+    }"
+    for="cardNumber"
+    class="font-Josefin text-indigoBlack-400 text-xs mb-4"
     >Número de tarjeta</label
   >
   <div
@@ -14,7 +26,7 @@
         this.form.get('creditCardNumber').touched &&
         this.form.get('creditCardNumber').invalid
     }"
-    class="bg-white w-full flex rounded-lg py-3 px-3 my-2 borderInputs items-center"
+    class="bg-white w-full flex rounded-lg py-2 px-3 my-2 borderInputs items-center"
   >
     <div class="w-12 mx-2 flip-in-ver-left" *ngIf="this.paymentMethod">
       <img [src]="this.creditCardThumbnail" alt="" class="object-cover" />
@@ -24,6 +36,7 @@
       type="number"
       id="cardNumber"
       (ngModelChange)="checkCreditCardNumber()"
+      autocomplete="cc-number"
       formControlName="creditCardNumber"
       data-checkout="cardNumber"
       class="bg-white text-indigoBlack-200 my-1 font-semibold focus:outline-none"
@@ -46,10 +59,24 @@
     >Número invalido</span
   >
   <div class="w-full mt-8 mb-1 flex">
-    <div class="font-Josefin text-indigoBlack-400 text-sm w-1/2 mb-4">
+    <div
+      [ngClass]="{
+        titleWrongInput:
+          (this.form.get('expireDateMM').touched &&
+            this.form.get('expireDateMM').invalid) ||
+          (this.form.get('expireDateYY').touched &&
+            this.form.get('expireDateYY').invalid)
+      }"
+      class="font-Josefin text-indigoBlack-400 text-sm w-1/2 mb-4"
+    >
       Fecha de vencimiento
     </div>
     <div
+      [ngClass]="{
+        titleWrongInput:
+          this.form.get('securityCode').touched &&
+          this.form.get('securityCode').invalid
+      }"
       for="securityCode"
       class="w-1/2 font-Josefin text-indigoBlack-400 text-xs mb-4"
     >
@@ -69,10 +96,12 @@
       class="w-1/2 bg-white flex py-3 rounded-lg mr-2 font-Josefin borderInputs"
     >
       <input
-        type="number"
+        type="text"
         class="w-1/2 text-right text-indigoBlack-200 px-2 focus:outline-none"
         placeholder="MM"
         id="cardExpirationMonth"
+        #monthContainer
+        (ngModelChange)="typingDate(monthContainer)"
         formControlName="expireDateMM"
         data-checkout="cardExpirationMonth"
         onselectstart="return false"
@@ -85,11 +114,14 @@
       />
       <span class="date-separator text-indigoBlack-200">/</span>
       <input
-        type="number"
+        type="text"
         class="w-1/2 text-indigoBlack-200 px-2 focus:outline-none"
         placeholder="YY"
         id="cardExpirationYear"
         formControlName="expireDateYY"
+        #yearContainer
+        (ngModelChange)="typingDate(yearContainer)"
+        (focus)="onFocusInput(yearContainer)"
         data-checkout="cardExpirationYear"
         onselectstart="return false"
         onpaste="return false"
@@ -110,6 +142,7 @@
     >
       <input
         id="securityCode"
+        autocomplete="cc-csc"
         data-checkout="securityCode"
         formControlName="securityCode"
         type="number"
@@ -127,8 +160,14 @@
   </div>
   <div class="w-full flex flex-col font-Josefin my-6">
     <label
+      [ngClass]="{
+        titleWrongInput:
+          this.form.get('cardholderName').touched &&
+          this.form.get('cardholderName').invalid
+      }"
       for="cardholderName"
       class="font-Josefin text-indigoBlack-400 text-xs mb-4"
+      autocomplete="cc-name"
       >Titular de la tarjeta</label
     >
     <input
@@ -141,7 +180,7 @@
       data-checkout="cardholderName"
       formControlName="cardholderName"
       type="text"
-      class="py-3 px-3 bg-white text-indigoBlack-200 rounded-lg focus:outline-none borderInputs"
+      class="py-3 px-6 bg-white text-indigoBlack-200 rounded-lg focus:outline-none borderInputs"
       placeholder="Tu nombre y apellido"
     />
   </div>
@@ -171,8 +210,14 @@
         name="docType"
         data-checkout="docType"
         type="text"
-        class="focus:outline-none w-full text-indigoBlack-200"
-      ></select>
+        class="focus:outline-none w-full text-indigoBlack-200 bg-transparent"
+        formControlName="docType"
+      >
+        <option value="" disabled>Seleccionar tipo</option>
+        <option [value]="type.id" *ngFor="let type of identificationTypes">
+          {{ type.name }}
+        </option>
+      </select>
     </div>
     <div class="w-1/2 bg-white py-3 rounded-lg px-3 borderInputs ml-2">
       <input
@@ -180,60 +225,62 @@
         name="docNumber"
         formControlName="docNumber"
         placeholder="25249210"
-        data-checkout="securityCode"
+        data-checkout="docNumber"
         type="number"
         class="focus:outline-none w-full text-indigoBlack-200"
       />
     </div>
   </div>
-
+  <div class="w-full flex flex-col font-Josefin my-6" id="issuerInput">
+    <label for="issuer" class="font-Josefin text-indigoBlack-400 text-xs mb-4"
+      >Banco emisor</label
+    >
+    <select
+      (ngModelChange)="getInstallments($event)"
+      id="issuer"
+      name="issuer"
+      data-checkout="issuer"
+      class="py-3 px-4 bg-white text-indigoBlack-200 rounded-lg focus:outline-none borderInputs"
+      formControlName="selectedIssuer"
+    >
+      <option value="" disabled>Selecciona un banco</option>
+      <option [value]="issuer.id" *ngFor="let issuer of issuers">
+        {{ issuer.name }}
+      </option>
+    </select>
+  </div>
+  <div
+    class="w-full flex flex-col font-Josefin my-6"
+    id="installmentsContainer"
+  >
+    <label
+      for="installments"
+      class="font-Josefin text-indigoBlack-400 text-xs mb-4"
+      >Cantidad de cuotas</label
+    >
+    <select
+      id="installments"
+      name="installments"
+      class="py-3 px-4 bg-white text-indigoBlack-200 rounded-lg focus:outline-none borderInputs"
+      formControlName="installments"
+    >
+      <option value="" disabled>Cantidad de cuotas</option>
+      <option [value]="i.installments" *ngFor="let i of installments">
+        {{ i.recommended_message }}
+      </option>
+    </select>
+  </div>
   <div>
-    <div id="issuerInput">
-      <label for="issuer">Banco emisor</label>
-      <select
-        (ngModelChange)="getInstallments($event)"
-        id="issuer"
-        name="issuer"
-        data-checkout="issuer"
-        formControlName="selectedIssuer"
+    <div class="w-full justify-center flex flex-col items-center mb-8">
+      <button
+        [ngClass]="{ 'opacity-25': this.form.invalid }"
+        [disabled]="this.form.invalid"
+        class="w-11/12 py-4 rounded-lg text-white font-Josefin text-center bg-indigoPink-600 mb-4 focus:outline-none"
+        type="submit"
       >
-        <option value="" disabled>Selecciona un banco</option>
-        <option [value]="issuer.id" *ngFor="let issuer of issuers">
-          {{ issuer.name }}
-        </option>
-      </select>
-    </div>
-    <div>
-      <label for="installments">Cuotas</label>
-      <select
-        type="text"
-        id="installments"
-        name="installments"
-        formControlName="installments"
-      >
-        <option value="" disabled>Cantidad de cuotas</option>
-        <option [value]="i.installments" *ngFor="let i of installments">
-          {{ i.recommended_message }}
-        </option>
-      </select>
-    </div>
-    <div>
-      <input
-        type="hidden"
-        name="transactionAmount"
-        id="transactionAmount"
-        value="100"
-      />
-      <input
-        type="hidden"
-        name="paymentMethodId"
-        id="paymentMethodId"
-        formControlName="paymentMethodId"
-      />
-      <input type="hidden" name="description" id="description" />
-      <br />
-      <button type="submit">Pagar</button>
-      <br />
+        Pagar
+      </button>
+      <span class="text-indigoBlack-200 font-Josefin">Volver atras</span>
     </div>
   </div>
 </form>

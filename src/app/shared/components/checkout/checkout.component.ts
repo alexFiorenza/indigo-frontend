@@ -1,38 +1,74 @@
+import { Router } from '@angular/router';
 import { RegisterComponent } from './../../../auth/register/register.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
-import { Component, OnInit, Renderer2, Input, Inject } from '@angular/core';
+import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { stringify } from '@angular/compiler/src/util';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-  @Input() public transactionAmount: Number = 100;
+  @Input() public transactionAmount: Number = 1000;
   public mp;
   public form: FormGroup;
   public paymentMethod;
   public issuers: Array<any> = [];
-  public defaultIssuer;
   public installments: Array<any> = [];
-  public defaultInstallments;
   public creditCardThumbnail;
+  public identificationTypes;
+  @ViewChild('yearContainer') private yearsInput: ElementRef;
+  @ViewChild('monthContainer') private monthInput: ElementRef;
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
   private mpScript = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js';
-  constructor(private r: Renderer2, @Inject(DOCUMENT) public document, private formBuilder: FormBuilder) {
+  constructor(private r: Renderer2, @Inject(DOCUMENT) public document, private formBuilder: FormBuilder, private router: Router) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.form = this.formBuilder.group({
       creditCardNumber: ['', Validators.required],
-      expireDateMM: ['', Validators.required, Validators.maxLength(2)],
-      expireDateYY: ['', Validators.required, Validators.maxLength(2)],
+      expireDateMM: ['', Validators.required],
+      expireDateYY: ['', Validators.required],
       cardholderName: ['', Validators.required],
       securityCode: ['', Validators.required],
-      docType: [''],
-      docNumber: [''],
+      docType: ['', Validators.required],
+      docNumber: ['', Validators.required],
       paymentMethodId: ['', Validators.required],
       selectedIssuer: ['', Validators.required],
       installments: ['', Validators.required]
     });
+    //TODO Change it when form finally implemented
+    // this.transactionAmount = this.router.getCurrentNavigation().extras.state.price
+
+  }
+  generateToken(form) {
+
+    const generateTokenObjs = {
+      cardNumber: this.form.get('creditCardNumber').value,
+      cardExpirationMonth: this.form.get('expireDateMM').value,
+      cardExpirationYear: this.form.get('expireDateYY').value,
+      securityCode: this.form.get('securityCode').value,
+      cardholderName: this.form.get('cardholderName').value,
+      docType: this.form.get('docType').value,
+      docNumber: this.form.get('docNumber').value,
+      issuer: this.form.get('selectedIssuer').value
+    };
+    this.mp.createToken(generateTokenObjs, (status, response) => {
+      if (status === 200) {
+
+      } else {
+
+        console.log(`Response failed, reason: ${response}`);
+      }
+    })
+  }
+  backendResponseMp() {
+
+  }
+  ngOnInit(): void {
+    this.generateScript();
+    this.getIdentificationTypes();
+
   }
   checkCreditCardNumber() {
     const value: number = this.form.get('creditCardNumber').value;
@@ -40,6 +76,7 @@ export class CheckoutComponent implements OnInit {
       const cardnumber = value.toString();
       if (cardnumber.length >= 6) {
         const bin = cardnumber.substring(0, 6);
+        // tslint:disable-next-line: no-shadowed-variable
         this.mpPaymentMethod(bin).then((value) => {
           this.paymentMethod = value.response;
           switch (this.paymentMethod.id) {
@@ -53,7 +90,6 @@ export class CheckoutComponent implements OnInit {
               this.creditCardThumbnail = '../../../../assets/visa.svg';
               break;
           }
-          console.log(this.paymentMethod);
           this.setPaymentMethod();
         }).catch((err) => {
           this.form.get('creditCardNumber').setErrors({
@@ -81,8 +117,8 @@ export class CheckoutComponent implements OnInit {
   }
   setPaymentMethod() {
     this.form.get('paymentMethodId').setValue(this.paymentMethod.id);
-    this.getIssuers(this.paymentMethod.id).then(value => {
-      this.setIssuers(value.response);
+    this.getIssuers(this.paymentMethod.id).then((value: any) => {
+      this.issuers = value.response;
     }).catch(err => {
       this.form.get('creditCardNumber').setErrors({
         error: 'Issuers not found'
@@ -90,9 +126,7 @@ export class CheckoutComponent implements OnInit {
       console.log(err);
     });
   }
-  ngOnInit(): void {
-    this.generateScript();
-  }
+
   getIssuers(paymentMethodId): Promise<any> {
     return new Promise((resolve, reject) => {
       this.mp.getIssuers(
@@ -111,12 +145,6 @@ export class CheckoutComponent implements OnInit {
       );
     });
   }
-
-  setIssuers(issuers) {
-    this.issuers = issuers;
-    this.defaultIssuer = this.issuers[0];
-    this.form.get('selectedIssuer').setValue(this.defaultIssuer.id);
-  }
   getInstallments(value) {
     const issuerId = value;
     this.mp.getInstallments({
@@ -131,10 +159,8 @@ export class CheckoutComponent implements OnInit {
 
   setInstallments(status, response) {
     if (status === 200) {
-      console.log(response);
+      // this.form.get('installments').setValue(this.defaultInstallments);
       this.installments = response[0].payer_costs;
-      this.defaultInstallments = this.installments[0].recommended_message;
-      this.form.get('installments').setValue(this.defaultInstallments);
     } else {
       console.log(`installments method info error: ${response}`);
     }
@@ -146,10 +172,43 @@ export class CheckoutComponent implements OnInit {
     script.src = this.mpScript;
     script.text = ``;
     this.r.appendChild(document.body, script);
-    script.onload = () => {
+    script.onload = async () => {
       this.mp = (window as any).Mercadopago;
       this.mp.setPublishableKey(this.mpPublickKey);
-      this.mp.getIdentificationTypes();
+      this.getIdentificationTypes();
     };
   }
+
+  typingDate(container: HTMLInputElement) {
+    const inputValue = container.value;
+    let parsedValue;
+    if (!inputValue.includes('0') || inputValue.includes('-')) {
+      parsedValue = parseInt(inputValue, 10);
+    }
+    const id = container.id;
+    if (id === 'cardExpirationMonth' && (parsedValue > 12 || parsedValue <= 0)) {
+      this.form.get('expireDateMM').setValue('');
+    } else if (inputValue.length === 2) {
+      this.yearsInput.nativeElement.focus();
+    }
+  }
+  onFocusInput(container: HTMLInputElement) {
+    if (this.form.get('expireDateMM').value === '') {
+      this.monthInput.nativeElement.focus();
+    }
+  }
+  onFormSubmit() {
+    this.generateToken(this.form.value);
+  }
+
+  async getIdentificationTypes() {
+    try {
+      // tslint:disable-next-line: max-line-length
+      const identifications = await (await fetch(`https://api.mercadopago.com/v1/identification_types?public_key=${this.mpPublickKey}`)).json();
+      this.identificationTypes = identifications;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 }
