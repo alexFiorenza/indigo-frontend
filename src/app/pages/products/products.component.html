@@ -133,9 +133,9 @@
       *ngFor="let p of products"
     >
       <img
-        *ngIf="!this.production && this.p.image.length > 0"
+        *ngIf="!this.production && this.p.images.length > 0"
         [routerLink]="'/productos/' + p._id"
-        [src]="this.apiUrl + p.image[0]"
+        [src]="this.apiUrl + p.images[0].image"
         class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
         alt=""
       />

@@ -22,8 +22,11 @@ const product1 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe1.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe1.png'
+        }
     ],
     name: 'Zapatillas 1',
     description: 'Zapatillas con cordones',
@@ -54,8 +57,11 @@ const product2 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe2.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe2.png'
+        }
     ],
     name: 'Zapatillas 2',
     description: 'Zapatillas con cordones',
@@ -87,8 +93,11 @@ const product3 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe3.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe3.png'
+        }
     ],
     name: 'Zapatillas 3',
     description: 'Zapatillas con cordones',
@@ -120,8 +129,11 @@ const product4 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe4.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe4.png'
+        }
     ],
     name: 'Zapatillas 4',
     description: 'Zapatillas con cordones',
@@ -152,8 +164,11 @@ const product5 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe4.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe4.png'
+        }
     ],
     name: 'Zapatillas 4',
     description: 'Zapatillas con cordones',
@@ -184,8 +199,11 @@ const product6 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe3.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe3.png'
+        }
     ],
     name: 'Zapatillas 3',
     description: 'Zapatillas con cordones',
@@ -217,8 +235,11 @@ const product7 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe3.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe3.png'
+        }
     ],
     name: 'Zapatillas 3',
     description: 'Zapatillas con cordones',
@@ -250,8 +271,11 @@ const product8 = {
             available: true
         }
     ],
-    image: [
-        '../../assets/sampleShoe3.png'
+    images: [
+        {
+            uid: 'test',
+            image: '../../assets/sampleShoe3.png'
+        }
     ],
     name: 'Zapatillas 3',
     description: 'Zapatillas con cordones',

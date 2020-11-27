@@ -2,7 +2,7 @@
 <div class="w-screen flex justify-center font-Josefin z-50">
   <div
     #alert
-    class="hidden slide-in-top bg-indigoPink-500 absolute flex-col items-center top-0 w-11/12 max-w-lg py-6 rounded-lg z-50 mt-2 justify-center"
+    class="hidden slide-in-top bg-indigoBlack-900 absolute flex-col items-center top-0 w-11/12 max-w-lg py-6 rounded-lg z-50 mt-2 justify-center"
   >
     <span class="text-white lg:text-lg font-semibold"
       >¡Producto agregado correctamente al carrito!</span
@@ -20,11 +20,11 @@
 >
   <swiper #imageContainer [config]="this.config" class="lg:hidden">
     <div
-      *ngFor="let slide of this.product.image"
+      *ngFor="let slide of this.product.images"
       class="productImages top-0 relative overflow-hidden"
     >
       <img
-        [src]="this.apiUrl + slide"
+        [src]="this.apiUrl + slide.image"
         class="opacity-75 absolute object-cover z-20 w-screen"
         alt=""
       />
@@ -33,12 +33,12 @@
   <div class="items-start flex">
     <div #imagesViewer class="hidden lg:flex">
       <div #imagesPreview class="flex flex-col gap-12">
-        <div #container *ngFor="let img of this.product.image; let i = index">
+        <div #container *ngFor="let img of this.product.images; let i = index">
           <img
             (click)="changeCurrentImage(i)"
             class="w-40 opacity-25 cursor-pointer"
-            *ngIf="!this.production && this.product.image.length > 0"
-            [src]="this.apiUrl + img"
+            *ngIf="!this.production && this.product.images.length > 0"
+            [src]="this.apiUrl + img.image"
             alt=""
           />
         </div>
@@ -46,7 +46,7 @@
       <div #selectedImage class="ml-12 overflow-hidden productHeight">
         <img
           class="w-80 zoom object-cover zoomImg"
-          *ngIf="!this.production && this.product.image.length > 0"
+          *ngIf="!this.production && this.product.images.length > 0"
           [src]="this.currentImage"
           alt=""
         />
@@ -149,16 +149,28 @@
         class="w-full flex justify-center text-red-400 lg:mt-5"
         >*Por favor selecciona un color y talle*</span
       >
-      <button
-        [ngClass]="{
-          'opacity-25': !this.selectedColor || !this.selectedSize
-        }"
-        [disabled]="!this.selectedColor || !this.selectedSize"
-        (click)="addToCart()"
-        class="mb-6 mt-2 w-full bg-indigoBlack-900 text-lg text-white font-light py-5 rounded-md focus:outline-none"
-      >
-        Añadir al carrito
-      </button>
+      <div class="w-full justify-center flex">
+        <button
+          [ngClass]="{
+            'opacity-25': !this.selectedColor || !this.selectedSize
+          }"
+          [disabled]="!this.selectedColor || !this.selectedSize"
+          (click)="addToCart()"
+          #addCart
+          class="add-to-cart "
+        >
+          <div class="default">Añadir al carrito</div>
+          <div class="success">Añadido</div>
+          <div class="cart">
+            <div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          <div class="dots"></div>
+        </button>
+      </div>
+
       <div
         class="text-xl hidden lg:flex w-full justify-center items-center text-indigoBlack-1000 font-thin"
       >

@@ -1,10 +1,9 @@
+import { OrdersService } from './../../../core/services/http/api/orders/orders.service';
 import { Router } from '@angular/router';
 import { RegisterComponent } from './../../../auth/register/register.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import { async } from '@angular/core/testing';
-import { stringify } from '@angular/compiler/src/util';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -23,7 +22,8 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('monthContainer') private monthInput: ElementRef;
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
   private mpScript = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js';
-  constructor(private r: Renderer2, @Inject(DOCUMENT) public document, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private r: Renderer2, @Inject(DOCUMENT) public document,
+    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.form = this.formBuilder.group({
       creditCardNumber: ['', Validators.required],
@@ -39,7 +39,6 @@ export class CheckoutComponent implements OnInit {
     });
     //TODO Change it when form finally implemented
     // this.transactionAmount = this.router.getCurrentNavigation().extras.state.price
-
   }
   generateToken(form) {
 
@@ -57,7 +56,6 @@ export class CheckoutComponent implements OnInit {
       if (status === 200) {
 
       } else {
-
         console.log(`Response failed, reason: ${response}`);
       }
     })

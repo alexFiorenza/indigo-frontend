@@ -4,7 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import { SwiperOptions } from 'swiper';
 import { environment } from './../../../environments/environment';
 import { ProductsService } from './../../core/services/http/api/products/products.service';
-import { Component, Inject, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Product } from 'src/app/shared/utilities/interfaces/product';
 import { ClipboardService } from 'ngx-clipboard'
@@ -26,6 +26,7 @@ export class SingleProductComponent implements OnInit {
   public lastSelectedSize;
   private zoomMade = false;
   @ViewChild('alert') private alert: ElementRef;
+  @ViewChild('addCart') private cartBtn: ElementRef;
   public config: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
@@ -43,29 +44,39 @@ export class SingleProductComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.productService.getSingleProduct(params.id).subscribe((resp: any) => {
         this.product = resp.response;
+        console.log(this.product);
         if (!this.production) {
           this.apiUrl = `${environment.uploadsUrl}/`;
         } else {
           //do staff with gcp service
         }
-        this.currentImage = `${this.apiUrl}${this.product.image[0]}`;
+        this.currentImage = `${this.apiUrl}${this.product.images[0].image}`;
       });
     });
   }
   ngOnInit(): void {
-
   }
+
   changeCurrentImage(index: number) {
-    this.currentImage = `${this.apiUrl}${this.product.image[index]}`;
+    this.currentImage = `${this.apiUrl}${this.product.images[index].image}`;
   }
   addToCart() {
-    const productToAdd = { ...this.product };
-    Object.assign(productToAdd, {
-      color: this.selectedColor,
-      sizes: this.selectedSize,
-    });
-    this.cartService.addNewProduct(productToAdd);
-    this.showAlert();
+    if (this.cartBtn.nativeElement.classList.contains('added')) {
+      this.cartBtn.nativeElement.classList.toggle('added');
+      return;
+    } else {
+      this.cartBtn.nativeElement.classList.toggle('added');
+    }
+    setTimeout(() => {
+      const productToAdd = { ...this.product };
+      Object.assign(productToAdd, {
+        color: this.selectedColor,
+        sizes: this.selectedSize,
+      });
+      this.cartService.addNewProduct(productToAdd);
+      this.showAlert();
+    }, 2000);
+
   }
   selectColor(event) {
     if (this.lastSelectedColor) {

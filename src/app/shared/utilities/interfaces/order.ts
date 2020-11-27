@@ -4,7 +4,7 @@ export interface Order {
     sizes: string;
     price: number;
     color: string;
-    image: Array<any>;
+    images: Array<any>;
     weight?: number;
     top?: boolean;
     sale?: number;
