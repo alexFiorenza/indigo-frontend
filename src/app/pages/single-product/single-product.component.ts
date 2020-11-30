@@ -1,20 +1,19 @@
+import { DOCUMENT } from '@angular/common';
 import { Order } from './../../shared/utilities/interfaces/order';
 import { CartService } from './../../core/services/cart/cart.service';
-import { DOCUMENT } from '@angular/common';
 import { SwiperOptions } from 'swiper';
 import { environment } from './../../../environments/environment';
 import { ProductsService } from './../../core/services/http/api/products/products.service';
-import { Component, Inject, OnInit, Renderer2, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterContentInit, Renderer2, Inject, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Product } from 'src/app/shared/utilities/interfaces/product';
-import { ClipboardService } from 'ngx-clipboard'
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
   styleUrls: ['./single-product.component.scss'],
 })
-export class SingleProductComponent implements OnInit {
+export class SingleProductComponent implements OnInit, AfterContentInit {
   public productId: string;
   public product: Order;
   public apiUrl: string;
@@ -25,8 +24,10 @@ export class SingleProductComponent implements OnInit {
   public lastSelectedColor;
   public lastSelectedSize;
   private zoomMade = false;
+  private favorites = [];
   @ViewChild('alert') private alert: ElementRef;
   @ViewChild('addCart') private cartBtn: ElementRef;
+  @ViewChild('favorite') private favorite: ElementRef;
   public config: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 1,
@@ -35,16 +36,15 @@ export class SingleProductComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductsService,
-    @Inject(DOCUMENT) private _document,
-    private r: Renderer2,
     private cartService: CartService,
-    private clipboardService: ClipboardService
+    private clipboardService: ClipboardService,
+    private r: Renderer2,
+    @Inject(DOCUMENT) private _document
   ) {
-    this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
+    this.r.setStyle(document.body, 'background-color', 'white');
     this.activatedRoute.params.subscribe((params: Params) => {
       this.productService.getSingleProduct(params.id).subscribe((resp: any) => {
         this.product = resp.response;
-        console.log(this.product);
         if (!this.production) {
           this.apiUrl = `${environment.uploadsUrl}/`;
         } else {
@@ -56,7 +56,16 @@ export class SingleProductComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
+  ngAfterContentInit() {
+  }
+  addToFavorites() {
+    const favoriteElement = this.favorite.nativeElement;
+    if (favoriteElement.className.indexOf('-active') > -1) {
+      favoriteElement.classList.remove('-active');
+    } else {
+      favoriteElement.classList.add('-active');
+    }
+  }
   changeCurrentImage(index: number) {
     this.currentImage = `${this.apiUrl}${this.product.images[index].image}`;
   }
@@ -110,7 +119,7 @@ export class SingleProductComponent implements OnInit {
     return str.substr(4).split(')')[0].split(sep).map(Number);
   }
   showAlert() {
-
+    window.scrollTo(0, 0)
     this.alert.nativeElement.classList.remove('hidden');
     this.alert.nativeElement.classList.add('flex');
     setTimeout(() => {
@@ -121,5 +130,17 @@ export class SingleProductComponent implements OnInit {
   share() {
     const url = window.location.href;
     this.clipboardService.copy(url);
+  }
+  async shareMobile() {
+    const sharableData = {
+      title: `Indigo: ${this.product.name}`,
+      text: `${this.product.description}`,
+      url: window.location.href
+    };
+    try {
+      await (navigator as any).share(sharableData);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

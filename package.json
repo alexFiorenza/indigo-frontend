@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve & ngtw watch",
-    "start-host": "ng serve --host 192.168.0.13 & ngtw watch",
+    "start-host": "ng serve --host 192.168.0.12  --port 4200 --disable-host-check ",
     "build": "ngtw build && ng build",
     "test": "ng test",
     "lint": "ng lint",

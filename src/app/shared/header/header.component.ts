@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   openSidebar() {
-
     this.sidebarComponent.nativeElement.classList.remove('slide-out-left');
     this.sidebarComponent.nativeElement.classList.remove('hidden');
   }

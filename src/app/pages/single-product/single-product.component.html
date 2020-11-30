@@ -4,7 +4,7 @@
     #alert
     class="hidden slide-in-top bg-indigoBlack-900 absolute flex-col items-center top-0 w-11/12 max-w-lg py-6 rounded-lg z-50 mt-2 justify-center"
   >
-    <span class="text-white lg:text-lg font-semibold"
+    <span class="text-white text-sm lg:text-lg font-semibold"
       >¡Producto agregado correctamente al carrito!</span
     >
     <span
@@ -54,7 +54,7 @@
     </div>
     <div
       #productInfo
-      class="lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-10 bottom-0 productInfo bg-white px-8 font-Josefin lg:mx-8"
+      class="lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-10 bottom-0 productInfo bg-white px-8 font-Josefin lg:mx-8 h-auto"
     >
       <div class="flex flex-col w-full mt-8 lg:mt-0">
         <div class="w-full flex justify-between px-2">
@@ -66,13 +66,25 @@
           </div>
           <div #icons class="flex flex-col justify-between">
             <ion-icon
+              (click)="shareMobile()"
               name="share-social-outline"
               class="text-xl mb-3 lg:hidden"
             ></ion-icon>
-            <ion-icon
+            <!-- <ion-icon
               name="heart-outline"
               class="text-xl lg:text-3xl cursor-pointer"
-            ></ion-icon>
+            ></ion-icon> -->
+            <div
+              class="m-favorite cursor-pointer"
+              #favorite
+              (click)="addToFavorites()"
+            >
+              <div class="m-favorite__icon"></div>
+
+              <span class="m-favorite__smallIcon"></span>
+              <span class="m-favorite__smallIcon"></span>
+              <span class="m-favorite__smallIcon"></span>
+            </div>
           </div>
         </div>
         <div class="w-full lineHeight mt-3 opacity-25"></div>
@@ -86,7 +98,7 @@
           class="font-Josefin font-light text-indigoBlack-400 hidden lg:block"
           >Selecciona un Color</span
         >
-        <div class="w-full lineHeight"></div>
+        <div class="w-full lineHeight opacity-25"></div>
 
         <div #availableProduct>
           <div #color class="mt-4 flex justify-between">
@@ -114,7 +126,7 @@
             class="font-Josefin font-light text-indigoBlack-400 hidden lg:block"
             >Selecciona un Talle</span
           >
-          <div class="w-full lineHeight mb-4 hidden lg:block"></div>
+          <div class="w-full lineHeight mb-4 hidden lg:block opacity-25"></div>
           <div #size class="mt-4 flex justify-between">
             <span class="font-light text-2xl text-indigoBlack-200 lg:hidden"
               >Talles</span
@@ -135,7 +147,7 @@
           {{ this.product.description }}
         </p>
 
-        <div class="w-full lineHeight mt-3 opacity-25 lg:hidden"></div>
+        <div class="w-full lineHeight mt-3 lg:hidden opacity-25"></div>
         <span class="text-indigoBlack-500 font-light my-5 lg:hidden"
           >Compras y reembolsos</span
         >
@@ -157,7 +169,7 @@
           [disabled]="!this.selectedColor || !this.selectedSize"
           (click)="addToCart()"
           #addCart
-          class="add-to-cart "
+          class="add-to-cart"
         >
           <div class="default">Añadir al carrito</div>
           <div class="success">Añadido</div>
@@ -170,7 +182,6 @@
           <div class="dots"></div>
         </button>
       </div>
-
       <div
         class="text-xl hidden lg:flex w-full justify-center items-center text-indigoBlack-1000 font-thin"
       >

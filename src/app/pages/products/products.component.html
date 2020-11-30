@@ -29,7 +29,7 @@
     <div
       #filters
       id="filtersContainer"
-      class="lg:mb-12 w-full lg:shadow-md lg:mt-6 lg:max-w-sm lg:w-11/12 bg-white lg:py-4 lg:h-auto h-24 filtersContainer lg:static fixed bottom-0 z-40 flex flex-col lg:items-start items-center"
+      class="lg:mb-12 w-full lg:z-40 z-50 lg:shadow-md lg:mt-6 lg:max-w-sm lg:w-11/12 bg-white lg:py-4 lg:h-auto h-24 filtersContainer lg:static fixed bottom-0 flex flex-col lg:items-start items-center"
     >
       <ion-icon
         #icon
@@ -126,10 +126,10 @@
   </div>
   <div
     #productsContainer
-    class="w-full lg:w-1/2 items-center flex flex-col lg:flex-row lg:items-start relative mt-4 lg:mt-0 lg:mx-8"
+    class="w-full lg:w-1/2 items-center flex flex-col lg:flex-row lg:items-start relative mt-4 mb-24 lg:mt-0 lg:mx-8"
   >
     <div
-      class="lg:w-48 w-10/12 mt-4 lg:h-48 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
+      class="lg:w-48 w-10/12 lg:h-48 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
       *ngFor="let p of products"
     >
       <img
