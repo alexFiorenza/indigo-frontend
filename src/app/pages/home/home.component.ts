@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
   public Slides: Array<Slides>;
   public shoesConfigDesktop: SwiperOptions = {
     direction: 'horizontal',
-    slidesPerView: 5,
+    slidesPerView: 4,
     navigation: true
   };
   public shoesConfigMobile: SwiperOptions = {

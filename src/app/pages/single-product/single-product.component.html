@@ -14,11 +14,13 @@
     >
   </div>
 </div>
-<div
-  *ngIf="this.product"
-  class="lg:flex w-full h-screen justify-center items-center"
->
-  <swiper #imageContainer [config]="this.config" class="lg:hidden">
+<div class="lg:flex w-full h-screen justify-center items-center">
+  <swiper
+    #imageContainer
+    [config]="this.config"
+    class="lg:hidden"
+    *ngIf="this.product"
+  >
     <div
       *ngFor="let slide of this.product.images"
       class="productImages top-0 relative overflow-hidden"
@@ -32,7 +34,7 @@
   </swiper>
   <div class="items-start flex">
     <div #imagesViewer class="hidden lg:flex">
-      <div #imagesPreview class="flex flex-col gap-12">
+      <div #imagesPreview class="flex flex-col gap-12" *ngIf="this.product">
         <div #container *ngFor="let img of this.product.images; let i = index">
           <img
             (click)="changeCurrentImage(i)"
@@ -43,7 +45,11 @@
           />
         </div>
       </div>
-      <div #selectedImage class="ml-12 overflow-hidden productHeight">
+      <div
+        #selectedImage
+        class="ml-12 overflow-hidden productHeight"
+        *ngIf="this.product"
+      >
         <img
           class="w-80 zoom object-cover zoomImg"
           *ngIf="!this.production && this.product.images.length > 0"
@@ -58,7 +64,7 @@
     >
       <div class="flex flex-col w-full mt-8 lg:mt-0">
         <div class="w-full flex justify-between px-2">
-          <div #info class="flex flex-col">
+          <div #info class="flex flex-col" *ngIf="this.product">
             <h3 class="text-indigoBlack-400 text-2xl">
               {{ this.product.name }}
             </h3>
@@ -70,10 +76,7 @@
               name="share-social-outline"
               class="text-xl mb-3 lg:hidden"
             ></ion-icon>
-            <!-- <ion-icon
-              name="heart-outline"
-              class="text-xl lg:text-3xl cursor-pointer"
-            ></ion-icon> -->
+
             <div
               class="m-favorite cursor-pointer"
               #favorite
@@ -92,7 +95,9 @@
           <span class="font-light text-indigoBlack-400 text-2xl"
             >Detalles del producto</span
           >
-          <p class="text-indigoBlack-400">{{ this.product.description }}</p>
+          <p class="text-indigoBlack-400" *ngIf="this.product">
+            {{ this.product.description }}
+          </p>
         </div>
         <span
           class="font-Josefin font-light text-indigoBlack-400 hidden lg:block"
@@ -100,7 +105,7 @@
         >
         <div class="w-full lineHeight opacity-25"></div>
 
-        <div #availableProduct>
+        <div #availableProduct *ngIf="this.product">
           <div #color class="mt-4 flex justify-between">
             <span class="font-light text-2xl text-indigoBlack-200 lg:hidden"
               >Color</span
@@ -127,7 +132,7 @@
             >Selecciona un Talle</span
           >
           <div class="w-full lineHeight mb-4 hidden lg:block opacity-25"></div>
-          <div #size class="mt-4 flex justify-between">
+          <div #size class="mt-4 flex justify-between" *ngIf="this.product">
             <span class="font-light text-2xl text-indigoBlack-200 lg:hidden"
               >Talles</span
             >
@@ -143,7 +148,10 @@
             </div>
           </div>
         </div>
-        <p class="font-light mt-6 text-sm text-indigoBlack-500 lg:hidden">
+        <p
+          class="font-light mt-6 text-sm text-indigoBlack-500 lg:hidden"
+          *ngIf="this.product"
+        >
           {{ this.product.description }}
         </p>
 

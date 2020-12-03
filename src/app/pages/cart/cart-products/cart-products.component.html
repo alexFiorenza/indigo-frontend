@@ -9,10 +9,13 @@
   >
     <span
       (click)="deleteProduct(i)"
-      class="absolute deleteText hidden lg:block text-indigoPink-700 font-Josefin font-light cursor-pointer"
+      class="absolute deleteText text-indigoPink-700 font-Josefin font-light cursor-pointer"
       >Eliminar</span
     >
-    <div class="w-11/12 bg-white flex shadow-md rounded-3xl my-6">
+    <div
+      (click)="redirectToProduct(product)"
+      class="w-11/12 bg-white flex shadow-md rounded-3xl my-6 cursor-pointer"
+    >
       <img
         [src]="uploadsUrl + product.images[0].image"
         class="w-3/12 imgRounded imgMaxHeight object-cover"
@@ -21,7 +24,6 @@
       <div class="w-3/4 font-Josefin">
         <div class="w-full flex justify-between px-3 text-lg mt-3">
           <span class="text-indigoBlack-500">{{ product.name }}</span>
-          <ion-icon name="heart-outline"></ion-icon>
         </div>
         <span class="text-indigoBlack-500 px-3 text-sm font-light">{{
           product.description

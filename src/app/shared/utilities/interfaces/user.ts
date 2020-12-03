@@ -1,3 +1,4 @@
+import { Order } from './order';
 export interface User {
     name: string;
     email: string;
@@ -11,4 +12,5 @@ export interface User {
     numberStreet: number;
     building: string;
     date?: string;
+    favorites: Array<Order>;
 };

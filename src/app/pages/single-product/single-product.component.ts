@@ -4,16 +4,18 @@ import { CartService } from './../../core/services/cart/cart.service';
 import { SwiperOptions } from 'swiper';
 import { environment } from './../../../environments/environment';
 import { ProductsService } from './../../core/services/http/api/products/products.service';
-import { Component, OnInit, ViewChild, ElementRef, AfterContentInit, Renderer2, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
+import { UserService } from '../../core/services/http/api/user/user.service';
+import { User } from '../../shared/utilities/interfaces/user';
 
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
   styleUrls: ['./single-product.component.scss'],
 })
-export class SingleProductComponent implements OnInit, AfterContentInit {
+export class SingleProductComponent implements OnInit {
   public productId: string;
   public product: Order;
   public apiUrl: string;
@@ -23,8 +25,9 @@ export class SingleProductComponent implements OnInit, AfterContentInit {
   public selectedSize: string;
   public lastSelectedColor;
   public lastSelectedSize;
-  private zoomMade = false;
-  private favorites = [];
+  public favorites = [];
+  public userSession: User;
+  public productInFavorites;
   @ViewChild('alert') private alert: ElementRef;
   @ViewChild('addCart') private cartBtn: ElementRef;
   @ViewChild('favorite') private favorite: ElementRef;
@@ -38,8 +41,8 @@ export class SingleProductComponent implements OnInit, AfterContentInit {
     private productService: ProductsService,
     private cartService: CartService,
     private clipboardService: ClipboardService,
-    private r: Renderer2,
-    @Inject(DOCUMENT) private _document
+    private userService: UserService,
+    private r: Renderer2
   ) {
     this.r.setStyle(document.body, 'background-color', 'white');
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -55,15 +58,40 @@ export class SingleProductComponent implements OnInit, AfterContentInit {
     });
   }
   ngOnInit(): void {
+    this.userSession = this.userService.loadPayload();
+    if (this.userSession) {
+      this.userService.getFavorites().subscribe((res) => {
+        //Add loader 
+        this.favorites = res.response.favorites;
+        if (this.favorites.length > 0) {
+          this.favorites.forEach(p => {
+            p.product._id === this.product._id ? this.productInFavorites = true : this.productInFavorites = false;
+          });
+          if (this.productInFavorites && this.favorite) {
+            this.favorite.nativeElement.classList.add('-active');
+          }
+        }
+      });
+    }
   }
-  ngAfterContentInit() {
-  }
+
   addToFavorites() {
     const favoriteElement = this.favorite.nativeElement;
     if (favoriteElement.className.indexOf('-active') > -1) {
       favoriteElement.classList.remove('-active');
+      if (this.productInFavorites) {
+        this.userService.deleteFavorite(this.product).subscribe(res => {
+          console.log(res);
+        });
+      }
     } else {
       favoriteElement.classList.add('-active');
+      if (!this.productInFavorites) {
+        this.userService.addToFavorites(this.product).subscribe((res) => {
+          console.log(res);
+          this.productInFavorites = true;
+        });
+      };
     }
   }
   changeCurrentImage(index: number) {
@@ -119,7 +147,7 @@ export class SingleProductComponent implements OnInit, AfterContentInit {
     return str.substr(4).split(')')[0].split(sep).map(Number);
   }
   showAlert() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     this.alert.nativeElement.classList.remove('hidden');
     this.alert.nativeElement.classList.add('flex');
     setTimeout(() => {

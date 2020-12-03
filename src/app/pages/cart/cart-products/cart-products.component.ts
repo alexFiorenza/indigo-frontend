@@ -1,8 +1,8 @@
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from './../../../../environments/environment';
 import { CartService } from './../../../core/services/cart/cart.service';
-import { Order } from './../../../shared/utilities/interfaces/order';
 import { Component, OnInit } from '@angular/core';
+import { Order } from '../../../shared/utilities/interfaces/order';
 
 @Component({
   selector: 'app-cart-products',
@@ -12,12 +12,17 @@ import { Component, OnInit } from '@angular/core';
 export class CartProductsComponent implements OnInit {
   public products: Array<Order>;
   public uploadsUrl = `${environment.uploadsUrl}/`;
-  constructor(private cartService: CartService) { }
+  public productsInFavorites: Array<Order> = [];
+  constructor(private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.products = this.cartService.getProducts();
   }
   deleteProduct(index: number) {
     this.cartService.deleteOneProduct(index);
+  }
+  redirectToProduct(product) {
+    const idProduct = product._id;
+    this.router.navigate(['/productos', idProduct]);
   }
 }

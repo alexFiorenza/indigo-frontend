@@ -21,6 +21,7 @@ export class CartService {
     return this.cart.getValue();
   }
   deleteOneProduct(index: number) {
-    this.cart.getValue().splice(index);
+    this.cart.getValue().splice(index, 1);
+    this.cart.next(this.cart.getValue());
   }
 }

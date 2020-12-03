@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.0.12:3000/api',
-  uploadsUrl: 'http://192.168.0.12:3000/public',
+  apiUrl: 'http://localhost:3000/api',
+  uploadsUrl: 'http://localhost:3000/public',
   andreaniApi: 'https://api.qa.andreani.com'
 };
 

@@ -5,6 +5,7 @@ import { environment } from './../../../environments/environment';
 import { DOCUMENT } from '@angular/common';
 import { CartService } from './../../core/services/cart/cart.service';
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-cart',
@@ -47,10 +48,14 @@ export class CartComponent implements OnInit {
     this.user = this.userService.loadPayload();
   }
   calculateCostProduct() {
-    this.products.forEach((p) => {
-      this.productsPrice += p.price;
-    });
-    this.total += this.productsPrice + this.costSend;
+    //TODO Refactor cost of products 
+    // this.cartService.$cart.subscribe(value => {
+    //   this.products = value;
+    //   this.products.forEach((p) => {
+    //     this.productsPrice += p.price;
+    //   });
+    //   this.total = this.productsPrice + this.costSend;
+    // });
   }
   calculateSendCost() { }
   checkout() {

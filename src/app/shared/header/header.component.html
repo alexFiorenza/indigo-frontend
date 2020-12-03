@@ -1,34 +1,36 @@
-<div class="flex w-full px-4 justify-between py-4 fixed z-50">
-  <ion-icon
-    (click)="openSidebar()"
-    #hamburguerMenu
-    name="menu-outline"
-    class="text-4xl text-indigoBlack-900 cursor-pointer"
-  ></ion-icon>
-  <ion-icon
-    (click)="redirectToProducts()"
-    name="chevron-back-outline"
-    #singleProduct
-    class="hidden text-4xl text-indigoBlack-900 cursor-pointer"
-  ></ion-icon>
-  <div class="relative cursor-pointer focus:outline-none">
+<div>
+  <div class="z-50 flex w-full px-4 justify-between fixed py-4">
     <ion-icon
-      routerLink="/carrito"
-      #cart
-      name="cart-outline"
-      class="text-4xl text-indigoBlack-900 focus:outline-none"
-    >
-    </ion-icon>
-    <div
-      class="font-Josefin absolute adjustCircle bg-indigoPink-500 rounded-full text-white text-center text-sm font-semibold"
-    >
-      <span class="text-white">{{ this.$total | async }}</span>
+      (click)="openSidebar()"
+      #hamburguerMenu
+      name="menu-outline"
+      class="text-4xl text-indigoBlack-900 cursor-pointer"
+    ></ion-icon>
+    <ion-icon
+      (click)="redirectToProducts()"
+      name="chevron-back-outline"
+      #singleProduct
+      class="hidden text-4xl text-indigoBlack-900 cursor-pointer"
+    ></ion-icon>
+    <div class="relative cursor-pointer focus:outline-none">
+      <ion-icon
+        routerLink="/carrito"
+        #cart
+        name="cart-outline"
+        class="text-4xl text-indigoBlack-900 focus:outline-none"
+      >
+      </ion-icon>
+      <div
+        class="font-Josefin absolute adjustCircle bg-indigoPink-500 rounded-full text-white text-center text-sm font-semibold"
+      >
+        <span class="text-white">{{ this.$total | async }}</span>
+      </div>
     </div>
   </div>
 
   <div
     #sidebar
-    class="left-0 top-0 z-50 fixed h-screen w-full md:max-w-sm text-indigoBlack-500 hidden"
+    class="left-0 top-0 sidebar fixed h-screen w-full md:max-w-sm text-indigoBlack-500 hidden"
   >
     <div
       class="items-start bg-white w-full h-full flex flex-col px-6 sm:px-8 shadow-lg slide-in-left relative"
