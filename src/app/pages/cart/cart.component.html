@@ -24,7 +24,7 @@
       >
         {{ this.title }}
       </h3>
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="componentActivated($event)"></router-outlet>
     </div>
     <div
       *ngIf="this.products.length > 0"

@@ -1,3 +1,4 @@
+import { CartService } from './../../../core/services/cart/cart.service';
 import { OrdersService } from './../../../core/services/http/api/orders/orders.service';
 import { Router } from '@angular/router';
 import { RegisterComponent } from './../../../auth/register/register.component';
@@ -18,12 +19,13 @@ export class CheckoutComponent implements OnInit {
   public installments: Array<any> = [];
   public creditCardThumbnail;
   public identificationTypes;
+  public token;
   @ViewChild('yearContainer') private yearsInput: ElementRef;
   @ViewChild('monthContainer') private monthInput: ElementRef;
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
   private mpScript = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js';
   constructor(private r: Renderer2, @Inject(DOCUMENT) public document,
-    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService) {
+    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService, private cartService: CartService) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.form = this.formBuilder.group({
       creditCardNumber: ['', Validators.required],
@@ -53,12 +55,14 @@ export class CheckoutComponent implements OnInit {
       issuer: this.form.get('selectedIssuer').value
     };
     this.mp.createToken(generateTokenObjs, (status, response) => {
-      if (status === 200) {
 
+      if (status === 200 || status === 201) {
+        console.log(response);
+        // this.token = response.id;
       } else {
-        console.log(`Response failed, reason: ${response}`);
+        console.log(`Response failed`);
       }
-    })
+    });
   }
   backendResponseMp() {
 
@@ -159,6 +163,7 @@ export class CheckoutComponent implements OnInit {
     if (status === 200) {
       // this.form.get('installments').setValue(this.defaultInstallments);
       this.installments = response[0].payer_costs;
+
     } else {
       console.log(`installments method info error: ${response}`);
     }
@@ -197,6 +202,20 @@ export class CheckoutComponent implements OnInit {
   }
   onFormSubmit() {
     this.generateToken(this.form.value);
+    // console.log(this.token);
+    //TODO Match with andreaniapi
+    // const paymentData = {
+    //   products: this.cartService.getProducts(),
+    //   date: Date.now(),
+    //   delayTime: '1 week',
+    //   delivery: 'andreani',
+    //   token
+    // };
+    // const installments = this.form.get('installments').value;
+    // const paymentMethodId = this.form.get('paymentMethodId').value;
+    // this.orderService.processPayment(paymentData, installments, paymentMethodId).subscribe(resp => {
+    //   console.log(resp);
+    // });
   }
 
   async getIdentificationTypes() {

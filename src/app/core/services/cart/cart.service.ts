@@ -1,13 +1,12 @@
 import { Order } from './../../../shared/utilities/interfaces/order';
-import { Product } from 'src/app/shared/utilities/interfaces/product';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private cart = new BehaviorSubject<Order[]>([]);
+  private cart = new BehaviorSubject<any>([]);
   private products: Array<Order> = [];
   public $cart = this.cart.asObservable();
   constructor() {
@@ -22,6 +21,6 @@ export class CartService {
   }
   deleteOneProduct(index: number) {
     this.cart.getValue().splice(index, 1);
-    this.cart.next(this.cart.getValue());
   }
+
 }

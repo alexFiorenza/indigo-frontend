@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { UserService } from './../../core/services/http/api/user/user.service';
 import { Order } from './../../shared/utilities/interfaces/order';
@@ -6,6 +7,8 @@ import { DOCUMENT } from '@angular/common';
 import { CartService } from './../../core/services/cart/cart.service';
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { products } from '../../shared/utilities/mocks/product';
+import { CartProductsComponent } from './cart-products/cart-products.component';
 
 @Component({
   selector: 'app-cart',
@@ -32,9 +35,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.r.setStyle(document.body, 'background-color', '#f3f3f3');
-    this.products = this.cartService.getProducts();
     this.calculateCostProduct();
-
     this.activatedRoute.children.forEach((r: any) => {
       this.title = r.url.value[0].path;
     });
@@ -48,14 +49,13 @@ export class CartComponent implements OnInit {
     this.user = this.userService.loadPayload();
   }
   calculateCostProduct() {
-    //TODO Refactor cost of products 
-    // this.cartService.$cart.subscribe(value => {
-    //   this.products = value;
-    //   this.products.forEach((p) => {
-    //     this.productsPrice += p.price;
-    //   });
-    //   this.total = this.productsPrice + this.costSend;
-    // });
+    this.productsPrice = 0;
+    this.products = this.cartService.getProducts();
+    this.products.forEach((p) => {
+      this.productsPrice += p.price;
+    });
+    this.total = this.productsPrice + this.costSend;
+    console.log(this.total);
   }
   calculateSendCost() { }
   checkout() {
@@ -65,5 +65,11 @@ export class CartComponent implements OnInit {
       }
     });
   }
-
+  componentActivated(event: CartProductsComponent) {
+    if (event.productDeleted) {
+      event.productDeleted.subscribe(value => {
+        this.calculateCostProduct();
+      });
+    }
+  }
 }

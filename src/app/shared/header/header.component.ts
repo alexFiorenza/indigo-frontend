@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.$total = this.cartService.$cart.pipe(
       map(p => p.length)
-    )
+    );
   }
 
   openSidebar() {
@@ -50,6 +50,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     window.location.reload();
   }
   redirectToProducts() {
-    this.route.navigate(['/productos'])
+    this.route.navigate(['/productos']);
   }
 }
