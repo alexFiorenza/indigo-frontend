@@ -10,14 +10,13 @@ import { environment } from 'src/environments/environment';
 export class OrdersService {
   public apiUrl = environment.apiUrl;
   constructor(private http: HttpClient, private userService: UserService) { }
-  processPayment(orderInfo, installments, paymentMethodId): Observable<any> {
+  processPayment(orderInfo, installments, paymentMethodId, price): Observable<any> {
     const headers = this.userService.setHeaders();
-    console.log(headers);
     const body = {
       orderInfo,
       installments,
       paymentMethodId,
-      price: 1000
+      price
     };
     return this.http.post(`${this.apiUrl}/orders/proccess_payment`, body, { headers });
   }

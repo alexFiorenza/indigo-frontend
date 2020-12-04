@@ -42,31 +42,6 @@ export class CheckoutComponent implements OnInit {
     //TODO Change it when form finally implemented
     // this.transactionAmount = this.router.getCurrentNavigation().extras.state.price
   }
-  generateToken(form) {
-
-    const generateTokenObjs = {
-      cardNumber: this.form.get('creditCardNumber').value,
-      cardExpirationMonth: this.form.get('expireDateMM').value,
-      cardExpirationYear: this.form.get('expireDateYY').value,
-      securityCode: this.form.get('securityCode').value,
-      cardholderName: this.form.get('cardholderName').value,
-      docType: this.form.get('docType').value,
-      docNumber: this.form.get('docNumber').value,
-      issuer: this.form.get('selectedIssuer').value
-    };
-    this.mp.createToken(generateTokenObjs, (status, response) => {
-
-      if (status === 200 || status === 201) {
-        console.log(response);
-        // this.token = response.id;
-      } else {
-        console.log(`Response failed`);
-      }
-    });
-  }
-  backendResponseMp() {
-
-  }
   ngOnInit(): void {
     this.generateScript();
     this.getIdentificationTypes();
@@ -200,22 +175,43 @@ export class CheckoutComponent implements OnInit {
       this.monthInput.nativeElement.focus();
     }
   }
-  onFormSubmit() {
-    this.generateToken(this.form.value);
-    // console.log(this.token);
-    //TODO Match with andreaniapi
-    // const paymentData = {
-    //   products: this.cartService.getProducts(),
-    //   date: Date.now(),
-    //   delayTime: '1 week',
-    //   delivery: 'andreani',
-    //   token
-    // };
-    // const installments = this.form.get('installments').value;
-    // const paymentMethodId = this.form.get('paymentMethodId').value;
-    // this.orderService.processPayment(paymentData, installments, paymentMethodId).subscribe(resp => {
-    //   console.log(resp);
-    // });
+  async onFormSubmit() {
+    const generateTokenObjs = {
+      cardNumber: this.form.get('creditCardNumber').value,
+      cardExpirationMonth: this.form.get('expireDateMM').value,
+      cardExpirationYear: this.form.get('expireDateYY').value,
+      securityCode: this.form.get('securityCode').value,
+      cardholderName: this.form.get('cardholderName').value,
+      docType: this.form.get('docType').value,
+      docNumber: this.form.get('docNumber').value,
+      issuer: this.form.get('selectedIssuer').value
+    };
+    console.log(generateTokenObjs);
+    this.mp.createToken(generateTokenObjs, async (status, response) => {
+      console.log(status, response);
+      if (status === 200 || status === 201) {
+        this.token = response.id;
+        const installments = this.form.get('installments').value;
+        const paymentMethodId = this.form.get('paymentMethodId').value;
+        const docNumber = this.form.get('docNumber').value;
+        const docType = this.form.get('docType').value;
+        //TODO Match with andreaniapi
+        const paymentData = {
+          products: this.cartService.getProducts(),
+          date: Date.now(),
+          delayTime: '1 week',
+          delivery: 'andreani',
+          token: this.token,
+          docNumber,
+          docType
+        };
+        this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).subscribe(resp => {
+          console.log(resp);
+        });
+      } else {
+        console.log('Response failed!!');
+      }
+    });
   }
 
   async getIdentificationTypes() {
