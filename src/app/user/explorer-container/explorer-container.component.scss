@@ -1,3 +1,6 @@
+.adjustHeight {
+  margin-bottom: 110px;
+}
 /*
   -- Values
   */
@@ -164,5 +167,10 @@ nav {
   .material-icons-outlined {
     color: $nav-icon-color;
     font-size: $nav-icon-size;
+  }
+}
+@media screen and (max-width: 350px) {
+  .collide-tabs {
+    margin-bottom: 5rem;
   }
 }

@@ -16,7 +16,7 @@ export class ExplorerContainerComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.r.setStyle(document.body, 'background-color', '#F3F3F3')
   }
-  addClass(elem: NodeListOf<Element>) {
+  addClass(elem) {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < elem.length; i++) {
       elem[i].addEventListener('click', function (e) {

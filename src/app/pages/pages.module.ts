@@ -11,6 +11,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { CartProductsComponent } from './cart/cart-products/cart-products.component';
 import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -29,7 +30,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     SharedModule,
     RouterModule,
     SwiperModule,
-    ClipboardModule
+    ClipboardModule,
+    ReactiveFormsModule
   ],
   exports: [
     HomeComponent,

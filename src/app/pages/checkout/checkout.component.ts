@@ -3,9 +3,8 @@ import { CartService } from './../../core/services/cart/cart.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import { SweetAlert } from 'sweetalert/typings/core';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -13,7 +12,7 @@ import { SweetAlert } from 'sweetalert/typings/core';
 })
 export class CheckoutComponent implements OnInit {
   @Input() public transactionAmount: Number = 0;
-  public swal: SweetAlert
+  // public swal: SweetAlert = swal;
   public mp;
   public form: FormGroup;
   public paymentMethod;
@@ -205,7 +204,7 @@ export class CheckoutComponent implements OnInit {
         };
         this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).subscribe(resp => {
           if (status) {
-            this.swal({
+            swal.fire({
               title: 'Confirmado',
               text: 'El pago se ha procesado correctamente',
               icon: 'success',
@@ -215,7 +214,7 @@ export class CheckoutComponent implements OnInit {
               this.router.navigate(['profile']);
             }, 2000);
           } else {
-            this.swal({
+            swal.fire({
               title: '¡Ha ocurrido un error!',
               text: 'Los datos introducidos no son correctos',
               icon: 'error',
@@ -227,13 +226,13 @@ export class CheckoutComponent implements OnInit {
           }
         });
       } else {
-        this.swal({
+        swal.fire({
           title: 'Ha ocurrido un error',
           text: 'Los datos no pudieron ser validados',
           icon: 'error',
         });
         setTimeout(() => {
-          this.swal.close();
+          swal.close();
           this.router.navigate(['carrito']);
         }, 2500);
       }

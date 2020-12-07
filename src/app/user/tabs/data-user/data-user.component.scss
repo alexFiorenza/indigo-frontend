@@ -1,3 +1,10 @@
 input::placeholder {
   color: #d2d2d2;
 }
+.animate__animated.animate__backInUp {
+  --animate-duration: 0.5s;
+}
+input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
