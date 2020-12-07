@@ -59,7 +59,7 @@ export class CartComponent implements OnInit {
   }
   calculateSendCost() { }
   checkout() {
-    this.router.navigateByUrl('checkout', {
+    this.router.navigateByUrl('procesar_pago', {
       state: {
         price: this.total
       }

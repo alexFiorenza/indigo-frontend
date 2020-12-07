@@ -1,3 +1,4 @@
+import { UserModule } from './user/user.module';
 import { PagesRoutingModule } from './pages/pages-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { CoreModule } from './core/core.module';
@@ -14,6 +15,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { FormsModule } from '@angular/forms';
+import { UserRoutingModule } from './user/user-routing.module';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -34,6 +36,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CoreModule,
     PagesRoutingModule,
     AppRoutingModule,
+    UserRoutingModule,
+    UserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [

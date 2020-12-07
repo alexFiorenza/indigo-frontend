@@ -3,6 +3,9 @@ import { CartProductsComponent } from './cart/cart-products/cart-products.compon
 import { CartComponent } from './cart/cart.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CheckoutGuard } from '../core/guards/checkout.guard';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,15 @@ const routes: Routes = [
         component: CartUserDataComponent
       }
     ]
+  },
+  {
+    path: 'procesar_pago',
+    component: CheckoutComponent,
+    canActivate: [CheckoutGuard]
+  },
+  {
+    path: 'inicio',
+    component: HomeComponent
   }
 ];
 @NgModule({

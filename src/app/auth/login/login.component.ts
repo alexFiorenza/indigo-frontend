@@ -37,6 +37,10 @@ export class LoginComponent implements OnInit {
         setTimeout(() => {
           this.router.navigate(['/inicio']);
         }, 1000);
+      } else {
+        this.status = 'error';
+        componentRef.instance.status = this.status;
+        window.location.reload();
       }
     });
   }

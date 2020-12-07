@@ -1,0 +1,57 @@
+<app-header></app-header>
+<div class="h-screen w-screen relative">
+  <div class="pt-16">
+    <!--TODO Add title of actual page-->
+    <router-outlet></router-outlet>
+  </div>
+  <div #explorer class="fixed bottom-0 w-screen">
+    <div
+      class="container w-full flex flex-col flex-grow items-center justify-center"
+    >
+      <nav>
+        <ul>
+          <li>
+            <a
+              routerLink="datos"
+              (click)="addClass(0)"
+              class="flex justify-center items-center link isActive"
+            >
+              <i class="material-icons-outlined">face</i>
+              <span>Datos</span>
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="favoritos"
+              (click)="addClass(1)"
+              class="flex justify-center items-center link"
+            >
+              <i class="material-icons-outlined">favorite</i>
+              <span>Favoritos</span>
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="pedidos"
+              (click)="addClass(2)"
+              class="flex justify-center items-center link"
+            >
+              <i class="material-icons-outlined">shopping_basket</i>
+              <span>pedidos</span>
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="ajustes"
+              (click)="addClass(3)"
+              class="flex justify-center items-center link"
+            >
+              <i class="material-icons-outlined">settings</i>
+              <span>Ajustes</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

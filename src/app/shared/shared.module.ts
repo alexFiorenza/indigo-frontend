@@ -5,10 +5,9 @@ import { RouterModule } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
-  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, CheckoutComponent],
+  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent],
   imports: [
     CommonModule,
     RouterModule,

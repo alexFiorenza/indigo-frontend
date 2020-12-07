@@ -1,17 +1,19 @@
-import { CartService } from './../../../core/services/cart/cart.service';
-import { OrdersService } from './../../../core/services/http/api/orders/orders.service';
+import { OrdersService } from './../../core/services/http/api/orders/orders.service';
+import { CartService } from './../../core/services/cart/cart.service';
 import { Router } from '@angular/router';
-import { RegisterComponent } from './../../../auth/register/register.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
+import swal from 'sweetalert';
 import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { SweetAlert } from 'sweetalert/typings/core';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-  @Input() public transactionAmount: Number = 1000;
+  @Input() public transactionAmount: Number = 0;
+  public swal: SweetAlert
   public mp;
   public form: FormGroup;
   public paymentMethod;
@@ -39,13 +41,11 @@ export class CheckoutComponent implements OnInit {
       selectedIssuer: ['', Validators.required],
       installments: ['', Validators.required]
     });
-    //TODO Change it when form finally implemented
-    // this.transactionAmount = this.router.getCurrentNavigation().extras.state.price
+    this.transactionAmount = this.router.getCurrentNavigation().extras.state.price
   }
   ngOnInit(): void {
     this.generateScript();
     this.getIdentificationTypes();
-
   }
   checkCreditCardNumber() {
     const value: number = this.form.get('creditCardNumber').value;
@@ -175,7 +175,7 @@ export class CheckoutComponent implements OnInit {
       this.monthInput.nativeElement.focus();
     }
   }
-  async onFormSubmit() {
+  onFormSubmit() {
     const generateTokenObjs = {
       cardNumber: this.form.get('creditCardNumber').value,
       cardExpirationMonth: this.form.get('expireDateMM').value,
@@ -186,9 +186,7 @@ export class CheckoutComponent implements OnInit {
       docNumber: this.form.get('docNumber').value,
       issuer: this.form.get('selectedIssuer').value
     };
-    console.log(generateTokenObjs);
     this.mp.createToken(generateTokenObjs, async (status, response) => {
-      console.log(status, response);
       if (status === 200 || status === 201) {
         this.token = response.id;
         const installments = this.form.get('installments').value;
@@ -206,10 +204,38 @@ export class CheckoutComponent implements OnInit {
           docType
         };
         this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).subscribe(resp => {
-          console.log(resp);
+          if (status) {
+            this.swal({
+              title: 'Confirmado',
+              text: 'El pago se ha procesado correctamente',
+              icon: 'success',
+            });
+            setTimeout(() => {
+              //TODO Redirect to order process
+              this.router.navigate(['profile']);
+            }, 2000);
+          } else {
+            this.swal({
+              title: '¡Ha ocurrido un error!',
+              text: 'Los datos introducidos no son correctos',
+              icon: 'error',
+            });
+            setTimeout(() => {
+              //TODO Redirect to order process
+              this.router.navigate(['profile']);
+            }, 3000);
+          }
         });
       } else {
-        console.log('Response failed!!');
+        this.swal({
+          title: 'Ha ocurrido un error',
+          text: 'Los datos no pudieron ser validados',
+          icon: 'error',
+        });
+        setTimeout(() => {
+          this.swal.close();
+          this.router.navigate(['carrito']);
+        }, 2500);
       }
     });
   }

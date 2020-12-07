@@ -10,7 +10,7 @@ import { CartComponent } from './cart/cart.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { CartProductsComponent } from './cart/cart-products/cart-products.component';
 import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
-import { FavoritesComponent } from './favorites/favorites.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 
@@ -22,7 +22,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
     CartComponent,
     CartProductsComponent,
     CartUserDataComponent,
-    FavoritesComponent,
+    CheckoutComponent
   ],
   imports: [
     CommonModule,

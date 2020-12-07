@@ -11,16 +11,15 @@ export class CheckoutGuard implements CanActivate {
   constructor(private router: Router) {
   }
   canActivate() {
-    return true;
-    // const state = this.router.getCurrentNavigation().extras.state;
-    // if (state !== undefined) {
-    //   this.price = state.price;
-    // }
-    // if (this.price) {
-    //   return true;
-    // } else {
-    //   this.router.navigate(['inicio']);
-    //   return false;
-    // }
+    const state = this.router.getCurrentNavigation().extras.state;
+    if (state !== undefined) {
+      this.price = state.price;
+    }
+    if (this.price) {
+      return true;
+    } else {
+      this.router.navigate(['inicio']);
+      return false;
+    }
   }
 }
