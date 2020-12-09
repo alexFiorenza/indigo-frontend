@@ -31,4 +31,24 @@ export class FavoritesComponent implements OnInit {
       path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/hourglass/hourglass.json'
     });
   }
+  clickedFavorite(id, overlay: HTMLElement) {
+    const overlayClasses = overlay.classList;
+    if (!overlayClasses.contains('hidden')) {
+      overlayClasses.add('fade-out-bck');
+      setTimeout(() => {
+        overlayClasses.toggle('hidden');
+      }, 700);
+    } else {
+      overlayClasses.remove('fade-out-bck');
+      overlayClasses.toggle('hidden');
+    }
+
+  }
+  deleteFavorite(order: Order) {
+    this.userService.deleteFavorite(order).subscribe((value) => {
+      if (status) {
+        window.location.reload();
+      }
+    })
+  }
 }

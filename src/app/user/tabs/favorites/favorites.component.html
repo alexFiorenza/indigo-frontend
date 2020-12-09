@@ -17,12 +17,30 @@
 
 <div
   *ngIf="this.favorites.length >= 0 && !this.loading"
-  class="flex flex-col items-center w-full animate__animated animate__backInDown"
+  class="flex flex-col items-center w-full animate__animated animate__slideInDown"
 >
   <div
     *ngFor="let f of favorites"
-    class="rounded-md shadow-md w-11/12 py-5 items-center px-3 bg-white flex font-Josefin text-indigoBlack-500"
+    (click)="clickedFavorite(f.product._id, overlay)"
+    class="relative cursor-pointer rounded-md shadow-md w-11/12 py-5 items-center px-3 bg-white flex font-Josefin text-indigoBlack-500"
   >
+    <div
+      #overlay
+      class="hidden absolute w-full h-full bg-indigoBlack-900 opacity-25 left-0 rounded-md fade-in-bck"
+    >
+      <div class="w-full h-full flex justify-center items-center">
+        <ion-icon
+          class="text-white text-3xl px-2"
+          [routerLink]="'/productos/' + f.product._id"
+          name="open-outline"
+        ></ion-icon>
+        <ion-icon
+          (click)="deleteFavorite(f.product)"
+          class="text-white text-3xl px-2"
+          name="remove-circle-outline"
+        ></ion-icon>
+      </div>
+    </div>
     <div>
       <img
         class="w-20 rounded-full"

@@ -1,12 +1,55 @@
 <app-header></app-header>
-<div class="h-screen w-screen relative collide-tabs">
-  <div class="pt-16">
+<div
+  class="h-screen w-screen relative collide-tabs lg:flex flex-row-reverse lg:justify-center"
+>
+  <div class="pt-16 lg:w-8/12 lg:max-w-lg">
     <!--TODO Add title of actual page-->
     <router-outlet></router-outlet>
   </div>
-  <div #explorer class="fixed bottom-0 w-screen">
+  <div
+    #explorer
+    class="fixed bottom-0 w-screen lg:static lg:pt-16 lg:max-w-xxs"
+  >
     <div
-      class="animate__animated animate__backInUp container w-full flex flex-col flex-grow items-center justify-center"
+      #desktop
+      class="hidden rounded-lg font-Josefin lg:flex flex-col items-start bg-white px-6 shadow-md pb-16 pt-6"
+    >
+      <div
+        routerLink="/panel/datos"
+        routerLinkActive="active"
+        class="my-2 flex items-center focus:outline-none text-indigoBlack-900 cursor-pointer"
+      >
+        <ion-icon class="text-xl" name="person-outline"></ion-icon>
+        <span class="px-3">Mis datos</span>
+      </div>
+      <div
+        routerLink="/panel/favoritos"
+        routerLinkActive="active"
+        class="my-2 flex items-center focus:outline-none text-indigoBlack-900 cursor-pointer"
+      >
+        <ion-icon class="text-xl" name="heart-outline"></ion-icon>
+        <span class="px-3">Favoritos</span>
+      </div>
+      <div
+        routerLink="/panel/pedidos"
+        routerLinkActive="active"
+        class="my-2 flex items-center focus:outline-none text-indigoBlack-900 cursor-pointer"
+      >
+        <ion-icon class="text-xl" name="bag-outline"></ion-icon>
+        <span class="px-3">Mis pedidos</span>
+      </div>
+      <div
+        routerLink="/panel/ajustes"
+        routerLinkActive="active"
+        class="my-2 flex items-center focus:outline-none text-indigoBlack-900 cursor-pointer"
+      >
+        <ion-icon class="text-xl" name="settings-outline"></ion-icon>
+        <span class="px-3">Ajustes</span>
+      </div>
+    </div>
+    <div
+      #mobile
+      class="lg:hidden animate__animated animate__backInUp container w-full flex flex-col flex-grow items-center justify-center"
     >
       <nav>
         <ul>

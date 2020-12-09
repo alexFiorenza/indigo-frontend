@@ -25,7 +25,7 @@ module.exports = {
         100: "#B1B1B1",
         200: "#D2D2D2",
         300: "#F6F6F6",
-        400:"#919191",
+        400: "#919191",
         500: "#707070",
         700: "#444444",
         800: "#4f4f4f",
@@ -380,6 +380,7 @@ module.exports = {
     },
     maxWidth: (theme, { breakpoints }) => ({
       none: "none",
+      xxs: "15rem",
       xs: "20rem",
       sm: "24rem",
       md: "28rem",

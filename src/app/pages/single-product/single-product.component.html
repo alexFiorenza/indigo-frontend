@@ -23,7 +23,7 @@
   >
     <div
       *ngFor="let slide of this.product.images"
-      class="productImages top-0 relative overflow-hidden"
+      class="productImages top-0 relative overflow-hidden animate__animated animate__zoomIn"
     >
       <img
         [src]="this.apiUrl + slide.image"
@@ -60,7 +60,7 @@
     </div>
     <div
       #productInfo
-      class="lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-10 bottom-0 productInfo bg-white px-8 font-Josefin lg:mx-8 h-auto"
+      class="animate__animated animate__slideInUp lg:mb-24 lg:static lg:bg-transparent lg:max-w-md w-full absolute z-10 bottom-0 productInfo bg-white px-8 font-Josefin lg:mx-8 h-auto"
     >
       <div class="flex flex-col w-full mt-8 lg:mt-0">
         <div class="w-full flex justify-between px-2">

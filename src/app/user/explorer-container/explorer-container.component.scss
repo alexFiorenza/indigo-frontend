@@ -1,3 +1,5 @@
+@import "../../shared/utilities/stylesUtilities.scss";
+@include strokeIcon();
 .adjustHeight {
   margin-bottom: 110px;
 }
@@ -173,4 +175,7 @@ nav {
   .collide-tabs {
     margin-bottom: 5rem;
   }
+}
+.active {
+  color: #f086a3;
 }
