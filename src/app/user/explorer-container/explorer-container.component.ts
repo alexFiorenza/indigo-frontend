@@ -1,20 +1,21 @@
+import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { Component, OnInit, AfterViewInit, Inject, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, Renderer2, AfterContentInit } from '@angular/core';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-explorer-container',
   templateUrl: './explorer-container.component.html',
   styleUrls: ['./explorer-container.component.scss']
 })
-export class ExplorerContainerComponent implements OnInit, AfterViewInit {
+export class ExplorerContainerComponent implements OnInit, AfterContentInit {
 
-  constructor(@Inject(DOCUMENT) private document, private r: Renderer2) { }
-  ngAfterViewInit() {
+  constructor(@Inject(DOCUMENT) private document, private r: Renderer2, private router: ActivatedRoute) { }
+  ngAfterContentInit() {
     this.addClass(document.querySelectorAll('.link'));
-
   }
   ngOnInit(): void {
-    this.r.setStyle(document.body, 'background-color', '#F3F3F3')
+    this.r.setStyle(document.body, 'background-color', '#F3F3F3');
   }
   addClass(elem) {
     // tslint:disable-next-line: prefer-for-of

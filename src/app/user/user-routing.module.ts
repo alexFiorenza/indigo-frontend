@@ -11,6 +11,11 @@ const USER_ROUTES: Routes = [
         component: ExplorerContainerComponent,
         children: [
             {
+                path: '',
+                redirectTo: 'datos',
+                pathMatch: 'full'
+            },
+            {
                 path: 'datos',
                 component: DataUserComponent
             },
@@ -27,11 +32,6 @@ const USER_ROUTES: Routes = [
                 component: SettingsComponent
             }
         ]
-    },
-    {
-        path: '',
-        redirectTo: 'panel/datos',
-        pathMatch: 'full'
     }
 ];
 @NgModule({
