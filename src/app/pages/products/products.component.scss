@@ -26,10 +26,6 @@ $border-img: #fcc6e3;
   transition: 0.4s ease-in;
   height: 98%;
 }
-.rotateArrow90 {
-  transition: 0.4s ease-in;
-  transform: rotateZ(180deg);
-}
 .defaultRotationArrow {
   transform: rotateZ(0deg);
 }

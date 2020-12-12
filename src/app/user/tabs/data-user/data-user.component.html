@@ -1,58 +1,56 @@
 <div
-  class="px-6 flex flex-col font-Josefin animate__animated animate__slideInDown"
+  class="lg:max-w-sm px-6 flex flex-col font-Josefin animate__animated animate__slideInDown"
 >
   <div class="flex flex-col items-start">
     <label for="name" class="text-indigoBlack-800 uppercase font-semibold"
       >Nombre</label
     >
-    <input
-      type="text"
-      placeholder="Alex Fiorenza"
-      class="text-sm px-4 py-3 rounded-full shadow-lg w-full my-2"
-    />
+    <div
+      class="text-indigoBlack-200 capitalize text-sm px-4 py-3 rounded-full bg-white shadow-lg w-full my-2"
+    >
+      {{ this.user.name }}
+    </div>
   </div>
   <div class="flex flex-col items-start mt-4">
     <label for="name" class="text-indigoBlack-800 uppercase font-semibold"
       >Email</label
     >
-    <input
-      type="email"
-      placeholder="alexxdfiorenza@gmail.com"
-      class="text-sm px-4 py-3 rounded-full shadow-lg w-full my-2"
-    />
+    <div
+      class="text-indigoBlack-200 text-sm px-4 py-3 rounded-full shadow-lg w-full my-2 bg-white"
+    >
+      {{ this.user.email }}
+    </div>
   </div>
   <div class="flex flex-col items-start mt-4">
     <label for="name" class="text-indigoBlack-800 uppercase font-semibold"
       >Telefono</label
     >
-    <input
-      type="number"
-      placeholder="1553158926"
-      class="text-sm px-4 py-3 rounded-full shadow-lg w-full my-2"
-    />
+    <div
+      class="text-indigoBlack-200 text-sm px-4 py-3 rounded-full shadow-lg w-full my-2 bg-white"
+    >
+      {{ this.user.phone }}
+    </div>
   </div>
   <div class="flex flex-col items-start mt-4">
     <label class="text-indigoBlack-800 uppercase font-semibold" for=""
       >Dirección</label
     >
-    <div class="flex">
-      <input
-        type="text"
-        placeholder="Buenos Aires"
-        class="text-sm px-5 py-3 rounded-full shadow-lg w-full my-2 mr-1"
-      />
-      <input
-        type="text"
-        placeholder="Lomas de Zamora"
-        class="text-sm px-5 py-3 rounded-full shadow-lg w-full my-2 ml-1"
-      />
+    <div class="flex w-full">
+      <div
+        class="text-indigoBlack-200 text-sm px-5 py-3 rounded-full shadow-lg w-1/2 my-2 mr-1 bg-white"
+      >
+        {{ this.user.province }}
+      </div>
+      <div
+        class="text-indigoBlack-200 text-sm px-5 py-3 rounded-full shadow-lg w-1/2 my-2 ml-1 bg-white"
+      >
+        {{ this.user.town }}
+      </div>
     </div>
-    <input
-      type="text"
-      placeholder="General Eustaquio frias"
-      class="text-sm px-5 py-3 rounded-full shadow-lg w-full my-2"
-    />
+    <div
+      class="text-indigoBlack-200 text-sm px-5 py-3 rounded-full shadow-lg w-full my-2 bg-white"
+    >
+      {{ this.user.street + this.user.numberStreet }}
+    </div>
   </div>
-  <div></div>
-  <div></div>
 </div>

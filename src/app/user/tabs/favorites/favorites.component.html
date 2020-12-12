@@ -30,13 +30,13 @@
     >
       <div class="w-full h-full flex justify-center items-center">
         <ion-icon
-          class="text-white text-3xl px-2"
+          class="text-white text-3xl px-2 focus:outline-none"
           [routerLink]="'/productos/' + f.product._id"
           name="open-outline"
         ></ion-icon>
         <ion-icon
           (click)="deleteFavorite(f.product)"
-          class="text-white text-3xl px-2"
+          class="text-white text-3xl px-2 focus:outline-none"
           name="remove-circle-outline"
         ></ion-icon>
       </div>

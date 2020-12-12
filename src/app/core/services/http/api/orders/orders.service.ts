@@ -20,5 +20,8 @@ export class OrdersService {
     };
     return this.http.post(`${this.apiUrl}/orders/proccess_payment`, body, { headers });
   }
-
+  getOrdersPerUserId(id) {
+    const headers = this.userService.setHeaders();
+    return this.http.get(`${this.apiUrl}/orders/userOrder/${id}`, { headers })
+  }
 }

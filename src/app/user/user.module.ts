@@ -7,6 +7,7 @@ import { ExplorerContainerComponent } from './explorer-container/explorer-contai
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { DataUserComponent } from './tabs/data-user/data-user.component';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 
 
@@ -15,7 +16,8 @@ import { DataUserComponent } from './tabs/data-user/data-user.component';
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    SwiperModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,4 +1,6 @@
+import { UserService } from './../../../core/services/http/api/user/user.service';
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../../shared/utilities/interfaces/user';
 
 @Component({
   selector: 'app-data-user',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./data-user.component.scss']
 })
 export class DataUserComponent implements OnInit {
-
-  constructor() { }
+  public user: User;
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.user = this.userService.loadPayload();
   }
 
 }

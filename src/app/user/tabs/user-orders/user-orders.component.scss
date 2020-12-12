@@ -1,0 +1,37 @@
+@import "../../../shared/utilities/stylesUtilities.scss";
+@include strokeIcon;
+.quantityCircle {
+  background-color: #f25d5d;
+  top: -10px;
+  right: -8px;
+}
+.activeOrder {
+  background-color: #b6fbc0;
+}
+ion-icon {
+  color: #afafaf;
+}
+.orderShadow {
+  box-shadow: 0px 3px 6px #aca2a247;
+}
+.borderRightFirst {
+  position: relative;
+  box-shadow: 5px 5px 0px rgba($color: #eaeaea, $alpha: 0.95),
+    10px 10px 0px rgba($color: #eaeaea, $alpha: 0.34);
+}
+.slide-out-top {
+  animation: slide-out-top 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+.arrowRotation {
+  transition: 1s ease-in-out;
+}
+.rotateArrow90 {
+  transition: 0.4s ease-in;
+  transform: rotateZ(180deg);
+}
+.defaultRotationArrow {
+  transform: rotateZ(0deg);
+}
+.lineHeight {
+  height: 0.5px;
+}

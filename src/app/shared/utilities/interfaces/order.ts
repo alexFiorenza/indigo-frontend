@@ -1,3 +1,4 @@
+import { User } from './user';
 export interface Order {
     name: string;
     description: string;
@@ -10,6 +11,12 @@ export interface Order {
     sale?: number;
     homeView: boolean;
     _id?: string;
+    products: Array<any>;
+    status: string;
     categories: Array<any>;
     stock: boolean;
+    deliveryMethod?: string;
+    user?: User;
+    delayTime?: string;
+    trackingId?: string;
 }

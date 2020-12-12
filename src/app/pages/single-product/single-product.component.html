@@ -79,6 +79,7 @@
 
             <div
               class="m-favorite cursor-pointer"
+              *ngIf="this.userSession"
               #favorite
               (click)="addToFavorites()"
             >

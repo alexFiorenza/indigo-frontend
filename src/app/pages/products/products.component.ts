@@ -58,7 +58,6 @@ export class ProductsComponent implements OnInit {
       setTimeout(() => {
         this.filtersTexts.nativeElement.classList.remove('hidden');
         this.filtersTexts.nativeElement.classList.add('flex');
-
       }, 400);
     } else {
       this.filters.nativeElement.classList.remove('normalizeHeight');
@@ -69,7 +68,6 @@ export class ProductsComponent implements OnInit {
       }, 400);
       this.filters.nativeElement.classList.add('h-24');
       this.icon.nativeElement.classList.add('defaultRotationArrow');
-
       this.opened = false;
     }
   }
