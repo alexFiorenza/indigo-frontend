@@ -1,1 +1,93 @@
-<p>products works!</p>
+<div class="w-full animate__animated animate__fadeIn">
+  <div class="mt-12 flex w-full justify-between items-center pr-8">
+    <div class="flex items-center">
+      <ion-icon name="layers" class="text-indigoBlack-800 text-2xl"></ion-icon>
+      <span class="text-indigoBlack-800 ml-4 text-2xl">Productos</span>
+    </div>
+    <div
+      class="flex items-center bg-indigoPink-700 text-white px-12 py-4 rounded-full cursor-pointer btnAddShadow"
+    >
+      <ion-icon name="add-circle" class="pr-4 text-lg opacity-75"></ion-icon>
+      <button class="text-lg focus:outline-none">Añadir</button>
+    </div>
+  </div>
+  <div #productsBox class="w-11/12 shadow-md mt-12 py-4 relative">
+    <div class="flex justify-between w-full items-center px-8">
+      <div class="flex items-center h-8">
+        <div class="flex flex-col mr-4 h-full relative">
+          <span
+            (click)="changeFilter(stock, stockActive)"
+            #stock
+            id="stock"
+            class="text-indigoPink-700 uppercase text-sm cursor-pointer"
+            >stock</span
+          >
+          <div
+            #stockActive
+            id="stockActive"
+            class="absolute bottom-0 stockFilter w-full animate__animated animate__fadeIn"
+          ></div>
+        </div>
+        <div class="flex flex-col h-full relative">
+          <span
+            (click)="changeFilter(noStock, noStockActive)"
+            #noStock
+            class="text-indigoPink-700 uppercase opacity-50 text-sm cursor-pointer"
+            >sin stock</span
+          >
+          <div
+            #noStockActive
+            class="absolute hidden bottom-0 stockFilter w-full animate__animated animate__fadeIn"
+          ></div>
+        </div>
+      </div>
+      <div class="flex items-center font-Josefin text-indigoBlack-100">
+        <div
+          (click)="editProducts(editContainer)"
+          #editContainer
+          class="flex items-center cursor-pointer mx-2"
+        >
+          <ion-icon name="create"></ion-icon>
+          <span class="text-sm mt-1 mx-2">Editar</span>
+        </div>
+        <div class="flex items-center cursor-pointer mx-2">
+          <ion-icon name="trash"></ion-icon>
+          <span class="text-sm mt-1 mx-2">Eliminar</span>
+        </div>
+        <div class="flex items-center cursor-pointer mx-2">
+          <ion-icon name="search"></ion-icon>
+          <span class="text-sm mt-1 mx-2">Buscar</span>
+        </div>
+      </div>
+    </div>
+    <div class="w-full lineSeparator mb-2 opacity-25"></div>
+    <div #productsContainer class="productsGridLayout px-8 py-4 font-Josefin">
+      <div
+        *ngFor="let product of products"
+        #product
+        class="relative w-full max-widthProduct cursor-pointer animate__animated animate__infinite"
+      >
+        <div
+          class="hidden absolute w-full h-48 setMaxHeight justify-center items-center"
+        >
+          <ion-icon
+            name="pencil"
+            class="absolute text-4xl z-30 text-indigoBlack-500"
+          ></ion-icon>
+          <div
+            class="bg-white absolute opacity-50 w-full rounded-lg h-full z-20"
+          ></div>
+        </div>
+        <img
+          class="w-full object-cover rounded-lg setMaxHeight h-48 z-10"
+          [src]="uploadsUrl + '/' + product.images[0].image"
+          alt=""
+        />
+        <div class="flex flex-col my-3">
+          <span class="text-indigoBlack-800 text-sm">{{ product.name }}</span>
+          <span class="text-indigoBlack-400 text-xs">${{ product.price }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

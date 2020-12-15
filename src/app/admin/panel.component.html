@@ -1,5 +1,5 @@
-<div class="w-screen font-Josefin">
-  <div #navPanel class="w-5/12 h-screen flex flex-col relative">
+<div class="w-screen font-Josefin flex">
+  <div #navPanel class="w-2/6 h-screen flex flex-col relative">
     <h2 class="text-indigoBlack-400 text-5xl uppercase ml-20 mt-20">indigo</h2>
     <div
       routerLink="inicio"
@@ -86,5 +86,8 @@
         >Volver a la pagina</span
       >
     </div>
+  </div>
+  <div class="w-4/6">
+    <router-outlet></router-outlet>
   </div>
 </div>
