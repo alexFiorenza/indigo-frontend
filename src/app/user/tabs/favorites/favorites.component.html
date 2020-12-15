@@ -14,7 +14,12 @@
     >¡No tenes ningun producto agregado a favoritos!</span
   >
 </div>
-
+<h2
+  *ngIf="this.favorites.length >= 0 && !this.loading"
+  class="font-Josefin text-4xl text-indigoBlack-900 px-4 mb-4 animate__animated animate__fadeIn animate__delay-1s lg:hidden"
+>
+  Favoritos
+</h2>
 <div
   *ngIf="this.favorites.length >= 0 && !this.loading"
   class="flex flex-col items-center w-full animate__animated animate__slideInDown"

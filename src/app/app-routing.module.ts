@@ -1,7 +1,5 @@
-import { CheckoutGuard } from './core/guards/checkout.guard';
 import { SingleProductComponent } from './pages/single-product/single-product.component';
 import { ProductsComponent } from './pages/products/products.component';
-import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

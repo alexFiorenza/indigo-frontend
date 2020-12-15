@@ -1,3 +1,8 @@
+<h2
+  class="font-Josefin text-3xl text-indigoBlack-900 px-4 mb-4 animate__animated animate__fadeIn animate__delay-1s lg:hidden"
+>
+  Mis pedidos
+</h2>
 <div class="w-full flex items-center flex-col font-Josefin">
   <div
     class="w-full flex flex-col items-center"
@@ -6,8 +11,8 @@
   >
     <div
       #orderInfo
-      (click)="openedOrder(orderInfo, order, orderContainer)"
-      class="z-50 orderShadow w-10/12 flex flex-col items-center cursor-pointer bg-white my-2 px-6 pt-6 rounded-2xl animate__animated animate__slideInDown"
+      (click)="openedOrder(orderInfo, order, orderContainer, icon)"
+      class="z-30 orderShadow w-10/12 flex flex-col items-center cursor-pointer bg-white my-2 px-6 pt-6 rounded-2xl animate__animated animate__slideInDown"
     >
       <div class="flex w-full mb-4 items-start">
         <div class="w-32 relative">

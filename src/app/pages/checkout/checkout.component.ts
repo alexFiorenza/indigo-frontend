@@ -211,7 +211,7 @@ export class CheckoutComponent implements OnInit {
             });
             setTimeout(() => {
               //TODO Redirect to order process
-              this.router.navigate(['profile']);
+              this.router.navigate(['/panel/pedidos']);
             }, 2000);
           } else {
             swal.fire({
