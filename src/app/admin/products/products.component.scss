@@ -75,8 +75,11 @@
     transform: translate(0);
   }
 }
-.selected {
+.selectedEdit {
   color: #c8b6fa;
+}
+.selectedDelete {
+  color: #f56565;
 }
 .setMaxHeight {
   max-height: 200px;

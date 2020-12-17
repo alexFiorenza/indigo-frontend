@@ -50,7 +50,11 @@
           <ion-icon name="create"></ion-icon>
           <span class="text-sm mt-1 mx-2">Editar</span>
         </div>
-        <div class="flex items-center cursor-pointer mx-2">
+        <div
+          (click)="deleteProduct(deleteContainer)"
+          #deleteContainer
+          class="flex items-center cursor-pointer mx-2"
+        >
           <ion-icon name="trash"></ion-icon>
           <span class="text-sm mt-1 mx-2">Eliminar</span>
         </div>
@@ -71,8 +75,13 @@
           class="hidden absolute w-full h-48 setMaxHeight justify-center items-center"
         >
           <ion-icon
+            (click)="hasToEmitAlert(product)"
             name="pencil"
             class="absolute text-4xl z-30 text-indigoBlack-500"
+          ></ion-icon>
+          <ion-icon
+            name="trash-outline"
+            class="absolute text-4xl z-30 text-red-500 hidden"
           ></ion-icon>
           <div
             class="bg-white absolute opacity-50 w-full rounded-lg h-full z-20"

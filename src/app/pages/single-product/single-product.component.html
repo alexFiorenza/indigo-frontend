@@ -115,7 +115,7 @@
               <div *ngFor="let c of product.color" class="mr-2">
                 <div
                   *ngIf="this.c.available"
-                  (click)="selectColor($event)"
+                  (click)="selectColor($event, c)"
                   [ngStyle]="{ 'background-color': c.color }"
                   class="h-8 w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
                 >
@@ -137,8 +137,8 @@
             <span class="font-light text-2xl text-indigoBlack-200 lg:hidden"
               >Talles</span
             >
-            <div class="flex">
-              <div *ngFor="let s of product.sizes">
+            <div class="flex" *ngIf="this.sizes.length > 0">
+              <div *ngFor="let s of this.sizes">
                 <span
                   (click)="selectSize($event)"
                   *ngIf="s.available"

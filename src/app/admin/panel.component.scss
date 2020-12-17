@@ -11,3 +11,25 @@
 .adjustWidth {
   width: 9rem;
 }
+.adjustZIndex {
+  z-index: 100;
+}
+.textIndex {
+  z-index: 150;
+}
+.bgIndex {
+  z-index: 120;
+}
+input::placeholder {
+  color: #d2d2d2;
+}
+.lineInputs {
+  height: 0.5px;
+}
+.headerModule {
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+.lineHeight {
+  height: 0.5px;
+}

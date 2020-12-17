@@ -23,6 +23,7 @@ export class SingleProductComponent implements OnInit {
   public currentImage;
   public selectedColor: string;
   public selectedSize: string;
+  public sizes = [];
   public lastSelectedColor;
   public lastSelectedSize;
   public favorites = [];
@@ -73,6 +74,7 @@ export class SingleProductComponent implements OnInit {
         }
       });
     }
+    //TODO default selectedColor
   }
 
   addToFavorites() {
@@ -88,7 +90,6 @@ export class SingleProductComponent implements OnInit {
       favoriteElement.classList.add('-active');
       if (!this.productInFavorites) {
         this.userService.addToFavorites(this.product).subscribe((res) => {
-          console.log(res);
           this.productInFavorites = true;
         });
       };
@@ -115,7 +116,7 @@ export class SingleProductComponent implements OnInit {
     }, 2000);
 
   }
-  selectColor(event) {
+  selectColor(event, color) {
     if (this.lastSelectedColor) {
       this.lastSelectedColor.classList.add('hidden');
     }
@@ -127,6 +128,7 @@ export class SingleProductComponent implements OnInit {
     const green = hex[1];
     const blue = hex[2];
     this.selectedColor = this.rgbToHex(red, green, blue);
+    this.sizes = color.sizes;
   }
   selectSize(event) {
     if (this.lastSelectedSize) {

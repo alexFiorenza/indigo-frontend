@@ -1,3 +1,89 @@
+<!-- [ngClass]="{ hidden: }" -->
+<div
+  *ngIf="this.hasToShowAlert"
+  class="w-screen h-screen absolute adjustZIndex font-Josefin"
+>
+  <div class="mt-8 w-screen absolute textIndex text-white flex justify-center">
+    <div class="w-10/12 bg-white rounded-lg">
+      <div
+        class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase h-12 flex justify-center"
+      >
+        Editar producto
+      </div>
+      <div #editContainer class="px-12">
+        <div #nameProduct class="flex flex-col w-5/12 my-4">
+          <h3 class="text-indigoBlack-500 text-xl capitalize">titulo</h3>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+          <input
+            [placeholder]="this.actualProduct.name"
+            type="text"
+            class="py-5 my-4 w-full shadow-xl bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
+          />
+        </div>
+        <div #colorProduct class="flex flex-col w-5/12 my-4 font-Josefin">
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">colores</h3>
+            <span class="font-light text-indigoBlack-200 cursor-pointer"
+              >editar</span
+            >
+          </div>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+          <div class="w-full flex my-4">
+            <div *ngFor="let c of actualProduct.color" class="mr-2">
+              <div
+                *ngIf="this.c.available"
+                [ngStyle]="{ 'background-color': c.color }"
+                class="h-8 w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+              >
+                <ion-icon
+                  *ngIf="this.c.available"
+                  name="checkmark-outline"
+                  class="absolute checks hidden cursor-pointer"
+                ></ion-icon>
+              </div>
+            </div>
+            <ion-icon
+              name="add-circle"
+              class="text-indigoBlack-800 opacity-25 text-4xl"
+            ></ion-icon>
+          </div>
+        </div>
+        <div #sizeProduct class="flex flex-col w-5/12 my-4 font-Josefin">
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">talles</h3>
+            <span class="font-light text-indigoBlack-200 cursor-pointer"
+              >editar</span
+            >
+          </div>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+          <div class="flex" *ngIf="this.sizes.length > 0">
+            <div *ngFor="let s of this.sizes">
+              <span
+                (click)="selectSize($event)"
+                *ngIf="s.available"
+                class="cursor-pointer w-10 mr-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
+                >{{ s.size }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div #descriptionProduct class="flex flex-col w-5/12 my-4 font-Josefin">
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">Descripción</h3>
+            <span class="font-light text-indigoBlack-200 cursor-pointer"
+              >editar</span
+            >
+          </div>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+          <!--TODO add textarea-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="w-screen h-screen bgIndex bg-indigoBlack-900 opacity-75 absolute"
+  ></div>
+</div>
 <div class="w-screen font-Josefin flex">
   <div #navPanel class="w-2/6 h-screen flex flex-col relative">
     <h2 class="text-indigoBlack-400 text-5xl uppercase ml-20 mt-20">indigo</h2>
@@ -88,6 +174,6 @@
     </div>
   </div>
   <div class="w-4/6">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="componentInitialized($event)"></router-outlet>
   </div>
 </div>

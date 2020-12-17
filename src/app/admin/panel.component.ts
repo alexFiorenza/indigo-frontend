@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductsComponent } from './products/products.component';
+import { Product } from '../shared/utilities/interfaces/product';
 
 @Component({
   selector: 'app-panel',
@@ -9,6 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PanelComponent implements OnInit, AfterContentInit {
   public previousDiv: HTMLElement;
   public actualRoute;
+  public hasToShowAlert = false;
+  public actualProduct: Product;
+  public selectedColor;
+  public selectedSize;
+  public sizes = [];
   constructor(private activatedRoute: ActivatedRoute) { }
   ngOnInit(): void {
   }
@@ -37,5 +44,24 @@ export class PanelComponent implements OnInit, AfterContentInit {
     }
     div.classList.toggle('hidden');
     this.previousDiv = div;
+  }
+  componentInitialized(component: ProductsComponent) {
+    if (component.emitAlert) {
+      component.emitAlert.subscribe((value) => {
+        if (value.showAlert) {
+          this.hasToShowAlert = value.showAlert;
+          this.actualProduct = value.product;
+        } else {
+          this.hasToShowAlert = value;
+        }
+
+      })
+    }
+  }
+  selectSize(event) {
+
+  }
+  colorSelected($event, colorSelected) {
+
   }
 }
