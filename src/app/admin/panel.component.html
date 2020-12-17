@@ -4,7 +4,7 @@
   class="w-screen h-screen absolute adjustZIndex font-Josefin"
 >
   <div class="mt-8 w-screen absolute textIndex text-white flex justify-center">
-    <div class="w-10/12 bg-white rounded-lg">
+    <div class="w-10/12 bg-white rounded-lg animate__animated animate__zoomIn">
       <div
         class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase h-12 flex justify-center"
       >
@@ -17,13 +17,16 @@
           <input
             [placeholder]="this.actualProduct.name"
             type="text"
-            class="py-5 my-4 w-full shadow-xl bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
+            class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
           />
         </div>
         <div #colorProduct class="flex flex-col w-5/12 my-4 font-Josefin">
           <div class="w-full flex justify-between items-center">
             <h3 class="text-indigoBlack-500 text-xl capitalize">colores</h3>
-            <span class="font-light text-indigoBlack-200 cursor-pointer"
+            <span
+              (click)="editColors(editText.textContent)"
+              #editText
+              class="font-light text-indigoBlack-200 cursor-pointer"
               >editar</span
             >
           </div>
@@ -32,19 +35,60 @@
             <div *ngFor="let c of actualProduct.color" class="mr-2">
               <div
                 *ngIf="this.c.available"
+                (click)="colorSelected($event, c)"
                 [ngStyle]="{ 'background-color': c.color }"
-                class="h-8 w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                class="h-8 borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
               >
                 <ion-icon
                   *ngIf="this.c.available"
                   name="checkmark-outline"
                   class="absolute checks hidden cursor-pointer"
                 ></ion-icon>
+                <ion-icon
+                  #deleteColors
+                  (click)="deleteColor(c)"
+                  class="absolute z-50 w-full h-full hidden cursor-pointer"
+                  name="close"
+                ></ion-icon>
               </div>
             </div>
+            <div *ngFor="let c of addedColors" class="mr-2">
+              <div
+                *ngIf="this.c.available"
+                (click)="colorSelected($event, c)"
+                [ngStyle]="{ 'background-color': c.color }"
+                class="h-8 borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+              >
+                <ion-icon
+                  *ngIf="this.c.available"
+                  name="checkmark-outline"
+                  class="absolute checks hidden cursor-pointer"
+                ></ion-icon>
+                <ion-icon
+                  #deleteColors
+                  (click)="deleteColor(c)"
+                  class="absolute z-50 w-full h-full hidden cursor-pointer"
+                  name="close"
+                ></ion-icon>
+              </div>
+            </div>
+            <input
+              #colorPicker
+              [cpOKButton]="true"
+              [(cpToggle)]="shouldOpenModal"
+              [cpOKButtonClass]="
+                'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+              "
+              (colorPickerSelect)="colorChanged($event)"
+              class="borderToProductColors h-8 w-8 rounded-full hidden cursor-pointer focus:outline-none"
+              [(colorPicker)]="color"
+              [style.background]="color"
+            />
             <ion-icon
+              (click)="addColorPicker()"
+              #addColors
               name="add-circle"
-              class="text-indigoBlack-800 opacity-25 text-4xl"
+              class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
             ></ion-icon>
           </div>
         </div>
@@ -56,15 +100,20 @@
             >
           </div>
           <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-          <div class="flex" *ngIf="this.sizes.length > 0">
-            <div *ngFor="let s of this.sizes">
+          <div class="flex items-center" *ngIf="this.sizes.length > 0">
+            <div *ngFor="let s of this.sizes" class="my-4">
               <span
                 (click)="selectSize($event)"
                 *ngIf="s.available"
-                class="cursor-pointer w-10 mr-1 h-10 bg-gray-900 rounded-full text-white flex font-light justify-center items-center"
+                class="cursor-pointer w-10 mr-1 h-10 bg-indigoBlack-800 rounded-full font-medium text-white flex text-lg justify-center items-center"
                 >{{ s.size }}</span
               >
             </div>
+            <ion-icon
+              *ngIf="this.sizes.length > 0"
+              name="add-circle"
+              class="text-indigoBlack-800 opacity-25 text-5xl cursor-pointer"
+            ></ion-icon>
           </div>
         </div>
         <div #descriptionProduct class="flex flex-col w-5/12 my-4 font-Josefin">

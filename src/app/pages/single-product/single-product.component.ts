@@ -135,7 +135,6 @@ export class SingleProductComponent implements OnInit {
       this.lastSelectedSize.classList.remove('selectedSize');
     }
     this.lastSelectedSize = event.currentTarget;
-
     this.lastSelectedSize.classList.add('selectedSize');
     const size = this.lastSelectedSize.textContent;
     this.selectedSize = size;

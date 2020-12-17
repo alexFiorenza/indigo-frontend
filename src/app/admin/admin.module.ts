@@ -7,6 +7,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { PanelComponent } from './panel.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 
@@ -16,7 +17,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     AdminRoutingModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ColorPickerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
