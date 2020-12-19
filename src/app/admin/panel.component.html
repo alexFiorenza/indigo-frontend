@@ -35,15 +35,13 @@
             <div *ngFor="let c of actualProduct.color" class="mr-2">
               <div
                 *ngIf="this.c.available"
+                #color
                 (click)="colorSelected($event, c)"
-                [ngStyle]="{ 'background-color': c.color }"
-                class="h-8 borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                [ngStyle]="{
+                  'background-color': c.color
+                }"
+                class="h-8 w-8 borderToProductColors rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
               >
-                <ion-icon
-                  *ngIf="this.c.available"
-                  name="checkmark-outline"
-                  class="absolute checks hidden cursor-pointer"
-                ></ion-icon>
                 <ion-icon
                   #deleteColors
                   (click)="deleteColor(c)"
@@ -55,15 +53,13 @@
             <div *ngFor="let c of addedColors" class="mr-2">
               <div
                 *ngIf="this.c.available"
+                #addedColor
                 (click)="colorSelected($event, c)"
-                [ngStyle]="{ 'background-color': c.color }"
-                class="h-8 borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                [ngStyle]="{
+                  'background-color': c.color
+                }"
+                class="h-8 fade-in borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
               >
-                <ion-icon
-                  *ngIf="this.c.available"
-                  name="checkmark-outline"
-                  class="absolute checks hidden cursor-pointer"
-                ></ion-icon>
                 <ion-icon
                   #deleteColors
                   (click)="deleteColor(c)"
@@ -95,24 +91,50 @@
         <div #sizeProduct class="flex flex-col w-5/12 my-4 font-Josefin">
           <div class="w-full flex justify-between items-center">
             <h3 class="text-indigoBlack-500 text-xl capitalize">talles</h3>
-            <span class="font-light text-indigoBlack-200 cursor-pointer"
+            <span
+              #sizeText
+              *ngIf="this.selectedColor"
+              (click)="editSize(sizeText.textContent)"
+              class="font-light text-indigoBlack-200 cursor-pointer"
               >editar</span
             >
           </div>
           <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-          <div class="flex items-center" *ngIf="this.sizes.length > 0">
-            <div *ngFor="let s of this.sizes" class="my-4">
+          <div
+            class="flex items-center"
+            *ngIf="this.sizes.length > 0 || selectedColor"
+          >
+            <div *ngFor="let s of this.sizes" class="my-4 relative">
               <span
-                (click)="selectSize($event)"
+                (click)="selectSize($event, s)"
+                #sizesContainer
                 *ngIf="s.available"
-                class="cursor-pointer w-10 mr-1 h-10 bg-indigoBlack-800 rounded-full font-medium text-white flex text-lg justify-center items-center"
-                >{{ s.size }}</span
+                class="cursor-pointer boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white flex text-base justify-center items-center"
               >
+                {{ s.size }}
+              </span>
             </div>
+            <div *ngFor="let s of this.addedSizes" class="my-4 relative">
+              <span
+                (click)="selectSize($event, s)"
+                #sizesContainer
+                *ngIf="s.available"
+                class="cursor-pointer boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white flex text-base justify-center items-center"
+              >
+                {{ s.size }}
+              </span>
+            </div>
+            <input
+              [(ngModel)]="sizeToChange"
+              #sizeInput
+              [placeholder]="sizeToChange"
+              type="text"
+              class="cursor-pointer hidden focus:outline-none text-center boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base"
+            />
             <ion-icon
-              *ngIf="this.sizes.length > 0"
               name="add-circle"
-              class="text-indigoBlack-800 opacity-25 text-5xl cursor-pointer"
+              (click)="addSize(sizeInput)"
+              class="text-indigoBlack-800 opacity-25 text-4xl my-4 cursor-pointer"
             ></ion-icon>
           </div>
         </div>

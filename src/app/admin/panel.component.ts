@@ -2,7 +2,15 @@ import { Component, OnInit, AfterContentInit, ViewChild, ElementRef, QueryList, 
 import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
+import { ThrowStmt } from '@angular/compiler';
+import { last } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
+interface Color {
+  available?: boolean,
+  color?: string,
+  sizes?: Array<any>
+}
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -13,7 +21,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public actualRoute;
   public hasToShowAlert = false;
   public actualProduct: Product;
-  public selectedColor;
+  public selectedColor: Color;
   public selectedSize;
   public sizes = [];
   public color = '#707070'
@@ -21,11 +29,25 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public shouldOpenModal = false;
   public colorsToDelete = [];
   public addedColors = [];
+  public addedSizes = [];
+  public lastSelectedColor: HTMLElement;
+  public sizeToChange;
   @ViewChild('colorPicker') public colorPicker: ElementRef;
   @ViewChild('addColors') public addColors: ElementRef;
   @ViewChild('editText') public editColorText: ElementRef;
+  @ViewChild('sizeText') public sizeText: ElementRef;
   @ViewChildren('deleteColors') public deleteColors: QueryList<ElementRef>;
-  constructor(private activatedRoute: ActivatedRoute) { }
+  @ViewChildren('sizesContainer') public sizesContainer: QueryList<ElementRef>;
+  public form: FormGroup;
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      /**
+       * 
+       * Fill with inputs data
+       * 
+       */
+    })
+  }
   ngOnInit(): void {
   }
   ngAfterContentInit() {
@@ -44,6 +66,10 @@ export class PanelComponent implements OnInit, AfterContentInit {
         this.previousDiv.classList.toggle('hidden');
         break;
     }
+  }
+  calculateBoxShadow(color) {
+    const defaultValues = `0px 3px 6px ${color.color}`
+    return defaultValues
   }
   transitionRouter(div: HTMLElement) {
     if (!this.previousDiv) {
@@ -67,27 +93,29 @@ export class PanelComponent implements OnInit, AfterContentInit {
       })
     }
   }
-  selectSize(event) {
+  selectSize(event, size) {
+    this.selectedSize = size;
+    if (event.currentTarget.classList.contains('opacity-50')) {
+      this.selectedColor.sizes.forEach((size: any) => {
+        if (size.size === this.selectedSize.size) {
+          const i = this.selectedColor.sizes.indexOf(size);
+          this.selectedColor.sizes.splice(i, 1);
+        }
+      });
+    }
   }
   colorSelected(event, colorSelected) {
-    if (this.isEditing) {
-      return;
+    const containerColor: HTMLElement = event.currentTarget;
+    if (this.lastSelectedColor) {
+      this.lastSelectedColor.classList.toggle('shadow-inset-center');
     }
-    const containerColor = event.currentTarget;
-    this.sizes = colorSelected.sizes;
-    const hex = this.getRGBValues(containerColor.style.backgroundColor);
-    const r = hex[0];
-    const g = hex[1];
-    const b = hex[2];
-    this.selectedColor = this.rgbToHex(r, g, b);
-  }
-  getRGBValues(str) {
-    const sep = str.indexOf(',') > -1 ? ',' : ' ';
-    return str.substr(4).split(')')[0].split(sep).map(Number);
-  }
-  rgbToHex(r, g, b) {
-    // tslint:disable-next-line: no-bitwise
-    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    if (this.isEditing) {
+      return
+    }
+    this.selectedColor = colorSelected
+    this.sizes = this.selectedColor.sizes;
+    containerColor.classList.add('shadow-inset-center');
+    this.lastSelectedColor = containerColor;
   }
   addColorPicker() {
     this.shouldOpenModal = !this.shouldOpenModal;
@@ -99,17 +127,27 @@ export class PanelComponent implements OnInit, AfterContentInit {
       available: true,
       sizes: []
     });
-
     this.colorPicker.nativeElement.classList.add('hidden');
   }
   editColors(text: string) {
     this.sizes.length > 0 ? this.sizes = [] : false;
+    this.selectedColor = undefined;
     text === 'editar' ? text = 'cancelar' : text = 'editar';
     this.editColorText.nativeElement.textContent = text;
     this.addColors.nativeElement.classList.toggle('hidden');
     this.isEditing = !this.isEditing;
     this.deleteColors.forEach((p) => {
       p.nativeElement.classList.toggle('hidden');
+    })
+  }
+  editSize(text: String) {
+    text === 'editar' ? text = 'cancelar' : text = 'editar';
+    this.sizeText.nativeElement.textContent = text;
+    //TODO Check delete style in sizes and delete them in respective color
+    this.sizesContainer.forEach((p) => {
+      p.nativeElement.classList.toggle('opacity-50');
+      p.nativeElement.classList.toggle('border-2');
+      p.nativeElement.classList.toggle('border-red-500');
     })
   }
   deleteColor(color) {
@@ -134,5 +172,15 @@ export class PanelComponent implements OnInit, AfterContentInit {
         }
       })
     })
+  }
+  addSize(inputShow: HTMLElement) {
+    if (this.selectedColor.sizes.length > 0) {
+      const lastSize = this.selectedColor.sizes[this.selectedColor.sizes.length - 1];
+      this.sizeToChange = parseInt(lastSize.size) + 1;
+    } else {
+      this.sizeToChange = 0;
+    }
+    inputShow.classList.toggle('hidden');
+    inputShow.focus();
   }
 }

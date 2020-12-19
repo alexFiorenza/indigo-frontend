@@ -8,6 +8,7 @@ import { PanelComponent } from './panel.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -18,7 +19,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
     AdminRoutingModule,
     RouterModule,
     SharedModule,
-    ColorPickerModule
+    ColorPickerModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
