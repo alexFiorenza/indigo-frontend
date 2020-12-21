@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
 import { LoaderBtnComponent } from './../loader-btn/loader-btn.component';
-import { Injectable, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, ComponentFactory, ComponentRef, ViewContainerRef } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,4 @@ export class ManageComponentsService {
     componentRef.instance.status = status;
     return componentRef;
   }
-
-
 }

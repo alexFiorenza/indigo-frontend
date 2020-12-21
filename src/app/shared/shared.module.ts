@@ -1,4 +1,4 @@
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderBtnComponent } from './components/loader-btn/loader-btn.component';
 import { SalesPipe } from './pipes/sales.pipe';
 import { RouterModule } from '@angular/router';
@@ -11,7 +11,8 @@ import { HeaderComponent } from './header/header.component';
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,

@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterContentInit, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { environment } from './../../environments/environment';
+import { ManageComponentsService } from './../shared/components/manageComponents/manage-components.service';
+import { Component, OnInit, AfterContentInit, ViewChild, ElementRef, QueryList, ViewChildren, ViewContainerRef, ComponentRef, Inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
-import { ThrowStmt } from '@angular/compiler';
-import { last } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { DOCUMENT } from '@angular/common';
 interface Color {
   available?: boolean,
   color?: string,
@@ -30,16 +30,21 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public colorsToDelete = [];
   public addedColors = [];
   public addedSizes = [];
+  public previewImages: Array<any> = [];
   public lastSelectedColor: HTMLElement;
   public sizeToChange;
+  public uplodsUrl = environment.uploadsUrl;
   @ViewChild('colorPicker') public colorPicker: ElementRef;
   @ViewChild('addColors') public addColors: ElementRef;
   @ViewChild('editText') public editColorText: ElementRef;
   @ViewChild('sizeText') public sizeText: ElementRef;
+  @ViewChild('sizeInput', { read: ViewContainerRef }) public sizeInput: ViewContainerRef;
   @ViewChildren('deleteColors') public deleteColors: QueryList<ElementRef>;
   @ViewChildren('sizesContainer') public sizesContainer: QueryList<ElementRef>;
+  @ViewChild('sizeContainerInputs') public sizeContainerInputs: ElementRef;
   public form: FormGroup;
-  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder,
+    private manageComponents: ManageComponentsService, @Inject(DOCUMENT) documen, private r: Renderer2) {
     this.form = this.formBuilder.group({
       /**
        * 
@@ -49,6 +54,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
     })
   }
   ngOnInit(): void {
+    this.r.setStyle(document.body, 'overflow-x', 'hidden');
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path
@@ -66,6 +72,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
         this.previousDiv.classList.toggle('hidden');
         break;
     }
+
   }
   calculateBoxShadow(color) {
     const defaultValues = `0px 3px 6px ${color.color}`
@@ -89,7 +96,6 @@ export class PanelComponent implements OnInit, AfterContentInit {
         } else {
           this.hasToShowAlert = value;
         }
-
       })
     }
   }
@@ -173,14 +179,31 @@ export class PanelComponent implements OnInit, AfterContentInit {
       })
     })
   }
-  addSize(inputShow: HTMLElement) {
+  addSize() {
     if (this.selectedColor.sizes.length > 0) {
       const lastSize = this.selectedColor.sizes[this.selectedColor.sizes.length - 1];
       this.sizeToChange = parseInt(lastSize.size) + 1;
     } else {
-      this.sizeToChange = 0;
+      this.sizeToChange = 35;
     }
-    inputShow.classList.toggle('hidden');
-    inputShow.focus();
+    this.selectedColor.sizes.push({
+      available: true,
+      size: this.sizeToChange
+    })
+  }
+  getImagePreview(fileUploaded: any) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(fileUploaded.currentTarget.files[0]);
+    fileReader.onload = ((e) => {
+      this.previewImages.push(e.target.result);
+    })
+  }
+  deleteCategory(category) {
+    this.actualProduct.categories.forEach((c) => {
+      if (c === category) {
+        const i = this.actualProduct.categories.indexOf(c);
+        this.actualProduct.categories.splice(i);
+      }
+    })
   }
 }

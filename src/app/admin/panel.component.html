@@ -1,152 +1,255 @@
-<!-- [ngClass]="{ hidden: }" -->
 <div
   *ngIf="this.hasToShowAlert"
   class="w-screen h-screen absolute adjustZIndex font-Josefin"
 >
-  <div class="mt-8 w-screen absolute textIndex text-white flex justify-center">
+  <div class="mt-4 w-screen absolute textIndex text-white flex justify-center">
     <div class="w-10/12 bg-white rounded-lg animate__animated animate__zoomIn">
       <div
         class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase h-12 flex justify-center"
       >
         Editar producto
       </div>
-      <div #editContainer class="px-12">
-        <div #nameProduct class="flex flex-col w-5/12 my-4">
-          <h3 class="text-indigoBlack-500 text-xl capitalize">titulo</h3>
-          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-          <input
-            [placeholder]="this.actualProduct.name"
-            type="text"
-            class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
-          />
-        </div>
-        <div #colorProduct class="flex flex-col w-5/12 my-4 font-Josefin">
-          <div class="w-full flex justify-between items-center">
-            <h3 class="text-indigoBlack-500 text-xl capitalize">colores</h3>
-            <span
-              (click)="editColors(editText.textContent)"
-              #editText
-              class="font-light text-indigoBlack-200 cursor-pointer"
-              >editar</span
-            >
-          </div>
-          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-          <div class="w-full flex my-4">
-            <div *ngFor="let c of actualProduct.color" class="mr-2">
+      <div class="w-full flex">
+        <div class="flex flex-col w-1/2">
+          <div #editContainer class="px-8 w-full">
+            <div #nameProduct class="flex flex-col w-full my-4">
+              <h3 class="text-indigoBlack-500 text-xl capitalize">titulo</h3>
               <div
-                *ngIf="this.c.available"
-                #color
-                (click)="colorSelected($event, c)"
-                [ngStyle]="{
-                  'background-color': c.color
-                }"
-                class="h-8 w-8 borderToProductColors rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
-              >
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <input
+                [placeholder]="this.actualProduct.name"
+                type="text"
+                class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
+              />
+            </div>
+            <div #colorProduct class="flex flex-col w-full my-4 font-Josefin">
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">colores</h3>
+                <span
+                  (click)="editColors(editText.textContent)"
+                  #editText
+                  class="font-light text-indigoBlack-200 cursor-pointer"
+                  >editar</span
+                >
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div class="w-full flex my-4">
+                <div *ngFor="let c of actualProduct.color" class="mr-2">
+                  <div
+                    *ngIf="this.c.available"
+                    #color
+                    (click)="colorSelected($event, c)"
+                    [ngStyle]="{
+                      'background-color': c.color
+                    }"
+                    class="h-8 w-8 borderToProductColors rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                  >
+                    <ion-icon
+                      #deleteColors
+                      (click)="deleteColor(c)"
+                      class="absolute z-50 w-full h-full hidden cursor-pointer"
+                      name="close"
+                    ></ion-icon>
+                  </div>
+                </div>
+                <div *ngFor="let c of addedColors" class="mr-2">
+                  <div
+                    *ngIf="this.c.available"
+                    #addedColor
+                    (click)="colorSelected($event, c)"
+                    [ngStyle]="{
+                      'background-color': c.color
+                    }"
+                    class="h-8 fade-in borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                  >
+                    <ion-icon
+                      #deleteColors
+                      (click)="deleteColor(c)"
+                      class="absolute z-50 w-full h-full hidden cursor-pointer"
+                      name="close"
+                    ></ion-icon>
+                  </div>
+                </div>
+                <input
+                  #colorPicker
+                  [cpOKButton]="true"
+                  [(cpToggle)]="shouldOpenModal"
+                  [cpOKButtonClass]="
+                    'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+                  "
+                  (colorPickerSelect)="colorChanged($event)"
+                  class="borderToProductColors h-8 w-8 rounded-full hidden cursor-pointer focus:outline-none"
+                  [(colorPicker)]="color"
+                  [style.background]="color"
+                />
                 <ion-icon
-                  #deleteColors
-                  (click)="deleteColor(c)"
-                  class="absolute z-50 w-full h-full hidden cursor-pointer"
-                  name="close"
+                  (click)="addColorPicker()"
+                  #addColors
+                  name="add-circle"
+                  class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
                 ></ion-icon>
               </div>
             </div>
-            <div *ngFor="let c of addedColors" class="mr-2">
+            <div #sizeProduct class="flex flex-col w-full my-4 font-Josefin">
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">talles</h3>
+                <span
+                  #sizeText
+                  *ngIf="this.selectedColor"
+                  (click)="editSize(sizeText.textContent)"
+                  class="font-light text-indigoBlack-200 cursor-pointer"
+                  >editar</span
+                >
+              </div>
               <div
-                *ngIf="this.c.available"
-                #addedColor
-                (click)="colorSelected($event, c)"
-                [ngStyle]="{
-                  'background-color': c.color
-                }"
-                class="h-8 fade-in borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div
+                class="flex items-center justify-start"
+                *ngIf="this.sizes.length > 0 || selectedColor"
               >
+                <div *ngFor="let s of this.sizes" class="my-4 relative">
+                  <input
+                    (click)="selectSize($event, s)"
+                    [value]="s.size"
+                    #sizesContainer
+                    *ngIf="s.available"
+                    class="cursor-pointer focus:outline-none boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base text-center"
+                  />
+                </div>
                 <ion-icon
-                  #deleteColors
-                  (click)="deleteColor(c)"
-                  class="absolute z-50 w-full h-full hidden cursor-pointer"
-                  name="close"
+                  name="add-circle"
+                  (click)="addSize()"
+                  class="text-indigoBlack-800 opacity-25 text-4xl my-4 cursor-pointer"
                 ></ion-icon>
               </div>
             </div>
-            <input
-              #colorPicker
-              [cpOKButton]="true"
-              [(cpToggle)]="shouldOpenModal"
-              [cpOKButtonClass]="
-                'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
-              "
-              (colorPickerSelect)="colorChanged($event)"
-              class="borderToProductColors h-8 w-8 rounded-full hidden cursor-pointer focus:outline-none"
-              [(colorPicker)]="color"
-              [style.background]="color"
-            />
-            <ion-icon
-              (click)="addColorPicker()"
-              #addColors
-              name="add-circle"
-              class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
-            ></ion-icon>
-          </div>
-        </div>
-        <div #sizeProduct class="flex flex-col w-5/12 my-4 font-Josefin">
-          <div class="w-full flex justify-between items-center">
-            <h3 class="text-indigoBlack-500 text-xl capitalize">talles</h3>
-            <span
-              #sizeText
-              *ngIf="this.selectedColor"
-              (click)="editSize(sizeText.textContent)"
-              class="font-light text-indigoBlack-200 cursor-pointer"
-              >editar</span
+            <div
+              #descriptionProduct
+              class="flex flex-col w-full my-4 font-Josefin"
             >
-          </div>
-          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-          <div
-            class="flex items-center"
-            *ngIf="this.sizes.length > 0 || selectedColor"
-          >
-            <div *ngFor="let s of this.sizes" class="my-4 relative">
-              <span
-                (click)="selectSize($event, s)"
-                #sizesContainer
-                *ngIf="s.available"
-                class="cursor-pointer boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white flex text-base justify-center items-center"
-              >
-                {{ s.size }}
-              </span>
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">
+                  Descripción
+                </h3>
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <textarea
+                [placeholder]="actualProduct.description"
+                class="my-2 bg-white w-full focus:outline-none rounded-lg descriptionInput px-3 py-2 text-indigoBlack-200 boxShadowInputs"
+              ></textarea>
             </div>
-            <div *ngFor="let s of this.addedSizes" class="my-4 relative">
-              <span
-                (click)="selectSize($event, s)"
-                #sizesContainer
-                *ngIf="s.available"
-                class="cursor-pointer boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white flex text-base justify-center items-center"
-              >
-                {{ s.size }}
-              </span>
+            <div #priceProduct class="flex flex-col w-full my-4 font-Josefin">
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">
+                  Precio | descuentos
+                </h3>
+                <span class="font-light text-indigoBlack-200 cursor-pointer"
+                  >editar</span
+                >
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div class="w-full flex my-2">
+                <input
+                  class="w-1/2 py-3 text-center text-2xl boxShadowInputs focus:outline-none mr-2 rounded-md"
+                  type="number"
+                  [placeholder]="actualProduct.price"
+                />
+                <input
+                  class="w-1/2 py-3 text-center text-2xl discount text-indigoPink-700 boxShadowInputs focus:outline-none ml-2 rounded-md"
+                  type="number"
+                  [placeholder]="actualProduct.sale"
+                />
+              </div>
             </div>
-            <input
-              [(ngModel)]="sizeToChange"
-              #sizeInput
-              [placeholder]="sizeToChange"
-              type="text"
-              class="cursor-pointer hidden focus:outline-none text-center boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base"
-            />
-            <ion-icon
-              name="add-circle"
-              (click)="addSize(sizeInput)"
-              class="text-indigoBlack-800 opacity-25 text-4xl my-4 cursor-pointer"
-            ></ion-icon>
           </div>
         </div>
-        <div #descriptionProduct class="flex flex-col w-5/12 my-4 font-Josefin">
+        <div class="w-1/2 flex flex-col px-8 my-4">
           <div class="w-full flex justify-between items-center">
-            <h3 class="text-indigoBlack-500 text-xl capitalize">Descripción</h3>
+            <h3 class="text-indigoBlack-500 text-xl capitalize">Imagenes</h3>
             <span class="font-light text-indigoBlack-200 cursor-pointer"
               >editar</span
             >
           </div>
           <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-          <!--TODO add textarea-->
+          <div class="flex flex-col items-start justify-start">
+            <div class="w-full flex my-4">
+              <img
+                class="w-24 rounded-xl"
+                *ngFor="let image of actualProduct.images"
+                [src]="uplodsUrl + '/' + image.image"
+                alt=""
+              />
+              <div
+                class="w-24 rounded-xl addInputsColor relative mx-4 flex justify-center items-center"
+              >
+                <input
+                  (change)="getImagePreview($event)"
+                  type="file"
+                  class="w-full h-full opacity-0 z-50 cursor-pointer absolute"
+                />
+                <ion-icon
+                  name="add-circle"
+                  class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
+                ></ion-icon>
+              </div>
+            </div>
+            <div class="flex justify-start items-start flex-wrap">
+              <div
+                #previewIMGContainer
+                *ngFor="let i of previewImages"
+                class="w-24 h-24 mr-2 rounded-xl relative flex justify-center items-center"
+              >
+                <ion-icon
+                  name="cloud-upload-outline"
+                  class="text-3xl text-indigoBlack-800 z-50"
+                ></ion-icon>
+                <img
+                  #previewImages
+                  class="w-full rounded-xl opacity-50 absolute h-full z-30 object-cover"
+                  [src]="i"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <div #categories class="flex flex-col w-full my-4">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">Categorias</h3>
+            <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+            <div
+              class="w-full capitalize py-4 flex justify-between px-4 my-2 rounded-xl bg-white boxShadowInputs text-indigoBlack-800"
+              *ngFor="let c of actualProduct.categories"
+            >
+              {{ c }}
+              <ion-icon
+                (click)="deleteCategory(c)"
+                name="remove-circle"
+                class="text-3xl cursor-pointer"
+              ></ion-icon>
+            </div>
+            <div
+              class="w-full py-4 flex justify-center px-4 my-3 rounded-xl bg-white boxShadowInputs text-indigoBlack-800"
+            >
+              <ion-icon name="add-circle" class="text-3xl"></ion-icon>
+            </div>
+          </div>
+          <div class="w-full flex flex-col items-center">
+            <button
+              class="w-full py-4 saveShadow bg-indigoPink-800 text-white uppercase rounded-xl"
+            >
+              Guardar
+            </button>
+            <span class="text-indigoBlack-200 text-xl mt-3"
+              >Descartar cambios</span
+            >
+          </div>
         </div>
       </div>
     </div>
