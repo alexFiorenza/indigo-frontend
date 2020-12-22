@@ -1,3 +1,4 @@
+$salePriceColor: #f086a3;
 .rotateLogOutIcon {
   transform: rotate(-180deg);
 }
@@ -83,4 +84,18 @@ input::placeholder {
 }
 .saveShadow {
   box-shadow: 0px 3px 6px #fcc6e3cf;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.productDiscount {
+  color: $salePriceColor;
+  opacity: 0.5;
 }

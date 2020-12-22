@@ -12,36 +12,8 @@
     </div>
   </div>
   <div #productsBox class="w-11/12 shadow-md mt-12 py-4 relative">
-    <div class="flex justify-between w-full items-center px-8">
-      <div class="flex items-center h-8">
-        <div class="flex flex-col mr-4 h-full relative">
-          <span
-            (click)="changeFilter(stock, stockActive)"
-            #stock
-            id="stock"
-            class="text-indigoPink-700 uppercase text-sm cursor-pointer"
-            >stock</span
-          >
-          <div
-            #stockActive
-            id="stockActive"
-            class="absolute bottom-0 stockFilter w-full animate__animated animate__fadeIn"
-          ></div>
-        </div>
-        <div class="flex flex-col h-full relative">
-          <span
-            (click)="changeFilter(noStock, noStockActive)"
-            #noStock
-            class="text-indigoPink-700 uppercase opacity-50 text-sm cursor-pointer"
-            >sin stock</span
-          >
-          <div
-            #noStockActive
-            class="absolute hidden bottom-0 stockFilter w-full animate__animated animate__fadeIn"
-          ></div>
-        </div>
-      </div>
-      <div class="flex items-center font-Josefin text-indigoBlack-100">
+    <div class="flex justify-end w-full items-center px-8">
+      <div class="flex items-center font-Josefin my-2 text-indigoBlack-100">
         <div
           (click)="editProducts(editContainer)"
           #editContainer

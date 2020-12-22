@@ -149,24 +149,51 @@
                 <h3 class="text-indigoBlack-500 text-xl capitalize">
                   Precio | descuentos
                 </h3>
-                <span class="font-light text-indigoBlack-200 cursor-pointer"
-                  >editar</span
-                >
               </div>
               <div
                 class="w-full lineHeight bg-indigoBlack-500 opacity-25"
               ></div>
               <div class="w-full flex my-2">
-                <input
-                  class="w-1/2 py-3 text-center text-2xl boxShadowInputs focus:outline-none mr-2 rounded-md"
-                  type="number"
-                  [placeholder]="actualProduct.price"
-                />
-                <input
-                  class="w-1/2 py-3 text-center text-2xl discount text-indigoPink-700 boxShadowInputs focus:outline-none ml-2 rounded-md"
-                  type="number"
-                  [placeholder]="actualProduct.sale"
-                />
+                <div
+                  class="flex justify-center w-1/2 py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
+                >
+                  <span
+                    [ngClass]="{ productDiscount: this.actualProduct.sale > 5 }"
+                    >$</span
+                  >
+                  <input
+                    [ngClass]="{ productDiscount: this.actualProduct.sale > 5 }"
+                    class="focus:outline-none w-12"
+                    type="number"
+                    [(ngModel)]="productPrice"
+                  />
+                </div>
+
+                <div
+                  [ngClass]="{
+                    hidden: this.actualProduct.sale <= 0 && !isOnFocus
+                  }"
+                  class="flex justify-center w-1/2 py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoPink-700"
+                >
+                  <span>%</span>
+                  <input
+                    (ngModelChange)="focusOnInputDiscount(discountInput)"
+                    #discountInput
+                    class="w-12 discount focus:outline-none"
+                    type="number"
+                    [(ngModel)]="this.actualProduct.sale"
+                  />
+                </div>
+                <div
+                  (click)="addSale(discountInput)"
+                  *ngIf="this.actualProduct.sale <= 0 && !isOnFocus"
+                  class="w-1/2 bg-white flex justify-center items-center boxShadowInputs rounded-xl cursor-pointer"
+                >
+                  <ion-icon
+                    class="text-indigoBlack-800 text-3xl"
+                    name="add-circle"
+                  ></ion-icon>
+                </div>
               </div>
             </div>
           </div>
@@ -174,21 +201,38 @@
         <div class="w-1/2 flex flex-col px-8 my-4">
           <div class="w-full flex justify-between items-center">
             <h3 class="text-indigoBlack-500 text-xl capitalize">Imagenes</h3>
-            <span class="font-light text-indigoBlack-200 cursor-pointer"
+            <span
+              #imgEditText
+              (click)="editImages(imgEditText.textContent)"
+              class="font-light text-indigoBlack-200 cursor-pointer"
               >editar</span
             >
           </div>
           <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
           <div class="flex flex-col items-start justify-start">
             <div class="w-full flex my-4">
-              <img
-                class="w-24 rounded-xl"
-                *ngFor="let image of actualProduct.images"
-                [src]="uplodsUrl + '/' + image.image"
-                alt=""
-              />
+              <ng-container *ngIf="this.actualProduct.images.length > 0">
+                <div
+                  class="w-24 h-24 relative flex items-center justify-center"
+                  #imgContainer
+                  *ngFor="let image of actualProduct.images"
+                >
+                  <img
+                    #productImages
+                    class="w-full object-cover rounded-xl h-full"
+                    [src]="uplodsUrl + '/' + image.image"
+                    alt=""
+                  />
+                  <ion-icon
+                    name="trash"
+                    (click)="deleteRespectiveImg(image)"
+                    #deleteImgIcon
+                    class="absolute text-3xl text-red-600 hidden cursor-pointer"
+                  ></ion-icon>
+                </div>
+              </ng-container>
               <div
-                class="w-24 rounded-xl addInputsColor relative mx-4 flex justify-center items-center"
+                class="w-24 h-24 rounded-xl addInputsColor relative mx-4 flex justify-center items-center"
               >
                 <input
                   (change)="getImagePreview($event)"
@@ -197,7 +241,7 @@
                 />
                 <ion-icon
                   name="add-circle"
-                  class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
+                  class="text-indigoBlack-800 opacity-25 h-full text-4xl cursor-pointer"
                 ></ion-icon>
               </div>
             </div>
@@ -242,11 +286,15 @@
           </div>
           <div class="w-full flex flex-col items-center">
             <button
+              [ngClass]="{ 'opacity-50': isEditing }"
+              [disabled]="isEditing"
               class="w-full py-4 saveShadow bg-indigoPink-800 text-white uppercase rounded-xl"
             >
               Guardar
             </button>
-            <span class="text-indigoBlack-200 text-xl mt-3"
+            <span
+              (click)="this.hasToShowAlert = !this.hasToShowAlert"
+              class="text-indigoBlack-200 text-xl mt-3 cursor-pointer"
               >Descartar cambios</span
             >
           </div>
