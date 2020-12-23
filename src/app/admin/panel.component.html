@@ -18,7 +18,7 @@
                 class="w-full lineHeight bg-indigoBlack-500 opacity-25"
               ></div>
               <input
-                [placeholder]="this.actualProduct.name"
+                [(ngModel)]="this.actualProduct.name"
                 type="text"
                 class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
               />
@@ -113,8 +113,8 @@
               >
                 <div *ngFor="let s of this.sizes" class="my-4 relative">
                   <input
+                    [(ngModel)]="s.size"
                     (click)="selectSize($event, s)"
-                    [value]="s.size"
                     #sizesContainer
                     *ngIf="s.available"
                     class="cursor-pointer focus:outline-none boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base text-center"
@@ -140,7 +140,7 @@
                 class="w-full lineHeight bg-indigoBlack-500 opacity-25"
               ></div>
               <textarea
-                [placeholder]="actualProduct.description"
+                [(ngModel)]="actualProduct.description"
                 class="my-2 bg-white w-full focus:outline-none rounded-lg descriptionInput px-3 py-2 text-indigoBlack-200 boxShadowInputs"
               ></textarea>
             </div>
@@ -213,7 +213,7 @@
             <div class="w-full flex my-4">
               <ng-container *ngIf="this.actualProduct.images.length > 0">
                 <div
-                  class="w-24 h-24 relative flex items-center justify-center"
+                  class="w-24 h-24 relative flex items-center mx-2 justify-center"
                   #imgContainer
                   *ngFor="let image of actualProduct.images"
                 >
@@ -278,16 +278,12 @@
                 class="text-3xl cursor-pointer"
               ></ion-icon>
             </div>
-            <div
-              class="w-full py-4 flex justify-center px-4 my-3 rounded-xl bg-white boxShadowInputs text-indigoBlack-800"
-            >
-              <ion-icon name="add-circle" class="text-3xl"></ion-icon>
-            </div>
           </div>
           <div class="w-full flex flex-col items-center">
             <button
               [ngClass]="{ 'opacity-50': isEditing }"
               [disabled]="isEditing"
+              (click)="updateProduct()"
               class="w-full py-4 saveShadow bg-indigoPink-800 text-white uppercase rounded-xl"
             >
               Guardar

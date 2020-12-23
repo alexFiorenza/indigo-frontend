@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
 import { DOCUMENT } from '@angular/common';
+import { ProductsService } from '../core/services/http/api/products/products.service';
 interface Color {
   available?: boolean,
   color?: string,
@@ -17,7 +18,7 @@ interface Color {
 })
 export class PanelComponent implements OnInit, AfterContentInit {
   public previousDiv: HTMLElement;
-  public imageToDelete;
+  public deleteFile;
   public actualRoute;
   public hasToShowAlert = false;
   public actualProduct: Product;
@@ -31,6 +32,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public addedColors = [];
   public addedSizes = [];
   public previewImages: Array<any> = [];
+  public imagesToUpload: FileList[] = [];
   public lastSelectedColor: HTMLElement;
   public sizeToChange;
   public productPrice: number;
@@ -47,7 +49,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
   @ViewChildren('sizesContainer') public sizesContainer: QueryList<ElementRef>;
   @ViewChild('sizeContainerInputs') public sizeContainerInputs: ElementRef;
   constructor(private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) document, private r: Renderer2, private salesPipe: SalesPipe) {
+    @Inject(DOCUMENT) document, private r: Renderer2, private salesPipe: SalesPipe, private productService: ProductsService) {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
@@ -89,6 +91,10 @@ export class PanelComponent implements OnInit, AfterContentInit {
           this.hasToShowAlert = value.showAlert;
           this.actualProduct = value.product;
           this.productPrice = this.actualProduct.price;
+          if (this.actualProduct.sale > 0) {
+            this.productPrice = this.salesPipe.transform(this.actualProduct.price, this.actualProduct.sale)
+            this.productPrice = Math.ceil(this.productPrice);
+          }
         } else {
           this.hasToShowAlert = value;
         }
@@ -113,6 +119,12 @@ export class PanelComponent implements OnInit, AfterContentInit {
     }
     if (this.isEditing) {
       return
+    }
+    if (this.selectedColor) {
+      console.log(this.sizes);
+      // this.addedSizes.forEach((c) => {
+      //   this.selectedColor.sizes.push(c);
+      // })
     }
     this.selectedColor = colorSelected
     this.sizes = this.selectedColor.sizes;
@@ -153,7 +165,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
     })
   }
   editImages(text: String) {
-    if (this.actualProduct.images.length > 1) {
+    if (this.actualProduct.images.length > 1 || text === 'cancelar') {
       text === 'editar' ? text = 'cancelar' : text = 'editar';
       this.imgEditText.nativeElement.textContent = text;
       this.isEditing = !this.isEditing;
@@ -166,13 +178,17 @@ export class PanelComponent implements OnInit, AfterContentInit {
     }
   }
   deleteRespectiveImg(img) {
-    this.imageToDelete = img;
-    this.actualProduct.images.forEach((i) => {
-      if (i.uid === this.imageToDelete.uid) {
-        const index = this.actualProduct.images.indexOf(i);
-        this.actualProduct.images.splice(index, 1);
-      }
-    })
+    if (this.deleteFile) {
+      alert('No podes eliminar mas de una imagen por petición')
+    } else {
+      this.deleteFile = img;
+      this.actualProduct.images.forEach((i) => {
+        if (i.uid === this.deleteFile.uid) {
+          const index = this.actualProduct.images.indexOf(i);
+          this.actualProduct.images.splice(index, 1);
+        }
+      })
+    }
   }
   deleteColor(color) {
     this.colorsToDelete.push({
@@ -208,8 +224,13 @@ export class PanelComponent implements OnInit, AfterContentInit {
       available: true,
       size: this.sizeToChange
     })
+    this.addedSizes.push({
+      available: true,
+      size: this.sizeToChange
+    })
   }
   getImagePreview(fileUploaded: any) {
+    this.imagesToUpload.push(fileUploaded.currentTarget.files[0])
     const fileReader = new FileReader();
     fileReader.readAsDataURL(fileUploaded.currentTarget.files[0]);
     fileReader.onload = ((e) => {
@@ -246,6 +267,37 @@ export class PanelComponent implements OnInit, AfterContentInit {
     this.productPrice = Math.ceil(this.productPrice);
   }
   updateProduct() {
-
+    if (this.addedColors.length > 0) {
+      this.addedColors.forEach((c) => {
+        const coincidence = this.actualProduct.color.find(e => {
+          if (e.color === c.color) {
+            return e
+          }
+        })
+        if (!coincidence) {
+          const i = this.addedColors.indexOf(c);
+          this.addedColors.splice(i, 1);
+          this.actualProduct.color.push(c);
+        }
+      })
+    }
+    const dataToSend = {
+      ...this.actualProduct,
+    }
+    delete dataToSend.images
+    delete dataToSend.color
+    delete dataToSend.categories
+    Object.assign(dataToSend, { color: JSON.stringify(this.actualProduct.color) })
+    Object.assign(dataToSend, { categories: JSON.stringify(this.actualProduct.categories) })
+    if (this.deleteFile) {
+      Object.assign(dataToSend, { deleteFile: this.deleteFile.image })
+    }
+    if (!this.actualProduct.sale) {
+      this.actualProduct.sale = 0;
+    }
+    this.productService.editProduct(dataToSend, this.actualProduct._id, this.imagesToUpload).subscribe((response) => {
+      console.log(response)
+    })
   }
+
 }

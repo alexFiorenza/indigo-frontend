@@ -4,16 +4,28 @@ import { environment } from './../../../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Order } from '../../../../../shared/utilities/interfaces/order';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
   getProducts(actualPage, limit): Observable<any> {
     return this.http.get<Array<Product>>(
       `${environment.apiUrl}/product/${actualPage}?limit=${limit}`
     );
+  }
+  editProduct(body, id, image) {
+    const headers = this.userService.setHeaders();
+    const formData = new FormData();
+    for (const key in body) {
+      formData.append(key, body[key]);
+    }
+    for (let i = 0; i < image.length; i++) {
+      formData.append('image', image[i]);
+    }
+    return this.http.put(`${environment.apiUrl}/product/${id}`, formData, { headers })
   }
   getSingleProduct(id) {
     return this.http.get<Product>(`${environment.apiUrl}/product/getOne/${id}`);
