@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SalesPipe } from './../shared/pipes/sales.pipe';
 import { environment } from './../../environments/environment';
 import { Component, OnInit, AfterContentInit, ViewChild, ElementRef, QueryList, ViewChildren, ViewContainerRef, Inject, Renderer2 } from '@angular/core';
@@ -6,6 +7,8 @@ import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
 import { DOCUMENT } from '@angular/common';
 import { ProductsService } from '../core/services/http/api/products/products.service';
+import swal from 'sweetalert2';
+import { ThrowStmt } from '@angular/compiler';
 interface Color {
   available?: boolean,
   color?: string,
@@ -38,18 +41,26 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public productPrice: number;
   public isOnFocus = false;
   public uplodsUrl = environment.uploadsUrl;
+  public hasToCreateProduct = false;
+  public form: FormGroup;
   @ViewChild('colorPicker') public colorPicker: ElementRef;
   @ViewChild('addColors') public addColors: ElementRef;
   @ViewChild('editText') public editColorText: ElementRef;
   @ViewChild('imgEditText') public imgEditText: ElementRef;
   @ViewChild('sizeText') public sizeText: ElementRef;
   @ViewChild('sizeInput', { read: ViewContainerRef }) public sizeInput: ViewContainerRef;
-  @ViewChildren('deleteColors') public deleteColors: QueryList<ElementRef>;
-  @ViewChildren('imgContainer') public imgContainer: QueryList<ElementRef>;
-  @ViewChildren('sizesContainer') public sizesContainer: QueryList<ElementRef>;
   @ViewChild('sizeContainerInputs') public sizeContainerInputs: ElementRef;
+  @ViewChildren('deleteColors') public deleteColors: QueryList<ElementRef>;
+  @ViewChildren('sizesContainer') public sizesContainer: QueryList<ElementRef>;
+  @ViewChildren('imgContainer') public imgContainer: QueryList<ElementRef>;
+  @ViewChildren('previewIMGContainer') public previewIMGContainer: QueryList<ElementRef>;
   constructor(private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) document, private r: Renderer2, private salesPipe: SalesPipe, private productService: ProductsService) {
+    @Inject(DOCUMENT) document, private r: Renderer2, private salesPipe: SalesPipe, private productService: ProductsService, private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      price: [0, [Validators.required, Validators.min(10)]],
+    })
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
@@ -70,6 +81,9 @@ export class PanelComponent implements OnInit, AfterContentInit {
         this.previousDiv.classList.toggle('hidden');
         break;
     }
+  }
+  discardChanges() {
+    window.location.reload();
   }
   calculateBoxShadow(color) {
     const defaultValues = `0px 3px 6px ${color.color}`
@@ -95,11 +109,17 @@ export class PanelComponent implements OnInit, AfterContentInit {
             this.productPrice = this.salesPipe.transform(this.actualProduct.price, this.actualProduct.sale)
             this.productPrice = Math.ceil(this.productPrice);
           }
-        } else {
-          this.hasToShowAlert = value;
         }
       })
     }
+    component.createProductAlert.subscribe((value) => {
+      if (value.showAlert) {
+        this.hasToCreateProduct = true;
+        this.hasToShowAlert = value.showAlert;
+      } else {
+        this.hasToShowAlert = value;
+      }
+    })
   }
   selectSize(event, size) {
     this.selectedSize = size;
@@ -165,21 +185,38 @@ export class PanelComponent implements OnInit, AfterContentInit {
     })
   }
   editImages(text: String) {
-    if (this.actualProduct.images.length > 1 || text === 'cancelar') {
+    if (this.actualProduct) {
+      if (this.actualProduct.images.length > 1 || text === 'cancelar') {
+        text === 'editar' ? text = 'cancelar' : text = 'editar';
+        this.imgEditText.nativeElement.textContent = text;
+        this.isEditing = !this.isEditing;
+        this.imgContainer.forEach((e) => {
+          e.nativeElement.firstChild.classList.toggle('opacity-50');
+          e.nativeElement.lastChild.classList.toggle('hidden');
+        })
+      } else {
+        swal.fire({
+          text: 'Por lo menos debe de haber una imagen en el producto',
+          title: '¡Atención!',
+          icon: 'info'
+        })
+      }
+    } else {
       text === 'editar' ? text = 'cancelar' : text = 'editar';
       this.imgEditText.nativeElement.textContent = text;
-      this.isEditing = !this.isEditing;
-      this.imgContainer.forEach((e) => {
-        e.nativeElement.firstChild.classList.toggle('opacity-50');
-        e.nativeElement.lastChild.classList.toggle('hidden');
+      this.previewIMGContainer.forEach((e) => {
+        e.nativeElement.firstChild.classList.toggle('hidden');
+        e.nativeElement.children[1].classList.toggle('hidden');
       })
-    } else {
-      alert('Por lo menos debe de haber una imagen en el producto')
     }
   }
   deleteRespectiveImg(img) {
     if (this.deleteFile) {
-      alert('No podes eliminar mas de una imagen por petición')
+      swal.fire({
+        text: 'No podes eliminar mas de una imagen por petición',
+        title: '¡Atención!',
+        icon: 'info'
+      })
     } else {
       this.deleteFile = img;
       this.actualProduct.images.forEach((i) => {
@@ -251,6 +288,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
     this.productPrice = Math.ceil(this.productPrice);
     input.focus();
     this.isOnFocus = true;
+
   }
   focusOnInputDiscount(input: HTMLInputElement) {
     this.actualProduct.sale = parseInt(input.value);
@@ -265,6 +303,10 @@ export class PanelComponent implements OnInit, AfterContentInit {
       this.productPrice = this.actualProduct.price;
     }
     this.productPrice = Math.ceil(this.productPrice);
+  }
+  deletePreviewIMG(index) {
+    this.previewImages.splice(index, 1);
+    console.log(this.previewImages);
   }
   updateProduct() {
     if (this.addedColors.length > 0) {
@@ -295,9 +337,19 @@ export class PanelComponent implements OnInit, AfterContentInit {
     if (!this.actualProduct.sale) {
       this.actualProduct.sale = 0;
     }
-    this.productService.editProduct(dataToSend, this.actualProduct._id, this.imagesToUpload).subscribe((response) => {
-      console.log(response)
+    this.productService.editProduct(dataToSend, this.actualProduct._id, this.imagesToUpload).subscribe((response: any) => {
+      if (response.status) {
+        swal.fire({
+          icon: 'success',
+          title: 'Perfecto',
+          text: '¡El producto se ha actualizado correctamente!',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      }
     })
   }
-
 }

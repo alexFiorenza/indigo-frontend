@@ -1,5 +1,6 @@
+<!--Edit product-->
 <div
-  *ngIf="this.hasToShowAlert"
+  *ngIf="this.hasToShowAlert && !this.hasToCreateProduct"
   class="w-screen h-screen absolute adjustZIndex font-Josefin"
 >
   <div class="mt-4 w-screen absolute textIndex text-white flex justify-center">
@@ -284,12 +285,12 @@
               [ngClass]="{ 'opacity-50': isEditing }"
               [disabled]="isEditing"
               (click)="updateProduct()"
-              class="w-full py-4 saveShadow bg-indigoPink-800 text-white uppercase rounded-xl"
+              class="w-full py-4 saveShadow focus:outline-none bg-indigoPink-800 text-white uppercase rounded-xl"
             >
               Guardar
             </button>
             <span
-              (click)="this.hasToShowAlert = !this.hasToShowAlert"
+              (click)="discardChanges()"
               class="text-indigoBlack-200 text-xl mt-3 cursor-pointer"
               >Descartar cambios</span
             >
@@ -298,6 +299,265 @@
       </div>
     </div>
   </div>
+  <div
+    class="w-screen h-screen bgIndex bg-indigoBlack-900 opacity-75 absolute"
+  ></div>
+</div>
+<!--Create product-->
+<div
+  *ngIf="this.hasToShowAlert && this.hasToCreateProduct"
+  class="w-screen h-screen absolute adjustZIndex font-Josefin"
+>
+  <form
+    [formGroup]="form"
+    class="mt-4 w-screen absolute textIndex text-white flex justify-center"
+  >
+    <div class="w-10/12 bg-white rounded-lg animate__animated animate__zoomIn">
+      <div
+        class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase h-12 flex justify-center"
+      >
+        Crear producto
+      </div>
+      <div class="w-full flex">
+        <div class="flex flex-col w-1/2">
+          <div #editContainer class="px-8 w-full">
+            <div #nameProduct class="flex flex-col w-full my-4">
+              <h3 class="text-indigoBlack-500 text-xl capitalize">titulo</h3>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div class="w-full flex flex-col items-center">
+                <input
+                  formControlName="name"
+                  placeholder="Nombre del producto"
+                  type="text"
+                  class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
+                />
+                <span
+                  class="text-indigoPink-700 text-xl"
+                  *ngIf="
+                    this.form.get('name').touched &&
+                    this.form.get('name').invalid
+                  "
+                  >*Nombre invalido*</span
+                >
+              </div>
+            </div>
+            <div #colorProduct class="flex flex-col w-full my-4 font-Josefin">
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">colores</h3>
+                <span
+                  (click)="editColors(editText.textContent)"
+                  #editText
+                  class="font-light text-indigoBlack-200 cursor-pointer"
+                  >editar</span
+                >
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div class="w-full flex my-4">
+                <div *ngFor="let c of addedColors" class="mr-2">
+                  <div
+                    *ngIf="this.c.available"
+                    #addedColor
+                    (click)="colorSelected($event, c)"
+                    [ngStyle]="{
+                      'background-color': c.color
+                    }"
+                    class="h-8 fade-in borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                  >
+                    <ion-icon
+                      #deleteColors
+                      (click)="deleteColor(c)"
+                      class="absolute z-50 w-full h-full hidden cursor-pointer"
+                      name="close"
+                    ></ion-icon>
+                  </div>
+                </div>
+                <input
+                  #colorPicker
+                  [cpOKButton]="true"
+                  [(cpToggle)]="shouldOpenModal"
+                  [cpOKButtonClass]="
+                    'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+                  "
+                  (colorPickerSelect)="colorChanged($event)"
+                  class="borderToProductColors h-8 w-8 rounded-full hidden cursor-pointer focus:outline-none"
+                  [(colorPicker)]="color"
+                  [style.background]="color"
+                />
+                <ion-icon
+                  (click)="addColorPicker()"
+                  #addColors
+                  name="add-circle"
+                  class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
+                ></ion-icon>
+              </div>
+            </div>
+            <div #sizeProduct class="flex flex-col w-full my-4 font-Josefin">
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">talles</h3>
+                <span
+                  #sizeText
+                  *ngIf="this.selectedColor"
+                  (click)="editSize(sizeText.textContent)"
+                  class="font-light text-indigoBlack-200 cursor-pointer"
+                  >editar</span
+                >
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div
+                class="flex items-center justify-start"
+                *ngIf="this.sizes.length > 0 || selectedColor"
+              >
+                <div *ngFor="let s of this.sizes" class="my-4 relative">
+                  <input
+                    [(ngModel)]="s.size"
+                    name="size"
+                    (click)="selectSize($event, s)"
+                    #sizesContainer
+                    *ngIf="s.available"
+                    class="cursor-pointer focus:outline-none boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base text-center"
+                  />
+                </div>
+                <ion-icon
+                  name="add-circle"
+                  (click)="addSize()"
+                  class="text-indigoBlack-800 opacity-25 text-4xl my-4 cursor-pointer"
+                ></ion-icon>
+              </div>
+            </div>
+            <div
+              #descriptionProduct
+              class="flex flex-col w-full my-4 font-Josefin"
+            >
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">
+                  Descripción
+                </h3>
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div class="w-full flex flex-col items-center">
+                <textarea
+                  formControlName="description"
+                  placeholder="Descripción del producto"
+                  class="my-2 bg-white w-full focus:outline-none rounded-lg descriptionInput px-3 py-2 text-indigoBlack-200 boxShadowInputs"
+                ></textarea>
+                <span
+                  class="text-indigoPink-700 text-xl"
+                  *ngIf="
+                    this.form.get('description').touched &&
+                    this.form.get('description').invalid
+                  "
+                  >*Descripción invalida*</span
+                >
+              </div>
+            </div>
+            <div #priceProduct class="flex flex-col w-full my-4 font-Josefin">
+              <div class="w-full flex justify-between items-center">
+                <h3 class="text-indigoBlack-500 text-xl capitalize">Precio</h3>
+              </div>
+              <div
+                class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+              ></div>
+              <div
+                class="w-full flex flex-col items-center justify-center my-2"
+              >
+                <div
+                  class="flex items-center justify-center w-full py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
+                >
+                  <span class="text-right">$</span>
+                  <input
+                    class="focus:outline-none text-left input-max-w"
+                    type="number"
+                    formControlName="price"
+                  />
+                </div>
+                <span
+                  class="text-indigoPink-700 text-xl"
+                  *ngIf="
+                    this.form.get('price').touched &&
+                    this.form.get('price').invalid
+                  "
+                  >*Precio invalido*</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-1/2 flex flex-col px-8 my-4">
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">Imagenes</h3>
+            <span
+              #imgEditText
+              (click)="editImages(imgEditText.textContent)"
+              class="font-light text-indigoBlack-200 cursor-pointer"
+              >editar</span
+            >
+          </div>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+          <div class="flex flex-col items-start justify-start">
+            <div class="w-full flex my-4">
+              <div
+                #previewIMGContainer
+                *ngFor="let img of previewImages; let i = index"
+                class="w-24 h-24 mr-2 rounded-xl relative flex justify-center items-center"
+              >
+                <ion-icon
+                  name="trash"
+                  (click)="deletePreviewIMG(i)"
+                  class="text-3xl text-red-600 hidden cursor-pointer"
+                ></ion-icon>
+                <ion-icon
+                  name="cloud-upload-outline"
+                  class="text-3xl text-indigoBlack-800 z-50"
+                ></ion-icon>
+                <img
+                  #previewImages
+                  class="w-full rounded-xl opacity-50 absolute h-full z-30 object-cover"
+                  [src]="img"
+                  alt=""
+                />
+              </div>
+              <div
+                class="w-24 h-24 rounded-xl addInputsColor relative flex justify-center items-center"
+              >
+                <input
+                  (change)="getImagePreview($event)"
+                  type="file"
+                  class="w-full h-full opacity-0 z-50 cursor-pointer absolute"
+                />
+                <ion-icon
+                  name="add-circle"
+                  class="text-indigoBlack-800 opacity-25 h-full text-4xl cursor-pointer"
+                ></ion-icon>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-col items-center">
+            <button
+              [ngClass]="{ 'opacity-50': isEditing }"
+              [disabled]="isEditing"
+              (click)="updateProduct()"
+              class="w-full py-4 saveShadow focus:outline-none bg-indigoPink-800 text-white uppercase rounded-xl"
+            >
+              Guardar
+            </button>
+            <span
+              (click)="discardChanges()"
+              class="text-indigoBlack-200 text-xl mt-3 cursor-pointer"
+              >Descartar cambios</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
   <div
     class="w-screen h-screen bgIndex bg-indigoBlack-900 opacity-75 absolute"
   ></div>

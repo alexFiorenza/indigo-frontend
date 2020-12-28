@@ -5,6 +5,7 @@
       <span class="text-indigoBlack-800 ml-4 text-2xl">Productos</span>
     </div>
     <div
+      (click)="addProduct()"
       class="addInput flex items-center bg-indigoPink-700 text-white px-12 py-4 rounded-full cursor-pointer btnAddShadow"
     >
       <ion-icon name="add-circle" class="pr-4 text-lg opacity-75"></ion-icon>
@@ -52,6 +53,7 @@
             class="absolute text-4xl z-30 text-indigoBlack-500"
           ></ion-icon>
           <ion-icon
+            (click)="removeProduct(product)"
             name="trash-outline"
             class="absolute text-4xl z-30 text-red-500 hidden"
           ></ion-icon>

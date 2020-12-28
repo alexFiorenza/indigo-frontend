@@ -1,7 +1,9 @@
+import swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, QueryList, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../shared/utilities/interfaces/product';
 import { ProductsService } from '../../core/services/http/api/products/products.service';
+import { UserService } from '../../core/services/http/api/user/user.service';
 
 @Component({
   selector: 'app-products',
@@ -13,14 +15,15 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public previousFilter: HTMLElement;
   public previousLine: HTMLElement;
   public uploadsUrl = environment.uploadsUrl;
+  public deletingProducts = false;
+  public editingProducts = false;
   public alertEmmited = false;
+  @Output() public createProductAlert = new EventEmitter();
   @Output() public emitAlert = new EventEmitter();
   @ViewChildren('product') private productsContainer: QueryList<ElementRef>;
   constructor(private productsService: ProductsService) { }
-
   ngOnInit(): void {
   }
-
   ngAfterViewInit() {
     this.previousFilter = document.querySelector('#stock');
     this.previousLine = document.querySelector('#stockActive');
@@ -37,27 +40,70 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.previousLine = activeLine;
   }
   editProducts(editContainer: HTMLElement) {
-    editContainer.classList.toggle('selectedEdit')
-    this.productsContainer.forEach((p: ElementRef) => {
-      const editIcon: HTMLElement = p.nativeElement.firstChild.children[0]
-      p.nativeElement.classList.toggle('vibrate-1')
-      if (editIcon.classList.contains('hidden')) {
-        editIcon.classList.toggle('hidden');
-      }
-      p.nativeElement.firstChild.classList.toggle('hidden');
-      p.nativeElement.firstChild.classList.toggle('flex');
-    })
+    if (!this.deletingProducts) {
+      editContainer.classList.toggle('selectedEdit')
+      this.editingProducts = !this.editingProducts;
+      this.productsContainer.forEach((p: ElementRef) => {
+        const editIcon: HTMLElement = p.nativeElement.firstChild.children[0]
+        p.nativeElement.classList.toggle('vibrate-1')
+        if (editIcon.classList.contains('hidden')) {
+          editIcon.classList.toggle('hidden');
+        }
+        p.nativeElement.firstChild.classList.toggle('hidden');
+        p.nativeElement.firstChild.classList.toggle('flex');
+      })
+    }
   }
   deleteProduct(deleteContainer: HTMLElement) {
-    deleteContainer.classList.toggle('selectedDelete');
-    this.productsContainer.forEach((p: ElementRef) => {
-      p.nativeElement.classList.toggle('vibrate-1');
-      p.nativeElement.firstChild.classList.toggle('hidden');
-      p.nativeElement.firstChild.classList.toggle('flex');
-      const trashIcon: HTMLElement = p.nativeElement.firstChild.children[1];
-      p.nativeElement.firstChild.children[0].classList.toggle('hidden');
-      trashIcon.classList.toggle('hidden');
+    if (!this.editingProducts) {
+      this.deletingProducts = !this.deletingProducts;
+      deleteContainer.classList.toggle('selectedDelete');
+      this.productsContainer.forEach((p: ElementRef) => {
+        p.nativeElement.classList.toggle('vibrate-1');
+        p.nativeElement.firstChild.classList.toggle('hidden');
+        p.nativeElement.firstChild.classList.toggle('flex');
+        const trashIcon: HTMLElement = p.nativeElement.firstChild.children[1];
+        p.nativeElement.firstChild.children[0].classList.toggle('hidden');
+        trashIcon.classList.toggle('hidden');
+      })
+    }
+  }
+  addProduct() {
+    this.alertEmmited = !this.alertEmmited;
+    this.createProductAlert.emit({
+      showAlert: this.alertEmmited,
+      createProduct: true
     })
+  }
+  removeProduct(product: Product) {
+    swal.fire({
+      title: '¿Estas seguro?',
+      text: `Estas por eliminar ${product.name}`,
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: ' #FCC6E3',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productsService.deleteSingleProduct(product._id).subscribe((res: any) => {
+          if (res.status) {
+            swal.fire({
+              title: 'Perfecto',
+              icon: 'success',
+              text: '¡El producto se ha eliminado correctamente!',
+              confirmButtonText: 'Confirmar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
+
   }
   hasToEmitAlert(actualProduct = undefined) {
     this.alertEmmited = !this.alertEmmited;
@@ -70,4 +116,5 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       })
     }
   }
+
 }

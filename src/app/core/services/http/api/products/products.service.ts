@@ -1,9 +1,8 @@
 import { Product } from './../../../../../shared/utilities/interfaces/product';
 import { Observable } from 'rxjs';
 import { environment } from './../../../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Order } from '../../../../../shared/utilities/interfaces/order';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -30,5 +29,8 @@ export class ProductsService {
   getSingleProduct(id) {
     return this.http.get<Product>(`${environment.apiUrl}/product/getOne/${id}`);
   }
-
+  deleteSingleProduct(id) {
+    const headers = this.userService.setHeaders();
+    return this.http.delete(`${environment.apiUrl}/product/${id}`, { headers });
+  }
 }
