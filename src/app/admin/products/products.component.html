@@ -31,9 +31,17 @@
           <ion-icon name="trash"></ion-icon>
           <span class="text-sm mt-1 mx-2">Eliminar</span>
         </div>
-        <div class="flex items-center cursor-pointer mx-2">
-          <ion-icon name="search"></ion-icon>
-          <span class="text-sm mt-1 mx-2">Buscar</span>
+        <div class="flex items-center w-56 cursor-pointer mx-2 py-1 px-4">
+          <ion-icon name="search" class="w-1/5"></ion-icon>
+          <input
+            type="search"
+            [(ngModel)]="searchText"
+            (ngModelChange)="searchBar()"
+            class="text-sm mt-1 mx-2 focus:outline-none w-4/5 search searchBorder"
+            name="search"
+            placeholder="Buscar"
+            id=""
+          />
         </div>
       </div>
     </div>

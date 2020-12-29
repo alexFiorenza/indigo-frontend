@@ -164,7 +164,7 @@
                   >
                   <input
                     [ngClass]="{ productDiscount: this.actualProduct.sale > 5 }"
-                    class="focus:outline-none w-12"
+                    class="focus:outline-none w-3/5"
                     type="number"
                     [(ngModel)]="productPrice"
                   />
@@ -233,6 +233,7 @@
                 </div>
               </ng-container>
               <div
+                *ngIf="!this.isEditing"
                 class="w-24 h-24 rounded-xl addInputsColor relative mx-4 flex justify-center items-center"
               >
                 <input
@@ -416,6 +417,7 @@
                 <div *ngFor="let s of this.sizes" class="my-4 relative">
                   <input
                     [(ngModel)]="s.size"
+                    [ngModelOptions]="{ standalone: true }"
                     name="size"
                     (click)="selectSize($event, s)"
                     #sizesContainer
@@ -511,7 +513,7 @@
                 <ion-icon
                   name="trash"
                   (click)="deletePreviewIMG(i)"
-                  class="text-3xl text-red-600 hidden cursor-pointer"
+                  class="text-3xl text-red-600 hidden cursor-pointer z-50"
                 ></ion-icon>
                 <ion-icon
                   name="cloud-upload-outline"
@@ -525,6 +527,7 @@
                 />
               </div>
               <div
+                *ngIf="!this.isEditing"
                 class="w-24 h-24 rounded-xl addInputsColor relative flex justify-center items-center"
               >
                 <input
@@ -541,9 +544,16 @@
           </div>
           <div class="w-full flex flex-col items-center">
             <button
-              [ngClass]="{ 'opacity-50': isEditing }"
-              [disabled]="isEditing"
-              (click)="updateProduct()"
+              [ngClass]="{
+                'opacity-50':
+                  (this.previewImages.length > 0 && isEditing) ||
+                  this.form.invalid
+              }"
+              [disabled]="
+                (this.previewImages.length > 0 && isEditing) ||
+                this.form.invalid
+              "
+              (click)="updateProduct(true)"
               class="w-full py-4 saveShadow focus:outline-none bg-indigoPink-800 text-white uppercase rounded-xl"
             >
               Guardar

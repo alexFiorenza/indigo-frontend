@@ -18,6 +18,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public deletingProducts = false;
   public editingProducts = false;
   public alertEmmited = false;
+  public searchText: string;
   @Output() public createProductAlert = new EventEmitter();
   @Output() public emitAlert = new EventEmitter();
   @ViewChildren('product') private productsContainer: QueryList<ElementRef>;
@@ -54,6 +55,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       })
     }
   }
+  searchBar() {
+    console.log(this.searchText);
+    //manage search bar (same logic as search bar in products user side)
+  }
   deleteProduct(deleteContainer: HTMLElement) {
     if (!this.editingProducts) {
       this.deletingProducts = !this.deletingProducts;
@@ -82,7 +87,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',
-      confirmButtonColor: ' #FCC6E3',
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, eliminar'
     }).then((result) => {

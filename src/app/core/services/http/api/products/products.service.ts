@@ -33,4 +33,15 @@ export class ProductsService {
     const headers = this.userService.setHeaders();
     return this.http.delete(`${environment.apiUrl}/product/${id}`, { headers });
   }
+  createProduct(data, image) {
+    const headers = this.userService.setHeaders();
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    for (let i = 0; i < image.length; i++) {
+      formData.append('image', image[i]);
+    }
+    return this.http.post(`${environment.apiUrl}/product/`, formData, { headers })
+  }
 }

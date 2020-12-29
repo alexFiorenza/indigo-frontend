@@ -64,6 +64,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
+
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path
@@ -162,6 +163,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
       sizes: []
     });
     this.colorPicker.nativeElement.classList.add('hidden');
+    console.log(this.addedColors);
   }
   editColors(text: string) {
     this.sizes.length > 0 ? this.sizes = [] : false;
@@ -202,6 +204,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
         })
       }
     } else {
+      this.isEditing = !this.isEditing;
       text === 'editar' ? text = 'cancelar' : text = 'editar';
       this.imgEditText.nativeElement.textContent = text;
       this.previewIMGContainer.forEach((e) => {
@@ -261,6 +264,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
       available: true,
       size: this.sizeToChange
     })
+    console.log(this.selectedColor);
     this.addedSizes.push({
       available: true,
       size: this.sizeToChange
@@ -306,50 +310,84 @@ export class PanelComponent implements OnInit, AfterContentInit {
   }
   deletePreviewIMG(index) {
     this.previewImages.splice(index, 1);
-    console.log(this.previewImages);
+    this.imagesToUpload.splice(index, 1);
   }
-  updateProduct() {
-    if (this.addedColors.length > 0) {
-      this.addedColors.forEach((c) => {
-        const coincidence = this.actualProduct.color.find(e => {
-          if (e.color === c.color) {
-            return e
-          }
-        })
-        if (!coincidence) {
-          const i = this.addedColors.indexOf(c);
-          this.addedColors.splice(i, 1);
-          this.actualProduct.color.push(c);
-        }
-      })
-    }
-    const dataToSend = {
-      ...this.actualProduct,
-    }
-    delete dataToSend.images
-    delete dataToSend.color
-    delete dataToSend.categories
-    Object.assign(dataToSend, { color: JSON.stringify(this.actualProduct.color) })
-    Object.assign(dataToSend, { categories: JSON.stringify(this.actualProduct.categories) })
-    if (this.deleteFile) {
-      Object.assign(dataToSend, { deleteFile: this.deleteFile.image })
-    }
-    if (!this.actualProduct.sale) {
-      this.actualProduct.sale = 0;
-    }
-    this.productService.editProduct(dataToSend, this.actualProduct._id, this.imagesToUpload).subscribe((response: any) => {
-      if (response.status) {
-        swal.fire({
-          icon: 'success',
-          title: 'Perfecto',
-          text: '¡El producto se ha actualizado correctamente!',
-          confirmButtonText: 'Confirmar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
+  updateProduct(shouldCreate = false) {
+    if (!shouldCreate) {
+      if (this.addedColors.length > 0) {
+        this.addedColors.forEach((c) => {
+          const coincidence = this.actualProduct.color.find(e => {
+            if (e.color === c.color) {
+              return e
+            }
+          })
+          if (!coincidence) {
+            const i = this.addedColors.indexOf(c);
+            this.addedColors.splice(i, 1);
+            this.actualProduct.color.push(c);
           }
         })
       }
-    })
+      const dataToSend = {
+        ...this.actualProduct,
+      }
+      delete dataToSend.images
+      delete dataToSend.color
+      delete dataToSend.categories
+      Object.assign(dataToSend, { color: JSON.stringify(this.actualProduct.color) })
+      Object.assign(dataToSend, { categories: JSON.stringify(this.actualProduct.categories) })
+      if (this.deleteFile) {
+        Object.assign(dataToSend, { deleteFile: this.deleteFile.image })
+      }
+      if (!this.actualProduct.sale) {
+        this.actualProduct.sale = 0;
+      }
+      this.productService.editProduct(dataToSend, this.actualProduct._id, this.imagesToUpload).subscribe((response: any) => {
+        if (response.status) {
+          swal.fire({
+            icon: 'success',
+            title: 'Perfecto',
+            text: '¡El producto se ha actualizado correctamente!',
+            confirmButtonText: 'Confirmar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          })
+        }
+      })
+    } else {
+      const formData = this.form.value;
+      const dataToSend = {
+        ...formData
+      }
+      Object.assign(dataToSend, { color: JSON.stringify(this.addedColors) })
+      this.productService.createProduct(dataToSend, this.imagesToUpload).subscribe((response: any) => {
+        if (response.status) {
+          swal.fire({
+            icon: 'success',
+            title: 'Perfecto',
+            text: '¡El producto se ha creado correctamente!',
+            confirmButtonText: 'Confirmar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          })
+        } else {
+          swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Al parecer ha ocurrido un error intenta de nuevo',
+            confirmButtonText: 'Recargar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          })
+        }
+      })
+    }
   }
+
 }
