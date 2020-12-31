@@ -1,0 +1,17 @@
+:host ::ng-deep .p-dropdown {
+  width: 14rem;
+}
+.layoutCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 300px));
+  gap: 40px;
+}
+.maxWCards {
+  max-width: 370px;
+}
+.transactionAmount {
+  background-color: #c8b6fa;
+}
+.dataAmount {
+  background-color: #fae3b6;
+}

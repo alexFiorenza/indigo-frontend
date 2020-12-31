@@ -10,6 +10,9 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     ColorPickerModule,
     FormsModule,
-    ReactiveFormsModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    DropdownModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe]

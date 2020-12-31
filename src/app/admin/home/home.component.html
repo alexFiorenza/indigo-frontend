@@ -4,11 +4,63 @@
     <span class="text-indigoBlack-800 ml-4 text-2xl">Vista general</span>
   </div>
   <p-dropdown
-    [options]="cities"
-    [(ngModel)]="selectedCity"
+    [options]="dates"
+    placeholder="Elegir fecha"
+    [showClear]="true"
+    [(ngModel)]="selectedDate"
     optionLabel="name"
   ></p-dropdown>
 </div>
-<div class="w-full flex">
-  <div #cards></div>
+<div class="w-full flex font-Josefin mx-6 layoutCards">
+  <div
+    #card
+    class="bg-white shadow-md mt-12 px-6 py-6 flex rounded-xl"
+    *ngFor="let card of cards"
+  >
+    <div class="flex flex-col w-4/6">
+      <h3 class="text-3xl font-bold">{{ card.data }}</h3>
+      <span class="text-indigoBlack-400 text-sm">{{ card.text }}</span>
+    </div>
+    <div
+      class="relative flex flex-col h-full w-2/6 items-center justify-center"
+    >
+      <div
+        [style]="{ 'background-color': card.color }"
+        class="py-10 px-4 absolute z-10 opacity-25 w-full h-full rounded-full"
+      ></div>
+      <ion-icon
+        [style]="{ color: card.color }"
+        [name]="card.icon"
+        class="text-3xl"
+      ></ion-icon>
+    </div>
+  </div>
+</div>
+<div class="w-full mt-8">
+  <div class="w-4/12">
+    <div class="flex items-center">
+      <ion-icon name="cube" class="text-indigoBlack-800 text-2xl"></ion-icon>
+      <span class="text-indigoBlack-800 ml-4 text-2xl">Servicios</span>
+    </div>
+    <div class="flex flex-col font-Josefin">
+      <div
+        class="w-full flex py-2 items-center rounded-lg bg-indigoPink-700 mt-4 cursor-pointer"
+      >
+        <div id="delivery" class="w-16 mx-4"></div>
+        <span class="text-white text-xl">Envios</span>
+      </div>
+      <div
+        class="w-full flex items-center rounded-lg py-2 transactionAmount mt-4 cursor-pointer"
+      >
+        <div id="wallet" class="w-16 mx-4"></div>
+        <span class="text-white text-xl">Transacciones</span>
+      </div>
+      <div
+        class="w-full flex items-center rounded-lg py-2 dataAmount mt-4 cursor-pointer"
+      >
+        <div id="analytics" class="w-16 mx-4"></div>
+        <span class="text-white text-xl">Datos extras</span>
+      </div>
+    </div>
+  </div>
 </div>
