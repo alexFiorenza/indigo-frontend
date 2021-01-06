@@ -112,7 +112,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
         }
       })
     }
-    else if (component.createProductAlert) {
+    if (component.createProductAlert) {
       component.createProductAlert.subscribe((value) => {
         if (value.showAlert) {
           this.hasToCreateProduct = true;

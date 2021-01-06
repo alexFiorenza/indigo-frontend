@@ -3,20 +3,66 @@
   [style]="{ width: '80vw' }"
   [(visible)]="display"
   [modal]="true"
+  closable="false"
   [draggable]="false"
   class="px-8 py-3 font-Josefin"
   position="top"
 >
-  <div class="w-full h-full flex justify-center">
+  <form [formGroup]="createSlideForm" class="w-full h-full flex justify-center">
     <div class="flex flex-col my-5 w-5/12">
-      <div class="p-float-label w-full mb-6">
-        <input id="float-input" type="text" pInputText class="w-full" />
-        <label for="float-input" class="w-full">Titulo</label>
+      <div class="flex flex-col w-full mb-6">
+        <div
+          [ngClass]="{
+            'p-invalid':
+              this.createSlideForm.get('title').invalid &&
+              this.createSlideForm.get('title').dirty
+          }"
+          class="p-float-label w-full"
+        >
+          <input
+            id="float-input"
+            type="text"
+            formControlName="title"
+            pInputText
+            class="w-full"
+          />
+          <label for="float-input" class="w-full">Titulo</label>
+        </div>
+        <small
+          *ngIf="
+            this.createSlideForm.get('title').invalid &&
+            this.createSlideForm.get('title').dirty
+          "
+          class="p-invalid"
+          >¡El titulo no es valido!</small
+        >
       </div>
-      <div class="p-float-label w-full mb-6">
-        <input id="float-input" type="text" pInputText class="w-full" />
-        <label for="float-input" class="w-full">Texto del botón</label>
+      <div class="flex flex-col w-full mb-6">
+        <div class="p-float-label w-full">
+          <input
+            [ngClass]="{
+              'p-invalid':
+                this.createSlideForm.get('button').invalid &&
+                this.createSlideForm.get('button').dirty
+            }"
+            id="float-input"
+            formControlName="button"
+            type="text"
+            pInputText
+            class="w-full"
+          />
+          <label for="float-input" class="w-full">Texto del botón</label>
+        </div>
+        <small
+          *ngIf="
+            this.createSlideForm.get('button').invalid &&
+            this.createSlideForm.get('button').dirty
+          "
+          class="p-invalid"
+          >¡El botón no es valido!</small
+        >
       </div>
+
       <div class="w-full mb-6 flex items-center">
         <label for="float-input" class="colorLabel mr-3"
           >Color del botón:</label
@@ -47,19 +93,48 @@
           [style.background]="colorTexts"
         />
       </div>
-      <div class="p-float-label w-full mb-6 mt-2">
-        <textarea
-          id="float-input"
-          type="text"
-          pInputTextarea
-          class="w-full h-32"
-        ></textarea>
-        <label for="float-input" class="w-full">Descripción</label>
+      <div class="flex flex-col w-full mb-6 mt-2">
+        <div class="p-float-label w-full">
+          <textarea
+            [ngClass]="{
+              'p-invalid':
+                this.createSlideForm.get('description').invalid &&
+                this.createSlideForm.get('description').dirty
+            }"
+            formControlName="description"
+            id="float-input"
+            type="text"
+            pInputTextarea
+            class="w-full h-32"
+          ></textarea>
+          <label for="float-input" class="w-full">Descripción</label>
+        </div>
+        <small
+          *ngIf="
+            this.createSlideForm.get('description').invalid &&
+            this.createSlideForm.get('description').dirty
+          "
+          class="p-invalid"
+          >¡La descripción no es valida!</small
+        >
       </div>
     </div>
-    <div class="flex flex-col w-1/2 my-5 mx-4">
+    <div class="flex flex-col w-1/2 mx-4">
+      <div class="w-full mb-6 flex flex-col">
+        <h3 class="colorLabel my-3">Redirección del botón</h3>
+        <p-dropdown
+          appendTo="body"
+          placeholder="Elegir redirección"
+          [options]="availableRoutes"
+          formControlName="selectedRoute"
+          optionLabel="name"
+          autoWidth="false"
+          [style]="{ width: '100%' }"
+        ></p-dropdown>
+      </div>
       <div class="w-full mb-6 flex items-center">
         <p-fileUpload
+          (onSelect)="fileCharged($event)"
           chooseLabel="Elegir imagen"
           [showUploadButton]="false"
           cancelLabel="Cancelar"
@@ -69,29 +144,28 @@
         >
         </p-fileUpload>
       </div>
-      <div class="w-full mb-6 flex flex-col">
-        <h3 class="colorLabel my-3">Redirección del botón</h3>
-        <p-dropdown
-          appendTo="body"
-          [options]="availableRoutes"
-          [(ngModel)]="selectedRoute"
-          optionLabel="name"
-          autoWidth="false"
-          [style]="{ width: '100%' }"
-        ></p-dropdown>
-      </div>
     </div>
-  </div>
+  </form>
   <p-footer>
     <div class="flex items-center w-full justify-end">
       <button
         pButton
         label="cancelar"
+        (click)="display = !display"
         icon="pi pi-times"
         class="p-button-outlined p-button-secondary"
         iconPos="left"
       ></button>
-      <button pButton label="Guardar" icon="pi pi-save" iconPos="left"></button>
+      <button
+        [disabled]="
+          this.createSlideForm.invalid || this.selectedFile === undefined
+        "
+        (click)="addSlide()"
+        pButton
+        label="Guardar"
+        icon="pi pi-save"
+        iconPos="left"
+      ></button>
     </div>
   </p-footer>
 </p-dialog>

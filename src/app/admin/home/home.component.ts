@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import lootie from 'lottie-web';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2'
+import { SlidesService } from '../../core/services/http/api/slides/slides.service';
 interface Date {
   name: string,
   code: number
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
   public availableRoutes: any[] = [];
   public colorBtn = '#707070'
   public colorTexts = '#ffff'
+  public selectedFile;
   selectedDate: Date;
   public uploadsUrl = environment.uploadsUrl
   display: boolean = false;
@@ -47,7 +50,7 @@ export class HomeComponent implements OnInit {
     icon: 'card',
     color: '#B6FBD6'
   }]
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private slidesService: SlidesService) {
     this.dates = [
       { name: 'Hoy', code: 1 },
       { name: '7 dias', code: 7 },
@@ -67,6 +70,7 @@ export class HomeComponent implements OnInit {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       button: ['', [Validators.required]],
+      selectedRoute: ['', [Validators.required]]
     })
   }
   loadBus() {
@@ -142,9 +146,42 @@ export class HomeComponent implements OnInit {
     }
   }
   addSlide() {
-
+    const body = this.createSlideForm.value;
+    delete body.selectedRoute;
+    Object.assign(body, { btnDirection: this.createSlideForm.get('selectedRoute').value.code })
+    Object.assign(body, { color: this.colorBtn, wordsColor: this.colorTexts })
+    this.slidesService.createSlide(this.createSlideForm.value, this.selectedFile).subscribe((response: any) => {
+      if (response.status) {
+        swal.fire({
+          icon: 'success',
+          title: 'Perfecto',
+          text: '¡Se ha creado correctamente la diapositiva!',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      } else {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Al parecer ha ocurrido un error intenta de nuevo',
+          confirmButtonText: 'Recargar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      }
+    })
   }
   editSlide(id) {
 
+  }
+
+  fileCharged(file) {
+    const uploadedFile = file.currentFiles[0];
+    this.selectedFile = uploadedFile;
   }
 }
