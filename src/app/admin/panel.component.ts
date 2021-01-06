@@ -64,7 +64,6 @@ export class PanelComponent implements OnInit, AfterContentInit {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
-
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path
@@ -113,14 +112,17 @@ export class PanelComponent implements OnInit, AfterContentInit {
         }
       })
     }
-    component.createProductAlert.subscribe((value) => {
-      if (value.showAlert) {
-        this.hasToCreateProduct = true;
-        this.hasToShowAlert = value.showAlert;
-      } else {
-        this.hasToShowAlert = value;
-      }
-    })
+    else if (component.createProductAlert) {
+      component.createProductAlert.subscribe((value) => {
+        if (value.showAlert) {
+          this.hasToCreateProduct = true;
+          this.hasToShowAlert = value.showAlert;
+        } else {
+          this.hasToShowAlert = value;
+        }
+      })
+    }
+
   }
   selectSize(event, size) {
     this.selectedSize = size;

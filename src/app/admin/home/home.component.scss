@@ -15,3 +15,27 @@
 .dataAmount {
   background-color: #fae3b6;
 }
+.cardHeight {
+  height: 250px;
+}
+.border-img {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+.borderToProductColors {
+  border: 0.5px #a1a1a1 solid;
+}
+.borderCardEdit {
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+}
+.colorLabel {
+  color: #6c767d;
+}
+.borderToProductColors {
+  border: 0.5px #a1a1a1 solid;
+}
+:host ::ng-deep .p-dialog-footer {
+  background-color: #f9f7fb !important;
+  padding: 15px 15px !important;
+}

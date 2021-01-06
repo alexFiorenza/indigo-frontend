@@ -1,9 +1,109 @@
+<p-dialog
+  header="Añadir diapositiva"
+  [style]="{ width: '80vw' }"
+  [(visible)]="display"
+  [modal]="true"
+  [draggable]="false"
+  class="px-8 py-3 font-Josefin"
+  position="top"
+>
+  <div class="w-full h-full flex justify-center">
+    <div class="flex flex-col my-5 w-5/12">
+      <div class="p-float-label w-full mb-6">
+        <input id="float-input" type="text" pInputText class="w-full" />
+        <label for="float-input" class="w-full">Titulo</label>
+      </div>
+      <div class="p-float-label w-full mb-6">
+        <input id="float-input" type="text" pInputText class="w-full" />
+        <label for="float-input" class="w-full">Texto del botón</label>
+      </div>
+      <div class="w-full mb-6 flex items-center">
+        <label for="float-input" class="colorLabel mr-3"
+          >Color del botón:</label
+        >
+        <input
+          #colorPicker
+          [cpOKButton]="true"
+          [cpOKButtonClass]="
+            'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+          "
+          class="borderToProductColors h-6 w-6 rounded-full cursor-pointer focus:outline-none"
+          [(colorPicker)]="colorBtn"
+          [style.background]="colorBtn"
+        />
+      </div>
+      <div class="w-full mb-6 flex items-center">
+        <label for="float-input" class="colorLabel mr-3"
+          >Color de las palabras:</label
+        >
+        <input
+          #colorPicker
+          [cpOKButton]="true"
+          [cpOKButtonClass]="
+            'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+          "
+          class="borderToProductColors h-6 w-6 rounded-full cursor-pointer focus:outline-none"
+          [(colorPicker)]="colorTexts"
+          [style.background]="colorTexts"
+        />
+      </div>
+      <div class="p-float-label w-full mb-6 mt-2">
+        <textarea
+          id="float-input"
+          type="text"
+          pInputTextarea
+          class="w-full h-32"
+        ></textarea>
+        <label for="float-input" class="w-full">Descripción</label>
+      </div>
+    </div>
+    <div class="flex flex-col w-1/2 my-5 mx-4">
+      <div class="w-full mb-6 flex items-center">
+        <p-fileUpload
+          chooseLabel="Elegir imagen"
+          [showUploadButton]="false"
+          cancelLabel="Cancelar"
+          accept="image/*"
+          [url]="uploadsUrl + '/'"
+          class="w-full"
+        >
+        </p-fileUpload>
+      </div>
+      <div class="w-full mb-6 flex flex-col">
+        <h3 class="colorLabel my-3">Redirección del botón</h3>
+        <p-dropdown
+          appendTo="body"
+          [options]="availableRoutes"
+          [(ngModel)]="selectedRoute"
+          optionLabel="name"
+          autoWidth="false"
+          [style]="{ width: '100%' }"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="flex items-center w-full justify-end">
+      <button
+        pButton
+        label="cancelar"
+        icon="pi pi-times"
+        class="p-button-outlined p-button-secondary"
+        iconPos="left"
+      ></button>
+      <button pButton label="Guardar" icon="pi pi-save" iconPos="left"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
 <div class="mt-12 flex w-full justify-between items-center pr-8">
   <div class="flex items-center">
     <ion-icon name="eye" class="text-indigoBlack-800 text-2xl"></ion-icon>
     <span class="text-indigoBlack-800 ml-4 text-2xl">Vista general</span>
   </div>
   <p-dropdown
+    class="mx-8"
+    (onChange)="inputHasChanged()"
     [options]="dates"
     placeholder="Elegir fecha"
     [showClear]="true"
@@ -36,7 +136,7 @@
     </div>
   </div>
 </div>
-<div class="w-full mt-8">
+<div class="w-full mx-4 mt-8 flex">
   <div class="w-4/12">
     <div class="flex items-center">
       <ion-icon name="cube" class="text-indigoBlack-800 text-2xl"></ion-icon>
@@ -46,21 +146,71 @@
       <div
         class="w-full flex py-2 items-center rounded-lg bg-indigoPink-700 mt-4 cursor-pointer"
       >
-        <div id="delivery" class="w-16 mx-4"></div>
+        <div id="delivery" class="w-20 mx-4"></div>
         <span class="text-white text-xl">Envios</span>
       </div>
       <div
         class="w-full flex items-center rounded-lg py-2 transactionAmount mt-4 cursor-pointer"
       >
-        <div id="wallet" class="w-16 mx-4"></div>
+        <div id="wallet" class="w-20 mx-4"></div>
         <span class="text-white text-xl">Transacciones</span>
       </div>
       <div
         class="w-full flex items-center rounded-lg py-2 dataAmount mt-4 cursor-pointer"
       >
-        <div id="analytics" class="w-16 mx-4"></div>
+        <div id="analytics" class="w-16 mx-6"></div>
         <span class="text-white text-xl">Datos extras</span>
       </div>
     </div>
+  </div>
+  <div class="w-3/5 flex flex-col">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <ion-icon
+          name="albums"
+          class="text-indigoBlack-800 text-2xl"
+        ></ion-icon>
+        <span class="text-indigoBlack-800 ml-4 text-2xl"
+          >Diapositivas inicio</span
+        >
+      </div>
+      <button
+        (click)="showDialog()"
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        class="p-button-outlined p-button-raised p-button-rounded"
+      ></button>
+    </div>
+    <p-carousel [value]="slides" [numVisible]="3" [numScroll]="1">
+      <ng-template let-slide pTemplate="item">
+        <div class="shadow rounded-xl m-1 font-Josefin relative">
+          <img
+            src="../../../assets/sampleShoe1.png"
+            class="w-full object-cover h-16 border-img"
+          />
+          <div class="px-4 py-4">
+            <span class="text-sm font-semibold text-indigoBlack-500">{{
+              slide.title
+            }}</span>
+            <p class="font-light text-sm">{{ slide.description }}</p>
+            <div class="flex my-2">
+              <span class="font-semibold text-indigoBlack-500">Color:</span>
+              <div
+                [ngStyle]="{
+                  'background-color': slide.color
+                }"
+                class="h-6 fade-in mx-2 borderToProductColors w-6 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+              ></div>
+            </div>
+          </div>
+          <button
+            class="bg-blue-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
+          >
+            Editar
+          </button>
+        </div>
+      </ng-template>
+    </p-carousel>
   </div>
 </div>

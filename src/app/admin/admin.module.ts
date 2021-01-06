@@ -11,9 +11,15 @@ import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { CarouselModule } from 'primeng/carousel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CardModule } from 'primeng/card'
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
@@ -28,6 +34,13 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     DropdownModule,
+    CarouselModule,
+    CardModule,
+    ButtonModule,
+    DialogModule,
+    InputTextModule,
+    InputTextareaModule,
+    FileUploadModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe]
