@@ -17,4 +17,18 @@ export class SlidesService {
     const headers = this.userService.setHeaders();
     return this.http.post(`${environment.apiUrl}/slides`, formData, { headers })
   }
+  getAllSlides() {
+    return this.http.get(`${environment.apiUrl}/slides`);
+  }
+  updateSlides(id, body, image = undefined) {
+    const formData = new FormData();
+    for (const key in body) {
+      formData.append(key, body[key]);
+    }
+    if (image) {
+      formData.append('image', image);
+    }
+    const headers = this.userService.setHeaders();
+    return this.http.put(`${environment.apiUrl}/slides/${id}`, formData, { headers })
+  }
 }

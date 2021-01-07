@@ -20,7 +20,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { SkeletonModule } from 'primeng/skeleton';
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
   imports: [
@@ -40,7 +40,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     DialogModule,
     InputTextModule,
     InputTextareaModule,
-    FileUploadModule
+    FileUploadModule,
+    SkeletonModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe]

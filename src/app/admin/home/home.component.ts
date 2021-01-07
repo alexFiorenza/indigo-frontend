@@ -21,12 +21,19 @@ interface Card {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  selectedSlide;
+  isEditSlideOpen = false;
+  fileToBeDeleted;
   dates: Date[];
-  slides: any[];
+  slides: any[] = [];
+  public skeleton = Array(3);
   public createSlideForm: FormGroup;
+  public editSlideForm: FormGroup;
   public selectedRoute;
   public availableRoutes: any[] = [];
   public colorBtn = '#707070'
+  public editColorBtn;
+  public editColorTexts;
   public colorTexts = '#ffff'
   public selectedFile;
   selectedDate: Date;
@@ -72,6 +79,7 @@ export class HomeComponent implements OnInit {
       button: ['', [Validators.required]],
       selectedRoute: ['', [Validators.required]]
     })
+
   }
   loadBus() {
     lootie.loadAnimation({
@@ -103,42 +111,14 @@ export class HomeComponent implements OnInit {
       path: 'https://assets8.lottiefiles.com/packages/lf20_DaD4lb.json' // the path to the animation json
     });
   }
+
   ngOnInit(): void {
     this.loadBus();
     this.loadWallet();
     this.loadAnalytics();
-    this.slides = [
-      {
-        title: 'Nuestras ofertas',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non lacus tristique accumsan.',
-        color: '#F086A3'
-      },
-      {
-        title: 'Contacta con nosotros ',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non lacus tristique accumsan.',
-        color: '#B6DBF8'
-      },
-      {
-        title: 'Nuestras ofertas',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non lacus tristique accumsan.',
-        color: '#F086A3'
-      },
-      {
-        title: 'Nuestras ofertas',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non lacus tristique accumsan.',
-        color: '#F086A3'
-      },
-      {
-        title: 'Contacta con nosotros ',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non lacus tristique accumsan.',
-        color: '#B6DBF8'
-      },
-      {
-        title: 'Nuestras ofertas',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non lacus tristique accumsan.',
-        color: '#F086A3'
-      }
-    ]
+    this.slidesService.getAllSlides().subscribe((response: any) => {
+      this.slides = response.response;
+    })
   }
   inputHasChanged() {
     if (!this.selectedDate) {
@@ -176,11 +156,37 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-  editSlide(id) {
-
+  editSlide(slide) {
+    this.selectedSlide = slide;
+    console.log(this.selectedSlide.btnDirection);
+    this.editSlideForm = this.formBuilder.group({
+      title: [this.selectedSlide.title, [Validators.required]],
+      description: [this.selectedSlide.description, [Validators.required]],
+      button: [this.selectedSlide.button, [Validators.required]],
+      selectedRoute: [this.selectedSlide.btnDirection, [Validators.required]]
+    })
+    this.isEditSlideOpen = true;
+    this.editColorBtn = this.selectedSlide.color;
+    this.editColorTexts = this.selectedSlide.wordsColor;
   }
-
-  fileCharged(file) {
+  saveChangesSlide() {
+    const body = this.editSlideForm.value;
+    if (body.btnDirection === undefined) {
+      delete body.btnDirection
+    }
+    Object.assign(body, { color: this.editColorBtn, wordsColor: this.editColorTexts })
+    if (this.fileToBeDeleted && this.selectedFile) {
+      Object.assign(body, { deleteFile: this.fileToBeDeleted })
+    }
+    //Update slide
+    this.slidesService.updateSlides(this.selectedSlide._id, body, this.selectedFile).subscribe((response) => {
+      console.log(response);
+    })
+  }
+  fileCharged(file, upload = false) {
+    if (upload) {
+      this.fileToBeDeleted = this.selectedSlide.images[0].image
+    }
     const uploadedFile = file.currentFiles[0];
     this.selectedFile = uploadedFile;
   }

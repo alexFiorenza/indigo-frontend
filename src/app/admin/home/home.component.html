@@ -1,4 +1,178 @@
 <p-dialog
+  *ngIf="this.selectedSlide"
+  header="Editar diapositiva"
+  [style]="{ width: '80vw' }"
+  [(visible)]="isEditSlideOpen"
+  [modal]="true"
+  closable="false"
+  [draggable]="false"
+  class="px-8 py-3 font-Josefin"
+  position="top"
+>
+  <form [formGroup]="editSlideForm" class="w-full h-full flex justify-center">
+    <div class="flex flex-col my-5 w-5/12">
+      <div class="flex flex-col w-full mb-6">
+        <div
+          [ngClass]="{
+            'p-invalid':
+              this.editSlideForm.get('title').invalid &&
+              this.editSlideForm.get('title').dirty
+          }"
+          class="p-float-label w-full"
+        >
+          <input
+            id="float-input"
+            type="text"
+            formControlName="title"
+            pInputText
+            class="w-full"
+          />
+          <label for="float-input" class="w-full">Titulo</label>
+        </div>
+        <small
+          *ngIf="
+            this.editSlideForm.get('title').invalid &&
+            this.editSlideForm.get('title').dirty
+          "
+          class="p-invalid"
+          >¡El titulo no es valido!</small
+        >
+      </div>
+      <div class="flex flex-col w-full mb-6">
+        <div class="p-float-label w-full">
+          <input
+            [ngClass]="{
+              'p-invalid':
+                this.editSlideForm.get('button').invalid &&
+                this.editSlideForm.get('button').dirty
+            }"
+            id="float-input"
+            formControlName="button"
+            type="text"
+            pInputText
+            class="w-full"
+          />
+          <label for="float-input" class="w-full">Texto del botón</label>
+        </div>
+        <small
+          *ngIf="
+            this.editSlideForm.get('button').invalid &&
+            this.editSlideForm.get('button').dirty
+          "
+          class="p-invalid"
+          >¡El botón no es valido!</small
+        >
+      </div>
+
+      <div class="w-full mb-6 flex items-center">
+        <label for="float-input" class="colorLabel mr-3"
+          >Color del botón:</label
+        >
+        <input
+          [cpOKButton]="true"
+          [cpOKButtonClass]="
+            'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+          "
+          class="borderToProductColors h-6 w-6 rounded-full cursor-pointer focus:outline-none"
+          [(colorPicker)]="editColorBtn"
+          [style.background]="editColorBtn"
+        />
+      </div>
+      <div class="w-full mb-6 flex items-center">
+        <label for="float-input" class="colorLabel mr-3"
+          >Color de las palabras:</label
+        >
+        <input
+          [cpOKButton]="true"
+          [cpOKButtonClass]="
+            'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
+          "
+          class="borderToProductColors h-6 w-6 rounded-full cursor-pointer focus:outline-none"
+          [(colorPicker)]="editColorTexts"
+          [style.background]="editColorTexts"
+        />
+      </div>
+      <div class="flex flex-col w-full mb-6 mt-2">
+        <div class="p-float-label w-full">
+          <textarea
+            [ngClass]="{
+              'p-invalid':
+                this.editSlideForm.get('description').invalid &&
+                this.editSlideForm.get('description').dirty
+            }"
+            formControlName="description"
+            id="float-input"
+            type="text"
+            pInputTextarea
+            class="w-full h-32"
+          ></textarea>
+          <label for="float-input" class="w-full">Descripción</label>
+        </div>
+        <small
+          *ngIf="
+            this.editSlideForm.get('description').invalid &&
+            this.editSlideForm.get('description').dirty
+          "
+          class="p-invalid"
+          >¡La descripción no es valida!</small
+        >
+      </div>
+    </div>
+    <div class="flex flex-col w-1/2 mx-4">
+      <div class="w-full mb-6 flex flex-col">
+        <h3 class="colorLabel my-3">Redirección del botón</h3>
+        <p-dropdown
+          appendTo="body"
+          [placeholder]="selectedSlide.btnDirection"
+          [options]="availableRoutes"
+          formControlName="selectedRoute"
+          optionLabel="name"
+          autoWidth="false"
+          [style]="{ width: '100%' }"
+        ></p-dropdown>
+      </div>
+      <div class="w-full mb-6 flex flex-col font-Josefin">
+        <p-fileUpload
+          (onSelect)="fileCharged($event, true)"
+          chooseLabel="Elegir imagen"
+          [showUploadButton]="false"
+          cancelLabel="Cancelar"
+          accept="image/*"
+          [url]="uploadsUrl + '/'"
+          class="w-full"
+        >
+        </p-fileUpload>
+        <span class="colorLabel mt-3 mb-2">Imagen actual de diapositiva</span>
+        <img
+          class="w-40 rounded-lg"
+          [src]="uploadsUrl + '/' + selectedSlide.images[0].image"
+          alt=""
+        />
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <div class="flex items-center w-full justify-end">
+      <button
+        pButton
+        label="cancelar"
+        (click)="isEditSlideOpen = !isEditSlideOpen"
+        icon="pi pi-times"
+        class="p-button-outlined p-button-secondary"
+        iconPos="left"
+      ></button>
+      <button
+        [disabled]="!this.editSlideForm.dirty"
+        (click)="saveChangesSlide()"
+        pButton
+        label="Guardar"
+        icon="pi pi-save"
+        iconPos="left"
+      ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+<p-dialog
   header="Añadir diapositiva"
   [style]="{ width: '80vw' }"
   [(visible)]="display"
@@ -256,11 +430,24 @@
         class="p-button-outlined p-button-raised p-button-rounded"
       ></button>
     </div>
-    <p-carousel [value]="slides" [numVisible]="3" [numScroll]="1">
+    <div class="flex mt-4" *ngIf="this.slides.length <= 0" #skeletonSliders>
+      <div *ngFor="let s of skeleton" class="ml-8 flex flex-col">
+        <p-skeleton height="4rem" width="11rem"></p-skeleton>
+        <p-skeleton height="1rem" width="8rem" class="my-3"></p-skeleton>
+        <p-skeleton height="13rem" width="11rem"></p-skeleton>
+      </div>
+    </div>
+
+    <p-carousel
+      [value]="slides"
+      [numVisible]="3"
+      [numScroll]="1"
+      *ngIf="this.slides.length > 0"
+    >
       <ng-template let-slide pTemplate="item">
         <div class="shadow rounded-xl m-1 font-Josefin relative">
           <img
-            src="../../../assets/sampleShoe1.png"
+            [src]="uploadsUrl + '/' + slide.images[0].image"
             class="w-full object-cover h-16 border-img"
           />
           <div class="px-4 py-4">
@@ -279,6 +466,7 @@
             </div>
           </div>
           <button
+            (click)="editSlide(slide)"
             class="bg-blue-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
           >
             Editar
