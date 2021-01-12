@@ -156,13 +156,15 @@
       <button
         pButton
         label="cancelar"
-        (click)="isEditSlideOpen = !isEditSlideOpen"
+        (click)="reloadView()"
         icon="pi pi-times"
         class="p-button-outlined p-button-secondary"
         iconPos="left"
       ></button>
       <button
-        [disabled]="!this.editSlideForm.dirty"
+        [disabled]="
+          !this.editSlideForm.dirty && this.selectedFile === undefined
+        "
         (click)="saveChangesSlide()"
         pButton
         label="Guardar"
@@ -325,7 +327,7 @@
       <button
         pButton
         label="cancelar"
-        (click)="display = !display"
+        (click)="reloadView()"
         icon="pi pi-times"
         class="p-button-outlined p-button-secondary"
         iconPos="left"
@@ -475,4 +477,38 @@
       </ng-template>
     </p-carousel>
   </div>
+</div>
+<div class="w-full">
+  <div class="flex items-center">
+    <ion-icon
+      name="apps-outline"
+      class="text-indigoBlack-800 text-2xl"
+    ></ion-icon>
+    <span class="text-indigoBlack-800 ml-4 text-2xl"
+      >Productos en pantalla de inicio</span
+    >
+  </div>
+  <p-virtualScroller [value]="products" scrollHeight="500px" [itemSize]="150">
+    <p-header>Lista de productos</p-header>
+    <ng-template pTemplate="item" let-product>
+      <div class="w-full flex my-4 font-Josefin">
+        <div class="w-40 h-32 mx-4">
+          <img
+            [src]="uploadsUrl + '/' + product.images[0].image"
+            class="w-full object-cover h-full shadow-sm"
+            alt=""
+          />
+        </div>
+        <div class="w-full flex justify-between mr-16">
+          <div class="flex flex-col">
+            <span class="text-lg text-indigoBlack-800 font-semibold">
+              {{ product.name }}</span
+            >
+            <p class="font-light">{{ product.description }}</p>
+          </div>
+          <div class="text-lg">{{ product.price | currency }}</div>
+        </div>
+      </div>
+    </ng-template>
+  </p-virtualScroller>
 </div>

@@ -60,6 +60,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       price: [0, [Validators.required, Validators.min(10)]],
+      homeView: [false, [Validators.required]]
     })
   }
   ngOnInit(): void {

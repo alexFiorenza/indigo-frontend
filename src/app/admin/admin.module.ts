@@ -21,6 +21,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SkeletonModule } from 'primeng/skeleton';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
   imports: [
@@ -41,7 +43,9 @@ import { SkeletonModule } from 'primeng/skeleton';
     InputTextModule,
     InputTextareaModule,
     FileUploadModule,
-    SkeletonModule
+    SkeletonModule,
+    VirtualScrollerModule,
+    ToggleButtonModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe]

@@ -266,6 +266,20 @@
               </div>
             </div>
           </div>
+          <div #homeView class="flex flex-col w-full my-4">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">
+              Vista panel principal
+            </h3>
+            <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+            <p-toggleButton
+              class="mt-2"
+              [(ngModel)]="actualProduct.homeView"
+              onLabel="Eliminar"
+              offLabel="Añadir"
+              [onIcon]="'pi pi-times'"
+              offIcon="pi pi-plus"
+            ></p-toggleButton>
+          </div>
           <div #categories class="flex flex-col w-full my-4">
             <h3 class="text-indigoBlack-500 text-xl capitalize">Categorias</h3>
             <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
@@ -493,6 +507,20 @@
           </div>
         </div>
         <div class="w-1/2 flex flex-col px-8 my-4">
+          <div #homeView class="flex flex-col w-full my-4">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">
+              Vista panel principal
+            </h3>
+            <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+            <p-toggleButton
+              class="mt-2"
+              formControlName="homeView"
+              onLabel="Eliminar"
+              offLabel="Añadir"
+              [onIcon]="'pi pi-times'"
+              offIcon="pi pi-plus"
+            ></p-toggleButton>
+          </div>
           <div class="w-full flex justify-between items-center">
             <h3 class="text-indigoBlack-500 text-xl capitalize">Imagenes</h3>
             <span
@@ -574,94 +602,99 @@
 </div>
 <!--Panel-->
 <div class="w-screen font-Josefin flex">
-  <div #navPanel class="w-2/6 max-w-xs h-screen flex flex-col relative">
-    <h2 class="text-indigoBlack-400 text-5xl uppercase ml-20 mt-20">indigo</h2>
-    <div
-      routerLink="inicio"
-      (click)="transitionRouter(homeTransition)"
-      class="flex items-center mt-24 cursor-pointer relative focus:outline-none"
-    >
+  <div class="w-2/6 max-w-xs h-screen">
+    <div #navPanel class="w-full h-full flex flex-col fixed">
+      <h2 class="text-indigoBlack-400 text-5xl uppercase ml-20 mt-20">
+        indigo
+      </h2>
       <div
-        #homeTransition
-        id="homeTransition"
-        class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft pinkDiv"
-      ></div>
-      <ion-icon
-        #homeIcon
-        routerLinkActive="active"
-        name="home"
-        class="text-4xl text-indigoBlack-800 ml-20"
-      ></ion-icon>
-      <span
-        routerLinkActive="active"
-        class="font-normal text-indigoBlack-800 mx-8"
-        >Panel principal</span
+        routerLink="inicio"
+        (click)="transitionRouter(homeTransition)"
+        class="flex items-center mt-24 cursor-pointer relative focus:outline-none"
       >
-    </div>
-    <div
-      (click)="transitionRouter(productsTransition)"
-      routerLink="productos"
-      class="flex items-center mt-16 cursor-pointer relative focus:outline-none"
-    >
+        <div
+          #homeTransition
+          id="homeTransition"
+          class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft pinkDiv"
+        ></div>
+        <ion-icon
+          #homeIcon
+          routerLinkActive="active"
+          name="home"
+          class="text-4xl text-indigoBlack-800 ml-20"
+        ></ion-icon>
+        <span
+          routerLinkActive="active"
+          class="font-normal text-indigoBlack-800 mx-8"
+          >Panel principal</span
+        >
+      </div>
       <div
-        #productsTransition
-        id="productsTransition"
-        class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft"
-      ></div>
-      <ion-icon
-        #productsIcon
-        routerLinkActive="active"
-        name="pricetags"
-        class="text-4xl text-indigoBlack-800 ml-20"
-      ></ion-icon>
-      <span
-        routerLinkActive="active"
-        class="font-normal text-indigoBlack-800 mx-8"
-        >Productos</span
+        (click)="transitionRouter(productsTransition)"
+        routerLink="productos"
+        class="flex items-center mt-16 cursor-pointer relative focus:outline-none"
       >
-    </div>
-    <div
-      (click)="transitionRouter(ordersTransition)"
-      routerLink="ordenes"
-      class="flex items-center mt-16 cursor-pointer focus:outline-none"
-    >
+        <div
+          #productsTransition
+          id="productsTransition"
+          class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft"
+        ></div>
+        <ion-icon
+          #productsIcon
+          routerLinkActive="active"
+          name="pricetags"
+          class="text-4xl text-indigoBlack-800 ml-20"
+        ></ion-icon>
+        <span
+          routerLinkActive="active"
+          class="font-normal text-indigoBlack-800 mx-8"
+          >Productos</span
+        >
+      </div>
       <div
-        #ordersTransition
-        id="ordersTransition"
-        class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft"
-      ></div>
-      <ion-icon
-        #ordersIcon
-        routerLinkActive="active"
-        name="cart-outline"
-        class="text-4xl text-indigoBlack-800 ml-20"
-      ></ion-icon>
-      <span
-        routerLinkActive="active"
-        class="font-normal text-indigoBlack-800 mx-8"
-        >Pedidos</span
+        (click)="transitionRouter(ordersTransition)"
+        routerLink="ordenes"
+        class="flex items-center mt-16 cursor-pointer focus:outline-none"
       >
-    </div>
-    <div class="flex items-center mt-16 cursor-pointer">
-      <ion-icon
-        name="people-outline"
-        class="text-4xl text-indigoBlack-800 ml-20"
-      ></ion-icon>
-      <span class="font-normal text-indigoBlack-800 mx-8">Clientes</span>
-    </div>
-    <div
-      routerLink="/inicio"
-      class="absolute mb-12 flex items-center bottom-0 focus:outline-none cursor-pointer"
-    >
-      <ion-icon
-        name="log-out-outline"
-        class="text-4xl text-indigoBlack-800 rotateLogOutIcon ml-20"
-      ></ion-icon>
-      <span class="font-normal text-indigoBlack-800 mx-8"
-        >Volver a la pagina</span
+        <div
+          #ordersTransition
+          id="ordersTransition"
+          class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft"
+        ></div>
+        <ion-icon
+          #ordersIcon
+          routerLinkActive="active"
+          name="cart-outline"
+          class="text-4xl text-indigoBlack-800 ml-20"
+        ></ion-icon>
+        <span
+          routerLinkActive="active"
+          class="font-normal text-indigoBlack-800 mx-8"
+          >Pedidos</span
+        >
+      </div>
+      <div class="flex items-center mt-16 cursor-pointer">
+        <ion-icon
+          name="people-outline"
+          class="text-4xl text-indigoBlack-800 ml-20"
+        ></ion-icon>
+        <span class="font-normal text-indigoBlack-800 mx-8">Clientes</span>
+      </div>
+      <div
+        routerLink="/inicio"
+        class="absolute mb-12 flex items-center bottom-0 focus:outline-none cursor-pointer"
       >
+        <ion-icon
+          name="log-out-outline"
+          class="text-4xl text-indigoBlack-800 rotateLogOutIcon ml-20"
+        ></ion-icon>
+        <span class="font-normal text-indigoBlack-800 mx-8"
+          >Volver a la pagina</span
+        >
+      </div>
     </div>
   </div>
+
   <div class="w-full">
     <router-outlet (activate)="componentInitialized($event)"></router-outlet>
   </div>

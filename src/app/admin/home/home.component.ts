@@ -5,6 +5,8 @@ import lootie from 'lottie-web';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2'
 import { SlidesService } from '../../core/services/http/api/slides/slides.service';
+import { Product } from '../../shared/utilities/interfaces/product';
+import { ProductsService } from '../../core/services/http/api/products/products.service';
 interface Date {
   name: string,
   code: number
@@ -24,6 +26,7 @@ export class HomeComponent implements OnInit {
   selectedSlide;
   isEditSlideOpen = false;
   fileToBeDeleted;
+  products: Product[] = [];
   dates: Date[];
   slides: any[] = [];
   public skeleton = Array(3);
@@ -57,7 +60,7 @@ export class HomeComponent implements OnInit {
     icon: 'card',
     color: '#B6FBD6'
   }]
-  constructor(private router: Router, private formBuilder: FormBuilder, private slidesService: SlidesService) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private slidesService: SlidesService, private productService: ProductsService) {
     this.dates = [
       { name: 'Hoy', code: 1 },
       { name: '7 dias', code: 7 },
@@ -119,6 +122,13 @@ export class HomeComponent implements OnInit {
     this.slidesService.getAllSlides().subscribe((response: any) => {
       this.slides = response.response;
     })
+    // this.productService.getProducts(1, 10).subscribe((res) => {
+    //   this.products = res.response.products;
+    // })
+    //TODO Create custom currency pipe 
+    this.productService.getHomeViewProducts().subscribe((res: any) => {
+      this.products = res.response;
+    })
   }
   inputHasChanged() {
     if (!this.selectedDate) {
@@ -179,6 +189,7 @@ export class HomeComponent implements OnInit {
       Object.assign(body, { deleteFile: this.fileToBeDeleted })
     }
     //Update slide
+    //TODO Manage when cancelling image uploading and confirmation alert
     this.slidesService.updateSlides(this.selectedSlide._id, body, this.selectedFile).subscribe((response) => {
       console.log(response);
     })
@@ -189,5 +200,9 @@ export class HomeComponent implements OnInit {
     }
     const uploadedFile = file.currentFiles[0];
     this.selectedFile = uploadedFile;
+    console.log(this.selectedFile);
+  }
+  reloadView() {
+    window.location.reload();
   }
 }
