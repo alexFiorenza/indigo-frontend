@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
   dates: Date[];
   slides: any[] = [];
+  public addCategories = false;
   public skeleton = Array(3);
   public createSlideForm: FormGroup;
   public editSlideForm: FormGroup;
@@ -39,6 +40,8 @@ export class HomeComponent implements OnInit {
   public editColorTexts;
   public colorTexts = '#ffff'
   public selectedFile;
+  public categoryName;
+  public checkedSubCategories = false;
   selectedDate: Date;
   public uploadsUrl = environment.uploadsUrl
   display: boolean = false;
@@ -93,6 +96,9 @@ export class HomeComponent implements OnInit {
       path: 'https://assets10.lottiefiles.com/packages/lf20_RJRDWS.json' // the path to the animation json
     });
   }
+  saveCategory() {
+
+  }
   showDialog() {
     this.display = true;
   }
@@ -122,9 +128,6 @@ export class HomeComponent implements OnInit {
     this.slidesService.getAllSlides().subscribe((response: any) => {
       this.slides = response.response;
     })
-    // this.productService.getProducts(1, 10).subscribe((res) => {
-    //   this.products = res.response.products;
-    // })
     //TODO Create custom currency pipe 
     this.productService.getHomeViewProducts().subscribe((res: any) => {
       this.products = res.response;
@@ -189,10 +192,34 @@ export class HomeComponent implements OnInit {
       Object.assign(body, { deleteFile: this.fileToBeDeleted })
     }
     //Update slide
-    //TODO Manage when cancelling image uploading and confirmation alert
-    this.slidesService.updateSlides(this.selectedSlide._id, body, this.selectedFile).subscribe((response) => {
-      console.log(response);
+    this.slidesService.updateSlides(this.selectedSlide._id, body, this.selectedFile).subscribe((response: any) => {
+      if (response.status) {
+        swal.fire({
+          icon: 'success',
+          title: 'Perfecto',
+          text: '¡El producto se ha creado correctamente!',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      } else {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Al parecer ha ocurrido un error intenta de nuevo',
+          confirmButtonText: 'Recargar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      }
     })
+  }
+  toggleCategory() {
+    this.addCategories = !this.addCategories;
   }
   fileCharged(file, upload = false) {
     if (upload) {

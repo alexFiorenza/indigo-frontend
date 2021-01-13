@@ -23,6 +23,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { SkeletonModule } from 'primeng/skeleton';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { InputSwitchModule } from 'primeng/inputswitch';
+//TODO Create primeng module
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
   imports: [
@@ -45,7 +48,9 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     FileUploadModule,
     SkeletonModule,
     VirtualScrollerModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    OverlayPanelModule,
+    InputSwitchModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe]

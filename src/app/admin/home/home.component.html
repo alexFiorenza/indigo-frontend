@@ -1,4 +1,50 @@
 <p-dialog
+  header="Crear categoria"
+  [(visible)]="addCategories"
+  [draggable]="false"
+  posiion="top"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="flex flex-col mx-8 my-3 items-start">
+    <input
+      pInputText
+      [(ngModel)]="categoryName"
+      type="text"
+      class="my-3 w-full"
+      placeholder="Nombre de la categoria"
+    />
+    <div class="flex items-center my-2">
+      <label class="my-3 font-Josefin text-indigoBlack-500"
+        >¿Tiene subcategorias?</label
+      >
+      <p-inputSwitch
+        class="my-1 mx-1"
+        [(ngModel)]="checkedSubCategories"
+      ></p-inputSwitch>
+    </div>
+    <button
+      pButton
+      type="button"
+      [disabled]="!categoryName"
+      (click)="saveCategory()"
+      label="Guardar"
+      class="w-full"
+      icon="pi pi-check"
+      [style]="{ 'margin-bottom': '0.5rem' }"
+      iconPos="left"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Cancelar"
+      class="w-full p-button-outlined"
+      icon="pi pi-trash"
+      iconPos="left"
+    ></button>
+  </div>
+</p-dialog>
+<p-dialog
   *ngIf="this.selectedSlide"
   header="Editar diapositiva"
   [style]="{ width: '80vw' }"
@@ -484,11 +530,11 @@
       name="apps-outline"
       class="text-indigoBlack-800 text-2xl"
     ></ion-icon>
-    <span class="text-indigoBlack-800 ml-4 text-2xl"
+    <span class="text-indigoBlack-800 ml-4 text-2xl my-3"
       >Productos en pantalla de inicio</span
     >
   </div>
-  <p-virtualScroller [value]="products" scrollHeight="500px" [itemSize]="150">
+  <p-virtualScroller [value]="products" scrollHeight="300px" [itemSize]="150">
     <p-header>Lista de productos</p-header>
     <ng-template pTemplate="item" let-product>
       <div class="w-full flex my-4 font-Josefin">
@@ -511,4 +557,21 @@
       </div>
     </ng-template>
   </p-virtualScroller>
+  <div class="flex items-center justify-between my-6">
+    <div class="flex items-center">
+      <ion-icon
+        name="list-outline"
+        class="text-indigoBlack-800 text-2xl"
+      ></ion-icon>
+      <span class="text-indigoBlack-800 ml-4 text-2xl my-3">Categorias</span>
+    </div>
+    <button
+      (click)="toggleCategory()"
+      pButton
+      type="button"
+      icon="pi pi-plus"
+      [style]="{ 'margin-right': '3rem' }"
+      class="p-button-outlined p-button-raised p-button-rounded"
+    ></button>
+  </div>
 </div>
