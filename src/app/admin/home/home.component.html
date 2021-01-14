@@ -1,3 +1,45 @@
+<p-toast position="top-right" key="success"></p-toast>
+<p-toast position="top-right" key="error"></p-toast>
+<p-dialog
+  *ngIf="this.selectedCategory"
+  [header]="'Crear subcategoria de ' + this.selectedCategory.name"
+  [(visible)]="addSubCategory"
+  [draggable]="false"
+  posiion="top"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="flex flex-col mx-8 my-3 items-start">
+    <input
+      pInputText
+      [(ngModel)]="categoryName"
+      type="text"
+      class="my-3 w-full"
+      [style]="{ 'margin-bottom': '0.5rem' }"
+      placeholder="Nombre de la categoria"
+    />
+    <button
+      pButton
+      type="button"
+      [disabled]="!categoryName"
+      (click)="saveSubCategory()"
+      label="Guardar"
+      class="w-full"
+      icon="pi pi-check"
+      [style]="{ 'margin-bottom': '0.5rem' }"
+      iconPos="left"
+    ></button>
+    <button
+      pButton
+      type="button"
+      (click)="toggleSubCategory()"
+      label="Cancelar"
+      class="w-full p-button-outlined"
+      icon="pi pi-trash"
+      iconPos="left"
+    ></button>
+  </div>
+</p-dialog>
 <p-dialog
   header="Crear categoria"
   [(visible)]="addCategories"
@@ -12,17 +54,10 @@
       [(ngModel)]="categoryName"
       type="text"
       class="my-3 w-full"
+      [style]="{ 'margin-bottom': '0.5rem' }"
       placeholder="Nombre de la categoria"
     />
-    <div class="flex items-center my-2">
-      <label class="my-3 font-Josefin text-indigoBlack-500"
-        >¿Tiene subcategorias?</label
-      >
-      <p-inputSwitch
-        class="my-1 mx-1"
-        [(ngModel)]="checkedSubCategories"
-      ></p-inputSwitch>
-    </div>
+
     <button
       pButton
       type="button"
@@ -37,6 +72,7 @@
     <button
       pButton
       type="button"
+      (click)="toggleCategory()"
       label="Cancelar"
       class="w-full p-button-outlined"
       icon="pi pi-trash"
@@ -557,21 +593,66 @@
       </div>
     </ng-template>
   </p-virtualScroller>
-  <div class="flex items-center justify-between my-6">
-    <div class="flex items-center">
-      <ion-icon
-        name="list-outline"
-        class="text-indigoBlack-800 text-2xl"
-      ></ion-icon>
-      <span class="text-indigoBlack-800 ml-4 text-2xl my-3">Categorias</span>
+  <div class="flex flex-col mx-3 my-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <ion-icon
+          name="list-outline"
+          class="text-indigoBlack-800 text-2xl"
+        ></ion-icon>
+
+        <span class="text-indigoBlack-800 ml-4 text-2xl my-3">Categorias</span>
+      </div>
+      <button
+        (click)="toggleCategory()"
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        [style]="{ 'margin-right': '3rem' }"
+        class="p-button-outlined p-button-raised p-button-rounded"
+      ></button>
     </div>
-    <button
-      (click)="toggleCategory()"
-      pButton
-      type="button"
-      icon="pi pi-plus"
-      [style]="{ 'margin-right': '3rem' }"
-      class="p-button-outlined p-button-raised p-button-rounded"
-    ></button>
+    <div class="lineHeight mb-5 bg-indigoBlack-500 opacity-25 mr-12"></div>
+    <div *ngFor="let category of categories">
+      <div
+        class="font-Josefin px-3 my-3 py-3 text-lg h-16 flex items-center justify-between boxShadowCategory rounded-md font-semibold mr-12 text-indigoBlack-500"
+      >
+        <span class="ml-8">{{ category.name }}</span>
+        <div class="mr-12">
+          <button
+            (click)="toggleSubCategory(category)"
+            type="button"
+            class="focus:outline-none mx-2"
+          >
+            <ion-icon name="add-circle" class="text-3xl"></ion-icon>
+          </button>
+          <button
+            (click)="deleteCategory(category)"
+            type="button"
+            class="focus:outline-none"
+          >
+            <ion-icon name="remove-circle" class="text-3xl"></ion-icon>
+          </button>
+        </div>
+      </div>
+      <div
+        *ngIf="this.category.subcategories.length > 0"
+        class="w-11/12 mx-auto"
+      >
+        <div
+          *ngFor="let subcategory of category.subcategories"
+          class="font-Josefin px-3 my-3 py-3 text-lg h-16 flex items-center justify-between boxShadowCategory rounded-md font-semibold mr-12 text-indigoBlack-500"
+        >
+          <span class="ml-8"> {{ subcategory.name }}</span>
+          <button
+            (click)="deleteSubCategory(subcategory, category)"
+            type="button"
+            class="focus:outline-none"
+          >
+            <ion-icon name="remove-circle" class="text-3xl"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { SalesPipe } from './../shared/pipes/sales.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,6 +26,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToastModule } from 'primeng/toast';
 //TODO Create primeng module
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
@@ -50,9 +52,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     VirtualScrollerModule,
     ToggleButtonModule,
     OverlayPanelModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ToastModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [SalesPipe]
+  providers: [SalesPipe, MessageService]
 })
 export class AdminModule { }

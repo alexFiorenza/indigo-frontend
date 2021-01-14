@@ -24,7 +24,16 @@ export class CategoryService {
     return this.http.put(`${environment.apiUrl}/categories/${id}`, body, { headers });
   }
   deleteCategoryOnProduct(id, body) {
+    return this.http.delete(`${environment.apiUrl}/categories/${id}`, body);
+  }
+  updateSubCategory(data, id) {
     const headers = this.userService.setHeaders();
-    return this.http.delete(`${environment.apiUrl}/categories/${id}`, body, { headers });
+    return this.http.put(`${environment.apiUrl}/categories/subcategory/${id}`, data, { headers })
+  }
+  deleteSubCategory(data, id) {
+    return this.http.put(`${environment.apiUrl}/categories/subcategory/delete/${id}`, data);
+  }
+  deleteCategory(id) {
+    return this.http.delete(`${environment.apiUrl}/categories/${id}`);
   }
 }

@@ -7,6 +7,8 @@ import swal from 'sweetalert2'
 import { SlidesService } from '../../core/services/http/api/slides/slides.service';
 import { Product } from '../../shared/utilities/interfaces/product';
 import { ProductsService } from '../../core/services/http/api/products/products.service';
+import { CategoryService } from '../../core/services/http/api/categories/category.service';
+import { MessageService } from 'primeng/api';
 interface Date {
   name: string,
   code: number
@@ -29,6 +31,10 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
   dates: Date[];
   slides: any[] = [];
+  public selectedCategory;
+  public addSubCategory = false;
+  public subCategoryName;
+  public categories: any[] = [];
   public addCategories = false;
   public skeleton = Array(3);
   public createSlideForm: FormGroup;
@@ -63,7 +69,7 @@ export class HomeComponent implements OnInit {
     icon: 'card',
     color: '#B6FBD6'
   }]
-  constructor(private router: Router, private formBuilder: FormBuilder, private slidesService: SlidesService, private productService: ProductsService) {
+  constructor(private messageService: MessageService, private router: Router, private formBuilder: FormBuilder, private slidesService: SlidesService, private productService: ProductsService, private categoryService: CategoryService) {
     this.dates = [
       { name: 'Hoy', code: 1 },
       { name: '7 dias', code: 7 },
@@ -96,8 +102,111 @@ export class HomeComponent implements OnInit {
       path: 'https://assets10.lottiefiles.com/packages/lf20_RJRDWS.json' // the path to the animation json
     });
   }
-  saveCategory() {
+  deleteCategory(category) {
+    swal.fire({
+      title: '¿Estas seguro?',
+      html: `Estas por eliminar la categoria: <strong>${category.name}</strong>`,
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoryService.deleteCategory(category._id).subscribe((res: any) => {
+          if (res.status) {
+            swal.fire({
+              title: 'Perfecto',
+              icon: 'success',
+              text: '¡La categoria se ha eliminado correctamente!',
+              confirmButtonText: 'Confirmar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
 
+  }
+  saveCategory() {
+    const data = {
+      name: this.categoryName
+    }
+    this.categoryService.createCategory(data).subscribe((res: any) => {
+      if (res.status) {
+        swal.fire({
+          icon: 'success',
+          title: 'Perfecto',
+          text: '¡Se ha creado correctamente la categoria!',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      } else {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Al parecer ha ocurrido un error intenta de nuevo',
+          confirmButtonText: 'Recargar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      }
+    })
+  }
+  deleteSubCategory(subcategory, category) {
+    this.categoryService.deleteSubCategory(subcategory, category._id).subscribe((res: any) => {
+      if (res.status) {
+        this.messageService.add({ key: 'success', severity: 'success', summary: '¡Perfecto!', detail: 'Subcategoria eliminada' });
+      } else {
+        this.messageService.add({ key: 'error', severity: 'error', summary: '¡Oops!', detail: 'Ha ocurrido un error' });
+      }
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    })
+  }
+  saveSubCategory() {
+    this.categoryService.updateSubCategory({ name: this.categoryName }, this.selectedCategory._id).subscribe((res: any) => {
+      if (res.status) {
+        swal.fire({
+          icon: 'success',
+          title: 'Perfecto',
+          text: '¡Se ha creado correctamente la subcategoria!',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      } else {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Al parecer ha ocurrido un error intenta de nuevo',
+          confirmButtonText: 'Recargar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      }
+    })
+  }
+  toggleSubCategory(category = undefined) {
+    this.addSubCategory = !this.addSubCategory;
+    if (this.selectedCategory) {
+      this.selectedCategory = null;
+      return;
+    }
+    this.selectedCategory = category;
   }
   showDialog() {
     this.display = true;
@@ -131,6 +240,9 @@ export class HomeComponent implements OnInit {
     //TODO Create custom currency pipe 
     this.productService.getHomeViewProducts().subscribe((res: any) => {
       this.products = res.response;
+    })
+    this.categoryService.getAllCategories().subscribe((res: any) => {
+      this.categories = res.response;
     })
   }
   inputHasChanged() {
@@ -197,7 +309,7 @@ export class HomeComponent implements OnInit {
         swal.fire({
           icon: 'success',
           title: 'Perfecto',
-          text: '¡El producto se ha creado correctamente!',
+          text: '¡La diapositiva se ha actualizado!',
           confirmButtonText: 'Confirmar'
         }).then((result) => {
           if (result.isConfirmed) {
