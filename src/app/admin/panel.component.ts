@@ -9,6 +9,8 @@ import { DOCUMENT } from '@angular/common';
 import { ProductsService } from '../core/services/http/api/products/products.service';
 import swal from 'sweetalert2';
 import { ThrowStmt } from '@angular/compiler';
+import { CategoryService } from '../core/services/http/api/categories/category.service';
+import { OverlayPanel } from 'primeng/overlaypanel';
 interface Color {
   available?: boolean,
   color?: string,
@@ -43,6 +45,8 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public uplodsUrl = environment.uploadsUrl;
   public hasToCreateProduct = false;
   public form: FormGroup;
+  public parentCategoryRef;
+  public availableCategories: any[] = [];
   @ViewChild('colorPicker') public colorPicker: ElementRef;
   @ViewChild('addColors') public addColors: ElementRef;
   @ViewChild('editText') public editColorText: ElementRef;
@@ -55,7 +59,9 @@ export class PanelComponent implements OnInit, AfterContentInit {
   @ViewChildren('imgContainer') public imgContainer: QueryList<ElementRef>;
   @ViewChildren('previewIMGContainer') public previewIMGContainer: QueryList<ElementRef>;
   constructor(private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) document, private r: Renderer2, private salesPipe: SalesPipe, private productService: ProductsService, private formBuilder: FormBuilder) {
+    @Inject(DOCUMENT) document, private r: Renderer2,
+    private salesPipe: SalesPipe, private productService: ProductsService,
+    private formBuilder: FormBuilder, private categoryService: CategoryService) {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -65,6 +71,52 @@ export class PanelComponent implements OnInit, AfterContentInit {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
+    this.categoryService.getAllCategories().subscribe((res: any) => {
+      this.availableCategories = res.response;
+    })
+  }
+  addSubCategory(subcategory, parentCategory) {
+    if (this.actualProduct.categories.length > 0) {
+      this.actualProduct.categories.forEach((c => {
+        console.log(`The name of the category is: ${c.name} and the parent category is ${parentCategory.name}`)
+        if (c.name === parentCategory.name) {
+          //category exists in array
+          c.subcategories.push(subcategory);
+        } else {
+          if (!this.parentCategoryRef) {
+            this.parentCategoryRef = {
+              ...parentCategory
+            }
+            delete this.parentCategoryRef.subcategories;
+            Object.assign(this.parentCategoryRef, { subcategories: [subcategory] })
+          } else {
+            this.parentCategoryRef = {
+              ...parentCategory
+            }
+            if (c.name !== this.parentCategoryRef.name) {
+              return;
+            } else {
+              this.parentCategoryRef.subcategories.push(subcategory);
+            }
+          }
+          this.actualProduct.categories.push(this.parentCategoryRef)
+        }
+      }))
+
+    } else {
+      if (!this.parentCategoryRef) {
+        this.parentCategoryRef = {
+          ...parentCategory
+        }
+        delete this.parentCategoryRef.subcategories;
+        Object.assign(this.parentCategoryRef, { subcategories: [subcategory] })
+      } else {
+        this.parentCategoryRef.subcategories.push(subcategory);
+      }
+    }
+  }
+  loadCategories(reference: OverlayPanel, e) {
+    reference.toggle(e);
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path

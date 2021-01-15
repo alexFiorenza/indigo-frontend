@@ -27,6 +27,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToastModule } from 'primeng/toast';
+import { BlockUIModule } from 'primeng/blockui';
 //TODO Create primeng module
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
@@ -53,7 +54,8 @@ import { ToastModule } from 'primeng/toast';
     ToggleButtonModule,
     OverlayPanelModule,
     InputSwitchModule,
-    ToastModule
+    ToastModule,
+    BlockUIModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe, MessageService]

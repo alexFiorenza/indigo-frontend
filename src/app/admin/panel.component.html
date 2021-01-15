@@ -1,12 +1,15 @@
 <!--Edit product-->
-<div
-  *ngIf="this.hasToShowAlert && !this.hasToCreateProduct"
-  class="w-screen h-screen absolute adjustZIndex font-Josefin"
+<p-blockUI
+  styleClass="adjustZIndex font-Josefin flex justify-center overflow-y-scroll overflow-x-hidden py-3"
+  [blocked]="this.hasToShowAlert && !this.hasToCreateProduct"
 >
-  <div class="mt-4 w-screen absolute textIndex text-white flex justify-center">
-    <div class="w-10/12 bg-white rounded-lg animate__animated animate__zoomIn">
+  <div
+    *ngIf="this.hasToShowAlert && !this.hasToCreateProduct"
+    class="mt-4 w-10/12 my-3 textIndex text-white flex justify-center"
+  >
+    <div class="w-full bg-white rounded-lg animate__animated animate__zoomIn">
       <div
-        class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase h-12 flex justify-center"
+        class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase py-4 flex justify-center"
       >
         Editar producto
       </div>
@@ -283,14 +286,61 @@
           <div #categories class="flex flex-col w-full my-4">
             <h3 class="text-indigoBlack-500 text-xl capitalize">Categorias</h3>
             <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
-            <div
-              class="w-full capitalize py-4 flex justify-between px-4 my-2 rounded-xl bg-white boxShadowInputs text-indigoBlack-800"
-              *ngFor="let c of actualProduct.categories"
+            <div *ngFor="let c of actualProduct.categories">
+              <div
+                class="w-full my-2 flex py-4 px-4 justify-between text-indigoBlack-800 boxShadowInputs bg-white rounded-xl"
+              >
+                {{ c.name }}
+                <ion-icon
+                  (click)="deleteCategory(c)"
+                  name="remove-circle"
+                  class="text-3xl cursor-pointer"
+                ></ion-icon>
+              </div>
+              <div
+                *ngFor="let subcategories of c.subcategories"
+                class="w-10/12 mx-auto my-2 flex flex-col text-indigoBlack-800"
+              >
+                <span> {{ subcategories.name }}</span>
+                <div
+                  class="w-full lineHeight bg-indigoBlack-500 opacity-25"
+                ></div>
+              </div>
+            </div>
+            <p-overlayPanel
+              #op
+              [style]="{ width: '16rem' }"
+              [dismissable]="true"
+              [showCloseIcon]="true"
             >
-              {{ c }}
+              <!--TODO Stylizy category overlay panel-->
+              <ng-template pTemplate>
+                <div
+                  class="w-full font-Josefin"
+                  *ngFor="let category of availableCategories"
+                >
+                  <div class="w-full flex justify-between">
+                    <span class="font-semibold text-indigoBlack-700">{{
+                      category.name
+                    }}</span>
+                  </div>
+                  <div
+                    *ngFor="let subcategory of category.subcategories"
+                    (click)="addSubCategory(subcategory, category)"
+                    class="font-light my-2 cursor-pointer text-indigoBlack-400 mx-3"
+                  >
+                    {{ subcategory.name }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-overlayPanel>
+
+            <div
+              class="w-full items-center capitalize py-4 flex justify-center px-4 my-2 rounded-xl bg-white boxShadowInputs text-indigoBlack-800"
+            >
               <ion-icon
-                (click)="deleteCategory(c)"
-                name="remove-circle"
+                (click)="loadCategories(op, $event)"
+                name="add-circle"
                 class="text-3xl cursor-pointer"
               ></ion-icon>
             </div>
@@ -314,10 +364,16 @@
       </div>
     </div>
   </div>
-  <div
+  <!-- <div
     class="w-screen h-screen bgIndex bg-indigoBlack-900 opacity-75 absolute"
-  ></div>
-</div>
+  ></div> -->
+</p-blockUI>
+<!-- <div
+  *ngIf="this.hasToShowAlert && !this.hasToCreateProduct"
+  class="w-screen h-screen absolute adjustZIndex font-Josefin"
+>
+  
+</div> -->
 <!--Create product-->
 <div
   *ngIf="this.hasToShowAlert && this.hasToCreateProduct"
@@ -603,7 +659,7 @@
 <!--Panel-->
 <div class="w-screen font-Josefin flex">
   <div class="w-2/6 max-w-xs h-screen">
-    <div #navPanel class="w-full h-full flex flex-col fixed">
+    <div #navPanel class="h-full flex flex-col fixed">
       <h2 class="text-indigoBlack-400 text-5xl uppercase ml-20 mt-20">
         indigo
       </h2>
