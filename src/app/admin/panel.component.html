@@ -161,13 +161,9 @@
                 <div
                   class="flex justify-center w-1/2 py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
                 >
-                  <span
-                    [ngClass]="{ productDiscount: this.actualProduct.sale > 5 }"
-                    >$</span
-                  >
                   <input
                     [ngClass]="{ productDiscount: this.actualProduct.sale > 5 }"
-                    class="focus:outline-none w-3/5"
+                    class="focus:outline-none text-center"
                     type="number"
                     [(ngModel)]="productPrice"
                   />
@@ -292,7 +288,7 @@
               >
                 {{ c.name }}
                 <ion-icon
-                  (click)="deleteCategory(c)"
+                  (click)="deleteCategory(c.name)"
                   name="remove-circle"
                   class="text-3xl cursor-pointer"
                 ></ion-icon>
@@ -326,7 +322,7 @@
                   </div>
                   <div
                     *ngFor="let subcategory of category.subcategories"
-                    (click)="addSubCategory(subcategory, category)"
+                    (click)="addSubCategory(category, subcategory)"
                     class="font-light my-2 cursor-pointer text-indigoBlack-400 mx-3"
                   >
                     {{ subcategory.name }}
@@ -364,17 +360,7 @@
       </div>
     </div>
   </div>
-  <!-- <div
-    class="w-screen h-screen bgIndex bg-indigoBlack-900 opacity-75 absolute"
-  ></div> -->
 </p-blockUI>
-<!-- <div
-  *ngIf="this.hasToShowAlert && !this.hasToCreateProduct"
-  class="w-screen h-screen absolute adjustZIndex font-Josefin"
->
-  
-</div> -->
-<!--Create product-->
 <div
   *ngIf="this.hasToShowAlert && this.hasToCreateProduct"
   class="w-screen h-screen absolute adjustZIndex font-Josefin"
@@ -543,9 +529,8 @@
                 <div
                   class="flex items-center justify-center w-full py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
                 >
-                  <span class="text-right">$</span>
                   <input
-                    class="focus:outline-none text-left input-max-w"
+                    class="focus:outline-none text-center"
                     type="number"
                     formControlName="price"
                   />

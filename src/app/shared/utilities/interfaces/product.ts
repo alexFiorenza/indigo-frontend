@@ -10,6 +10,15 @@ export interface Product {
     sale?: number;
     homeView: boolean;
     _id?: string;
-    categories: Array<any>;
+    categories: Category[];
     stock: boolean;
+}
+export interface Category {
+    subcategories: Subcategory[];
+    _id: string;
+    name: string;
+}
+
+export interface Subcategory {
+    name: string;
 }

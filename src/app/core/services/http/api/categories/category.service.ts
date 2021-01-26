@@ -36,4 +36,7 @@ export class CategoryService {
   deleteCategory(id) {
     return this.http.delete(`${environment.apiUrl}/categories/${id}`);
   }
+  filterProductByCategory(category, subcategory, page) {
+    return this.http.get(`${environment.apiUrl}/product/filter/${1}?category=${category}&subcategory=${subcategory}`);
+  }
 }

@@ -9,6 +9,7 @@ import { Product } from '../../shared/utilities/interfaces/product';
 import { ProductsService } from '../../core/services/http/api/products/products.service';
 import { CategoryService } from '../../core/services/http/api/categories/category.service';
 import { MessageService } from 'primeng/api';
+import { AnalyticsService } from '../../core/services/http/api/analytics/analytics.service';
 interface Date {
   name: string,
   code: number
@@ -48,28 +49,18 @@ export class HomeComponent implements OnInit {
   public selectedFile;
   public categoryName;
   public checkedSubCategories = false;
-  selectedDate: Date;
+  selectedDate: Date = {
+    name: 'Hoy', code: 1
+  };
   public uploadsUrl = environment.uploadsUrl
   display: boolean = false;
-  cards: Card[] = [{
-    data: 1000,
-    text: 'Usuarios registrados',
-    icon: 'person',
-    color: '#B6DBFB'
-  },
-  {
-    data: 200,
-    text: 'Pedidos registrados',
-    icon: 'bag',
-    color: '#FACCB6'
-  },
-  {
-    data: 150.3,
-    text: 'Renumeración',
-    icon: 'card',
-    color: '#B6FBD6'
-  }]
-  constructor(private messageService: MessageService, private router: Router, private formBuilder: FormBuilder, private slidesService: SlidesService, private productService: ProductsService, private categoryService: CategoryService) {
+  cards: Card[] = []
+  public skeletonCards = Array(3);
+  public skeletonHomeView = ['skeleton1', 'skeleton2'];
+  public skeletonCategories = Array(3);
+  constructor(private messageService: MessageService, private router: Router, private formBuilder: FormBuilder,
+    private slidesService: SlidesService, private productService: ProductsService,
+    private categoryService: CategoryService, private analyticsService: AnalyticsService) {
     this.dates = [
       { name: 'Hoy', code: 1 },
       { name: '7 dias', code: 7 },
@@ -91,7 +82,26 @@ export class HomeComponent implements OnInit {
       button: ['', [Validators.required]],
       selectedRoute: ['', [Validators.required]]
     })
-
+    this.analyticsService.getCardsData(this.selectedDate.code).subscribe((res: any) => {
+      this.cards = [{
+        "data": res.response.users.count,
+        "text": "Usuarios registrados",
+        "icon": "person",
+        "color": "#B6DBFB"
+      },
+      {
+        "data": res.response.orders.count,
+        "text": "Pedidos registrados",
+        "icon": "bag",
+        "color": "#FACCB6"
+      },
+      {
+        "data": res.response.totalMoney,
+        "text": "Renumeración",
+        "icon": "card",
+        "color": "#B6FBD6"
+      }]
+    })
   }
   loadBus() {
     lootie.loadAnimation({
@@ -248,6 +258,28 @@ export class HomeComponent implements OnInit {
   inputHasChanged() {
     if (!this.selectedDate) {
       return;
+    } else {
+      console.log(this.selectedDate.code)
+      this.analyticsService.getCardsData(this.selectedDate.code).subscribe((res: any) => {
+        this.cards = [{
+          "data": res.response.users.count,
+          "text": "Usuarios registrados",
+          "icon": "person",
+          "color": "#B6DBFB"
+        },
+        {
+          "data": res.response.orders.count,
+          "text": "Pedidos registrados",
+          "icon": "bag",
+          "color": "#FACCB6"
+        },
+        {
+          "data": res.response.totalMoney,
+          "text": "Renumeración",
+          "icon": "card",
+          "color": "#B6FBD6"
+        }]
+      })
     }
   }
   addSlide() {

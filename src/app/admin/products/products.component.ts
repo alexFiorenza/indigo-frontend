@@ -19,6 +19,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public editingProducts = false;
   public alertEmmited = false;
   public searchText: string;
+  public skeletonLoader = Array(12);
   @Output() public createProductAlert = new EventEmitter();
   @Output() public emitAlert = new EventEmitter();
   @ViewChildren('product') private productsContainer: QueryList<ElementRef>;

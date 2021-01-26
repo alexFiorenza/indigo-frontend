@@ -46,80 +46,26 @@
       >
       <div
         #filtersTexts
-        class="flex-col font-Josefin hidden filtersTextAnimation lg:flex text-indigoBlack-200 w-4/5 lg:w-full lg:px-8 text-xl lg:text-lg"
+        class="flex-col font-Josefin hidden filtersTextAnimation lg:flex w-4/5 lg:w-full lg:px-8"
       >
-        <div class="my-3 lg:my-1 flex items-center">
-          <input
-            (click)="createTagFilter(lessPrice)"
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span #lessPrice>Menor precio</span>
-        </div>
-        <div class="my-3 flex items-center lg:my-1">
-          <input
-            (click)="createTagFilter(maxPrice)"
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2"
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span #maxPrice>Mayor precio</span>
-        </div>
-        <div class="my-3 lg:my-1 flex items-center">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2"
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span>Niño</span>
-        </div>
-        <div class="my-3 lg:my-1 flex items-center">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2"
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span></span>
-
-          Hombre
-        </div>
-        <div class="my-3 lg:my-1 flex items-center">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2"
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span> Mujer</span>
-        </div>
-        <div class="my-3 lg:my-1 flex items-center">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2"
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span>Disponible</span>
-        </div>
-        <div class="my-3 lg:my-1 flex items-center">
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            class="mx-2"
-            class="mx-2 px-2 py-2 checkboxStyle appearance-none focus:outline-none cursor-pointer"
-          />
-          <span>Más vendidas</span>
+        <div
+          class="my-3 lg:my-1 flex flex-col"
+          *ngFor="let category of categories"
+        >
+          <div
+            class="flex items-center text-2xl lg:text-xl text-indigoBlack-500"
+          >
+            <span>{{ category.name }}</span>
+          </div>
+          <div
+            (click)="
+              filterProducts(subcategoryText, category.name, subcategory.name)
+            "
+            class="w-10/12 ml-16 font-light text-xl lg:text-lg cursor-pointer my-1 text-indigoBlack-200"
+            *ngFor="let subcategory of category.subcategories"
+          >
+            <span #subcategoryText>{{ subcategory.name }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -128,29 +74,68 @@
     #productsContainer
     class="w-full lg:w-1/2 items-center flex flex-col lg:flex-row lg:items-start relative mt-4 mb-24 lg:mt-0 lg:mx-8"
   >
-    <div
-      class="lg:w-48 w-10/12 lg:h-48 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
-      *ngFor="let p of products"
-    >
-      <img
-        *ngIf="!this.production && this.p.images.length > 0"
-        [routerLink]="'/productos/' + p._id"
-        [src]="this.apiUrl + p.images[0].image"
-        class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
-        alt=""
-      />
-      <div class="hidden lg:flex flex-col">
-        <span class="mt-2 uppercase font-light text-indigoBlack-100">{{
-          p.name
-        }}</span>
-        <span class="text-indigoBlack-500">${{ p.price }}</span>
-        <span
-          class="ml-2 font-Josefin text-indigoBlack-500"
-          #sale
-          *ngIf="this.p.sale > 0"
-          >{{ p.price | sales: p.sale | currency }}</span
-        >
+    <ng-container *ngIf="this.filteredProducts.length <= 0 && !currentFilter">
+      <div
+        class="lg:w-40 w-10/12 lg:h-40 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
+        *ngFor="let p of products"
+      >
+        <img
+          *ngIf="!this.production && this.p.images.length > 0"
+          [routerLink]="'/productos/' + p._id"
+          [src]="this.apiUrl + p.images[0].image"
+          class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
+        />
+        <div class="hidden lg:flex flex-col">
+          <span class="mt-2 uppercase font-light text-indigoBlack-100">{{
+            p.name
+          }}</span>
+          <div class="lg:flex">
+            <span
+              [ngClass]="{ productDiscount: this.p.sale > 0 }"
+              class="text-indigoBlack-500 relative"
+              >{{ p.price | parseCurrency }}</span
+            >
+            <span
+              class="ml-2 font-Josefin text-indigoBlack-500"
+              #sale
+              *ngIf="this.p.sale > 0"
+              >{{ p.price | sales: p.sale | parseCurrency }}</span
+            >
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
+    <ng-container *ngIf="this.filteredProducts.length > 0 && currentFilter">
+      <div
+        class="lg:w-40 w-10/12 lg:h-40 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
+        *ngFor="let p of filteredProducts"
+      >
+        <img
+          *ngIf="!this.production && this.p.images.length > 0"
+          [routerLink]="'/productos/' + p._id"
+          [src]="this.apiUrl + p.images[0].image"
+          class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
+        />
+        <div class="hidden lg:flex flex-col">
+          <span class="mt-2 uppercase font-light text-indigoBlack-100">{{
+            p.name
+          }}</span>
+          <div class="lg:flex">
+            <span
+              [ngClass]="{ productDiscount: this.p.sale > 0 }"
+              class="text-indigoBlack-500 relative"
+              >{{ p.price | parseCurrency }}</span
+            >
+            <span
+              class="ml-2 font-Josefin text-indigoBlack-500"
+              #sale
+              *ngIf="this.p.sale > 0"
+              >{{ p.price | sales: p.sale | parseCurrency }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

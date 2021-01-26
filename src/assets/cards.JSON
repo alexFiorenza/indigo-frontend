@@ -1,0 +1,18 @@
+[{
+    "data": 1000,
+    "text": "Usuarios registrados",
+    "icon": "person",
+    "color": "#B6DBFB"
+},
+{
+    "data": 200,
+    "text": "Pedidos registrados",
+    "icon": "bag",
+    "color": "#FACCB6"
+},
+{
+    "data": 150.3,
+    "text": "Renumeración",
+    "icon": "card",
+    "color": "#B6FBD6"
+}]

@@ -3,7 +3,8 @@
 
 $checked-input: #fdd5ea;
 $border-img: #fcc6e3;
-
+$lineColor: #f086a3;
+$salePriceColor: #d2d2d2;
 .bodyBackground {
   background-color: #f3f3f3;
 }
@@ -26,6 +27,14 @@ $border-img: #fcc6e3;
   transition: 0.4s ease-in;
   height: 98%;
 }
+.arrowRotation {
+  transition: 1s ease-in-out;
+}
+.rotateArrow90 {
+  transition: 0.4s ease-in;
+  transform: rotateZ(180deg);
+}
+
 .defaultRotationArrow {
   transform: rotateZ(0deg);
 }
@@ -59,4 +68,19 @@ $border-img: #fcc6e3;
 .checkboxStyle:checked {
   background-color: #fdd5ea;
   border: 1px solid #fdd5ea;
+}
+.productDiscount {
+  color: $salePriceColor;
+  opacity: 0.7;
+}
+.productDiscount::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  height: 1px;
+  background-color: $lineColor;
+}
+.selectedFilter {
+  color: #f086a3;
 }

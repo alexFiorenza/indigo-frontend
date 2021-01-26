@@ -12,7 +12,7 @@ import { CartProductsComponent } from './cart/cart-products/cart-products.compon
 import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -31,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     SwiperModule,
     ClipboardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CheckboxModule
   ],
   exports: [
     HomeComponent,

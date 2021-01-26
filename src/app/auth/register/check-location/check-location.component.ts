@@ -51,9 +51,11 @@ export class CheckLocationComponent implements OnInit {
     Object.assign(this.user, this.form.value);
     const containerRef = this.loaders.instantiateBtnLoader(this.loader, this.textBtn, this.status);
     this.userService.registerUser(this.user).subscribe((res: any) => {
+      console.log(res);
       if (res.status) {
         this.status = 'completed';
         containerRef.instance.status = this.status;
+        this.router.navigate(['ingresar'])
       }
     });
   }

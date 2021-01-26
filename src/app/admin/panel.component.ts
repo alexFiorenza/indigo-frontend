@@ -4,11 +4,10 @@ import { environment } from './../../environments/environment';
 import { Component, OnInit, AfterContentInit, ViewChild, ElementRef, QueryList, ViewChildren, ViewContainerRef, Inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
-import { Product } from '../shared/utilities/interfaces/product';
+import { Product, Subcategory, Category } from '../shared/utilities/interfaces/product';
 import { DOCUMENT } from '@angular/common';
 import { ProductsService } from '../core/services/http/api/products/products.service';
 import swal from 'sweetalert2';
-import { ThrowStmt } from '@angular/compiler';
 import { CategoryService } from '../core/services/http/api/categories/category.service';
 import { OverlayPanel } from 'primeng/overlaypanel';
 interface Color {
@@ -75,44 +74,40 @@ export class PanelComponent implements OnInit, AfterContentInit {
       this.availableCategories = res.response;
     })
   }
-  addSubCategory(subcategory, parentCategory) {
+  addSubCategory(parentCategoryDB: Category, selectedSubCategory: Subcategory) {
     if (this.actualProduct.categories.length > 0) {
-      this.actualProduct.categories.forEach((c => {
-        console.log(`The name of the category is: ${c.name} and the parent category is ${parentCategory.name}`)
-        if (c.name === parentCategory.name) {
-          //category exists in array
-          c.subcategories.push(subcategory);
-        } else {
-          if (!this.parentCategoryRef) {
-            this.parentCategoryRef = {
-              ...parentCategory
-            }
-            delete this.parentCategoryRef.subcategories;
-            Object.assign(this.parentCategoryRef, { subcategories: [subcategory] })
+      //Check if subcategory is within the product
+      this.actualProduct.categories.forEach((c) => {
+        const tmp = c.subcategories.filter((sub) => sub.name === selectedSubCategory.name)
+        if (tmp.length <= 0) {
+          //Subcategory doesn't exist
+          if (c.name === parentCategoryDB.name) {
+            c.subcategories.push(selectedSubCategory)
           } else {
-            this.parentCategoryRef = {
-              ...parentCategory
-            }
-            if (c.name !== this.parentCategoryRef.name) {
-              return;
+            const i = this.actualProduct.categories.filter((value) => {
+              if (value.name === parentCategoryDB.name) {
+                return value;
+              }
+            });
+            if (i.length <= 0) {
+              const categoryToStore = { ...parentCategoryDB };
+              delete categoryToStore.subcategories;
+              Object.assign(categoryToStore, { subcategories: [selectedSubCategory] });
+              this.actualProduct.categories.push(categoryToStore);
             } else {
-              this.parentCategoryRef.subcategories.push(subcategory);
+              return;
             }
           }
-          this.actualProduct.categories.push(this.parentCategoryRef)
+        } else {
+          return;
         }
-      }))
-
+      })
     } else {
-      if (!this.parentCategoryRef) {
-        this.parentCategoryRef = {
-          ...parentCategory
-        }
-        delete this.parentCategoryRef.subcategories;
-        Object.assign(this.parentCategoryRef, { subcategories: [subcategory] })
-      } else {
-        this.parentCategoryRef.subcategories.push(subcategory);
-      }
+      //Add a new subcategory from empty array
+      const categoryToStore = { ...parentCategoryDB };
+      delete categoryToStore.subcategories;
+      Object.assign(categoryToStore, { subcategories: [selectedSubCategory] });
+      this.actualProduct.categories.push(categoryToStore);
     }
   }
   loadCategories(reference: OverlayPanel, e) {
@@ -195,12 +190,6 @@ export class PanelComponent implements OnInit, AfterContentInit {
     }
     if (this.isEditing) {
       return
-    }
-    if (this.selectedColor) {
-      console.log(this.sizes);
-      // this.addedSizes.forEach((c) => {
-      //   this.selectedColor.sizes.push(c);
-      // })
     }
     this.selectedColor = colorSelected
     this.sizes = this.selectedColor.sizes;
@@ -334,12 +323,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
     })
   }
   deleteCategory(category) {
-    this.actualProduct.categories.forEach((c) => {
-      if (c === category) {
-        const i = this.actualProduct.categories.indexOf(c);
-        this.actualProduct.categories.splice(i);
-      }
-    })
+    this.actualProduct.categories = this.actualProduct.categories.filter(v => v.name !== category)
   }
   addSale(input: HTMLInputElement) {
     this.actualProduct.sale += 10;

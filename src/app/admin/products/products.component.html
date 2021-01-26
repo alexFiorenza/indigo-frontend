@@ -47,38 +47,60 @@
     </div>
     <div class="w-full lineSeparator mb-2 opacity-25"></div>
     <div #productsContainer class="productsGridLayout px-8 py-4 font-Josefin">
-      <div
-        *ngFor="let product of products"
-        #product
-        class="relative w-full max-widthProduct cursor-pointer animate__animated animate__infinite"
-      >
+      <ng-container *ngIf="this.products.length > 0">
         <div
-          class="hidden absolute w-full h-48 setMaxHeight justify-center items-center"
+          *ngFor="let product of products"
+          #product
+          class="relative w-full max-widthProduct cursor-pointer animate__animated animate__infinite"
         >
-          <ion-icon
-            (click)="hasToEmitAlert(product)"
-            name="pencil"
-            class="absolute text-4xl z-30 text-indigoBlack-500"
-          ></ion-icon>
-          <ion-icon
-            (click)="removeProduct(product)"
-            name="trash-outline"
-            class="absolute text-4xl z-30 text-red-500 hidden"
-          ></ion-icon>
           <div
-            class="bg-white absolute opacity-50 w-full rounded-lg h-full z-20"
-          ></div>
+            class="hidden absolute w-full h-48 setMaxHeight justify-center items-center"
+          >
+            <ion-icon
+              (click)="hasToEmitAlert(product)"
+              name="pencil"
+              class="absolute text-4xl z-30 text-indigoBlack-500"
+            ></ion-icon>
+            <ion-icon
+              (click)="removeProduct(product)"
+              name="trash-outline"
+              class="absolute text-4xl z-30 text-red-500 hidden"
+            ></ion-icon>
+            <div
+              class="bg-white absolute opacity-50 w-full rounded-lg h-full z-20"
+            ></div>
+          </div>
+          <img
+            class="w-full object-cover rounded-lg setMaxHeight h-48 z-10"
+            [src]="uploadsUrl + '/' + product.images[0].image"
+            alt=""
+          />
+          <div class="flex flex-col my-3">
+            <span class="text-indigoBlack-800 text-sm">{{ product.name }}</span>
+            <span class="text-indigoBlack-400 text-xs">{{
+              product.price | parseCurrency
+            }}</span>
+          </div>
         </div>
-        <img
-          class="w-full object-cover rounded-lg setMaxHeight h-48 z-10"
-          [src]="uploadsUrl + '/' + product.images[0].image"
-          alt=""
-        />
-        <div class="flex flex-col my-3">
-          <span class="text-indigoBlack-800 text-sm">{{ product.name }}</span>
-          <span class="text-indigoBlack-400 text-xs">${{ product.price }}</span>
+      </ng-container>
+      <ng-container *ngIf="this.products.length <= 0">
+        <div
+          *ngFor="let skeleton of skeletonLoader"
+          #product
+          class="relative w-full max-widthProduct cursor-pointer animate__animated animate__infinite"
+        >
+          <p-skeleton height="12rem" width="100%"></p-skeleton>
+
+          <div class="flex flex-col my-3">
+            <p-skeleton height="1rem" width="50%"></p-skeleton>
+            <p-skeleton
+              height="1rem"
+              width="25%"
+              styleClass="my-2"
+            ></p-skeleton>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>
