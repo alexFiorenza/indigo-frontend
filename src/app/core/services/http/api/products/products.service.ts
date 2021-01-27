@@ -4,6 +4,7 @@ import { environment } from './../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from '../user/user.service';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

@@ -1,290 +1,243 @@
-import { Product } from '../interfaces/product';
 
 const product1 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe1.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe1.png"
         }
     ],
-    name: 'Zapatillas 1',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
-    stock: false,
-    sale: 20
-};
+    stock: true,
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
+
 const product2 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe2.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe2.png"
         }
     ],
-    name: 'Zapatillas 2',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 0
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
 
-};
 const product3 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe3.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe3.png"
         }
     ],
-    name: 'Zapatillas 3',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 10
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
 
-};
 const product4 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe4.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe4.png"
         }
     ],
-    name: 'Zapatillas 4',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 20
-};
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
+
 const product5 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe4.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe2.png"
         }
     ],
-    name: 'Zapatillas 4',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 20
-};
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
+
 const product6 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe3.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe3.png"
         }
     ],
-    name: 'Zapatillas 3',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 10
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
 
-};
 const product7 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe3.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe4.png"
         }
     ],
-    name: 'Zapatillas 3',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 10
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
 
-};
 const product8 = {
-    _id: '5f879e903f2b83266fe0899d',
-    categories: [
-        'hombre',
-        'zapatilla'
-    ],
-    sizes: [
-        {
-            size: 44,
-            available: false
-        }
-    ],
+    _id: "5fe9bbb457b10d1457ac41d4",
+    categories: [],
     color: [
         {
-            color: 'rojo',
-            available: false
-        },
-        {
-            color: 'verde',
-            available: true
+            color: "#FDCF26",
+            available: true,
+            sizes: [
+                {
+                    size: "44",
+                    available: true
+                }
+            ]
         }
     ],
     images: [
         {
-            uid: 'test',
-            image: '../../assets/sampleShoe3.png'
+            uid: "1g1hr40nkj8gkhbn",
+            image: "../../../../assets/sampleShoe1.png"
         }
     ],
-    name: 'Zapatillas 3',
-    description: 'Zapatillas con cordones',
-    price: 450,
+    top: false,
+    sale: 0,
     homeView: true,
     stock: true,
-    sale: 10
-
-};
+    name: "Zapatillas 3",
+    description: "Zapatillas con cordones",
+    price: 450
+}
 export const products = {
     array: [product1,
         product2,

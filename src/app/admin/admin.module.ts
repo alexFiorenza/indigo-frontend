@@ -9,7 +9,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { PanelComponent } from './panel.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CarouselModule } from 'primeng/carousel';
@@ -23,12 +22,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SkeletonModule } from 'primeng/skeleton';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
-import { ToggleButtonModule } from 'primeng/togglebutton';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToastModule } from 'primeng/toast';
-import { BlockUIModule } from 'primeng/blockui';
-//TODO Create primeng module
 @NgModule({
   declarations: [HomeComponent, ProductsComponent, OrdersComponent, PanelComponent],
   imports: [
@@ -36,7 +32,6 @@ import { BlockUIModule } from 'primeng/blockui';
     AdminRoutingModule,
     RouterModule,
     SharedModule,
-    ColorPickerModule,
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -51,11 +46,9 @@ import { BlockUIModule } from 'primeng/blockui';
     FileUploadModule,
     SkeletonModule,
     VirtualScrollerModule,
-    ToggleButtonModule,
     OverlayPanelModule,
     InputSwitchModule,
     ToastModule,
-    BlockUIModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe, MessageService]

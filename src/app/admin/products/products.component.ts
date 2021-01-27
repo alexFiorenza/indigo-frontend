@@ -110,7 +110,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     })
 
   }
-  hasToEmitAlert(actualProduct = undefined) {
+  hasToEmitAlert(actualProduct?) {
     this.alertEmmited = !this.alertEmmited;
     if (!actualProduct) {
       this.emitAlert.emit(this.alertEmmited);
@@ -121,5 +121,4 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       })
     }
   }
-
 }

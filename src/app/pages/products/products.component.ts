@@ -27,13 +27,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
   @ViewChild('filtersTexts') private filtersTexts: ElementRef;
   @ViewChild('filterTags') private tags: ElementRef;
   private opened = false;
-  public products: Array<Product> = [];
+  public products = [];
   private totalPages: Number;
   public apiUrl: string;
   public production = environment.production;
   public currentFilter: HTMLElement;
   public categories = []
   public selectedFilter;
+  public skeletonLoader = Array(10);
+  public skeletonFilters = Array(3);
   public filteredProducts: Array<Product> = [];
   constructor(
     @Inject(DOCUMENT) public document,
@@ -98,6 +100,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
         >${text.textContent}</span
         >`;
       this.tags.nativeElement.innerHTML += tag;
+      this.categoryService.filterProductByCategory(category, subcategory, 1).subscribe((res: any) => {
+        if (res.status) {
+          res.response.length <= 0 ? this.filteredProducts = [] : this.filteredProducts = res.response
+          this.currentFilter = text;
+          console.log(this.filteredProducts.length);
+        }
+      })
     } else {
       if (this.currentFilter === text) {
         this.currentFilter = null;

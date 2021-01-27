@@ -6,22 +6,31 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { ParseCurrencyPipe } from './pipes/parse-currency.pipe';
+import { ProductModalComponent } from './components/product-modal/product-modal.component';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { BlockUIModule } from 'primeng/blockui';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 @NgModule({
-  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe],
+  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe, ProductModalComponent],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BlockUIModule,
+    ColorPickerModule,
+    ToggleButtonModule
   ],
   exports: [
     HeaderComponent,
     LoaderBtnComponent,
     SalesPipe,
-    ParseCurrencyPipe
+    ParseCurrencyPipe,
+    ColorPickerModule,
+    ProductModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [CurrencyPipe]
+  providers: [CurrencyPipe, SalesPipe]
 })
 export class SharedModule { }
