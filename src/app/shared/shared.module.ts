@@ -10,9 +10,11 @@ import { ProductModalComponent } from './components/product-modal/product-modal.
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BlockUIModule } from 'primeng/blockui';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { SaleProductComponent } from './components/sale-product/sale-product.component';
+import { FullPageLoaderComponent } from './components/full-page-loader/full-page-loader.component';
 
 @NgModule({
-  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe, ProductModalComponent],
+  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe, ProductModalComponent, SaleProductComponent, FullPageLoaderComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -28,7 +30,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     SalesPipe,
     ParseCurrencyPipe,
     ColorPickerModule,
-    ProductModalComponent
+    ProductModalComponent,
+    SaleProductComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [CurrencyPipe, SalesPipe]

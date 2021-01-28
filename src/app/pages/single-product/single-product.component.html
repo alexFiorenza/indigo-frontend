@@ -68,7 +68,9 @@
             <h3 class="text-indigoBlack-400 text-2xl">
               {{ this.product.name }}
             </h3>
-            <span class="text-indigoBlack-200">${{ this.product.price }}</span>
+            <div class="flex">
+              <app-sale-product [product]="product"></app-sale-product>
+            </div>
           </div>
           <div #icons class="flex flex-col justify-between">
             <ion-icon
@@ -96,7 +98,7 @@
           <span class="font-light text-indigoBlack-400 text-2xl"
             >Detalles del producto</span
           >
-          <p class="text-indigoBlack-400" *ngIf="this.product">
+          <p class="text-indigoBlack-400 lg:font-light" *ngIf="this.product">
             {{ this.product.description }}
           </p>
         </div>

@@ -50,14 +50,17 @@ export class ProductModalComponent implements OnInit {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       price: [0, [Validators.required, Validators.min(10)]],
-      homeView: [false, [Validators.required]]
+      homeView: [false, [Validators.required]],
+      height: ['', [Validators.required, Validators.min(1)]],
+      width: ['', [Validators.required, Validators.min(1)]],
+      length: ['', [Validators.required, Validators.min(1)]],
+      weight: ['', [Validators.required, Validators.min(1)]],
     })
   }
   ngOnInit(): void {
     this.categoryService.getAllCategories().subscribe((res: any) => {
       this.availableCategories = res.response;
     })
-
   }
   /**
    ** Categories logic

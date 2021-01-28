@@ -1,0 +1,14 @@
+$lineColor: #f086a3;
+$salePriceColor: #d2d2d2;
+.productDiscount {
+  color: $salePriceColor;
+  opacity: 0.7;
+}
+.productDiscount::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  height: 1px;
+  background-color: $lineColor;
+}

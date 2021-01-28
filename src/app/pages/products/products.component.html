@@ -122,19 +122,7 @@
           <span class="mt-2 uppercase font-light text-indigoBlack-100">{{
             p.name
           }}</span>
-          <div class="lg:flex">
-            <span
-              [ngClass]="{ productDiscount: this.p.sale > 0 }"
-              class="text-indigoBlack-500 relative"
-              >{{ p.price | parseCurrency }}</span
-            >
-            <span
-              class="ml-2 font-Josefin text-indigoBlack-500"
-              #sale
-              *ngIf="this.p.sale > 0"
-              >{{ p.price | sales: p.sale | parseCurrency }}</span
-            >
-          </div>
+          <app-sale-product class="lg:flex" [product]="p"></app-sale-product>
         </div>
       </div>
     </ng-container>

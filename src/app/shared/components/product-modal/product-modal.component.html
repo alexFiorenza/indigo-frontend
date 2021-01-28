@@ -267,6 +267,7 @@
               </div>
             </div>
           </div>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
           <div #homeView class="flex flex-col w-full my-4">
             <h3 class="text-indigoBlack-500 text-xl capitalize">
               Vista panel principal
@@ -614,6 +615,74 @@
               </div>
             </div>
           </div>
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-indigoBlack-500 text-xl capitalize">
+              Peso producto
+            </h3>
+          </div>
+          <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
+          <div class="flex w-full">
+            <div
+              class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+            >
+              <input
+                type="number"
+                placeholder="Alto"
+                formControlName="height"
+                class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
+              />
+              <span
+                class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                >cm</span
+              >
+            </div>
+
+            <div
+              class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+            >
+              <input
+                type="number"
+                placeholder="Ancho"
+                formControlName="width"
+                class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
+              />
+              <span
+                class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                >cm</span
+              >
+            </div>
+          </div>
+          <div class="flex w-full">
+            <div
+              class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+            >
+              <input
+                type="number"
+                placeholder="Largo"
+                formControlName="length"
+                class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
+              />
+              <span
+                class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                >cm</span
+              >
+            </div>
+            <div
+              class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+            >
+              <input
+                type="number"
+                placeholder="Peso"
+                formControlName="weight"
+                class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
+              />
+              <span
+                class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                >kg</span
+              >
+            </div>
+          </div>
+
           <div class="w-full flex flex-col items-center">
             <button
               [ngClass]="{

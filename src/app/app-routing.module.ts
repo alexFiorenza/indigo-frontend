@@ -2,6 +2,7 @@ import { SingleProductComponent } from './pages/single-product/single-product.co
 import { ProductsComponent } from './pages/products/products.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { FullPageLoaderComponent } from './shared/components/full-page-loader/full-page-loader.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'productos/:id',
     component: SingleProductComponent,
+  },
+  {
+    path: 'loader',
+    component: FullPageLoaderComponent
   },
   {
     path: '',
