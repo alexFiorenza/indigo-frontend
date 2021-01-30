@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import swal from 'sweetalert2';
-import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   @Input() public transactionAmount: Number = 0;
   // public swal: SweetAlert = swal;
   public mp;
@@ -45,6 +45,9 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.generateScript();
     this.getIdentificationTypes();
+  }
+  ngOnDestroy() {
+    this.r.setStyle(document.body, 'background-color', ' white');
   }
   checkCreditCardNumber() {
     const value: number = this.form.get('creditCardNumber').value;

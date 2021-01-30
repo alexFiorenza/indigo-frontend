@@ -10,12 +10,22 @@ export class FullPageLoaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.sneakerLoader();
+    this.sneakerLoaderDesktop();
+    this.sneakerLoaderMobile();
   }
-  sneakerLoader() {
+  sneakerLoaderDesktop() {
     lootie.loadAnimation({
-      container: document.querySelector('.loader'),
+      container: document.querySelector('.loader-desktop'),
       path: '../../../../assets/sneaker-loader.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true
+    })
+  }
+  sneakerLoaderMobile() {
+    lootie.loadAnimation({
+      container: document.querySelector('.loader-mobile'),
+      path: 'https://assets9.lottiefiles.com/packages/lf20_vlZ09F.json',
       renderer: 'svg',
       loop: true,
       autoplay: true

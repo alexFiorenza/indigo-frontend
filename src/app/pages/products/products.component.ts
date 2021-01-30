@@ -1,3 +1,4 @@
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';
 import { ProductsService } from './../../core/services/http/api/products/products.service';
 import { UserService } from './../../core/services/http/api/user/user.service';
@@ -14,6 +15,7 @@ import {
 } from '@angular/core';
 import { Product } from 'src/app/shared/utilities/interfaces/product';
 import { CategoryService } from '../../core/services/http/api/categories/category.service';
+import { fromEvent } from 'rxjs';
 
 
 @Component({
@@ -26,17 +28,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
   @ViewChild('icon') private icon: ElementRef;
   @ViewChild('filtersTexts') private filtersTexts: ElementRef;
   @ViewChild('filterTags') private tags: ElementRef;
-  private opened = false;
-  public products = [];
-  private totalPages: Number;
-  public apiUrl: string;
-  public production = environment.production;
-  public currentFilter: HTMLElement;
-  public categories = []
-  public selectedFilter;
-  public skeletonLoader = Array(10);
-  public skeletonFilters = Array(3);
-  public filteredProducts: Array<Product> = [];
+  @ViewChild('searchBar') private searchBar: ElementRef;
+  opened = false;
+  products = [];
+  totalPages: Number;
+  apiUrl: string;
+  production = environment.production;
+  currentFilter: HTMLElement;
+  categories = []
+  selectedFilter;
+  skeletonLoader = Array(10);
+  skeletonFilters = Array(3);
+  filteredProducts: Array<Product> = [];
+  searchInputText;
   constructor(
     @Inject(DOCUMENT) public document,
     private r: Renderer2,
@@ -59,6 +63,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.totalPages = resp.response.totalPages;
       this.categoryService.getAllCategories().subscribe((res: any) => {
         this.categories.push(...res.response);
+        fromEvent(this.searchBar.nativeElement, 'input')
+          .pipe(map((event: Event) => (event.target as HTMLInputElement).value),
+            debounceTime(2000))
+          .subscribe(data =>
+            //TODO create service and send data to backend to filter
+            console.log(this.searchInputText));
       })
     });
   }
@@ -84,6 +94,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.opened = !this.opened;
     }
   }
+
   filterProducts(text: HTMLElement, category?, subcategory?) {
     text.classList.toggle('selectedFilter');
     const child = [...this.tags.nativeElement.children];

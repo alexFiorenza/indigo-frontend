@@ -207,7 +207,6 @@
           appendTo="body"
           [placeholder]="selectedSlide.btnDirection"
           [options]="availableRoutes"
-          formControlName="selectedRoute"
           optionLabel="name"
           autoWidth="false"
           [style]="{ width: '100%' }"
@@ -433,12 +432,15 @@
     <ion-icon name="eye" class="text-indigoBlack-800 text-2xl"></ion-icon>
     <span class="text-indigoBlack-800 ml-4 text-2xl">Vista general</span>
   </div>
+
   <p-dropdown
     class="mx-8"
     (onChange)="inputHasChanged()"
     [options]="dates"
     placeholder="Elegir fecha"
+    [ngModelOptions]="{ standalone: true }"
     [showClear]="true"
+    name="date"
     [(ngModel)]="selectedDate"
     optionLabel="name"
   ></p-dropdown>

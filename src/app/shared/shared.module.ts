@@ -1,3 +1,4 @@
+import { PrimengModule } from './primeng/primeng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderBtnComponent } from './components/loader-btn/loader-btn.component';
 import { SalesPipe } from './pipes/sales.pipe';
@@ -22,7 +23,8 @@ import { FullPageLoaderComponent } from './components/full-page-loader/full-page
     FormsModule,
     BlockUIModule,
     ColorPickerModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    PrimengModule
   ],
   exports: [
     HeaderComponent,
@@ -31,7 +33,8 @@ import { FullPageLoaderComponent } from './components/full-page-loader/full-page
     ParseCurrencyPipe,
     ColorPickerModule,
     ProductModalComponent,
-    SaleProductComponent
+    SaleProductComponent,
+    FullPageLoaderComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [CurrencyPipe, SalesPipe]

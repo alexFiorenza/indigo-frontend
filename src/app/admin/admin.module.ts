@@ -19,11 +19,11 @@ import { BrowserModule } from '@angular/platform-browser';
     AdminRoutingModule,
     RouterModule,
     SharedModule,
+    PrimengModule,
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    PrimengModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [SalesPipe]

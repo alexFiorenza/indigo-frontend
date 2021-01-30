@@ -1,6 +1,7 @@
+import { Image } from './product';
 export interface Slides {
     title: string;
-    image: string;
+    images: Array<Image>;
     description?: string;
     button?: string;
     color?: string;

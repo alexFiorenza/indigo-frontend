@@ -1,9 +1,10 @@
+import { environment } from 'src/environments/environment';
 import { Slides } from './../../shared/utilities/interfaces/slides';
-import { products } from './../../shared/utilities/mocks/product';
 import { Product } from './../../shared/utilities/interfaces/product';
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { SwiperOptions } from 'swiper';
-import { slides } from 'src/app/shared/utilities/mocks/slides';
+import { SlidesService } from '../../core/services/http/api/slides/slides.service';
+import { ProductsService } from '../../core/services/http/api/products/products.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,7 +12,10 @@ import { slides } from 'src/app/shared/utilities/mocks/slides';
 })
 export class HomeComponent implements OnInit, AfterContentInit {
   public products: Array<Product>;
+  public homeViewProducts: Array<Product>;
   public Slides: Array<Slides>;
+  public uploadsUrl = environment.uploadsUrl;
+  public fullyLoaded = false;
   public shoesConfigDesktop: SwiperOptions = {
     direction: 'horizontal',
     slidesPerView: 4,
@@ -30,9 +34,23 @@ export class HomeComponent implements OnInit, AfterContentInit {
     },
     autoplay: true
   };
-  constructor() {
-    this.Slides = slides;
-    this.products = products.array;
+  constructor(private slideService: SlidesService, private productsService: ProductsService) {
+    this.slideService.getAllSlides().subscribe((res: any) => {
+      if (res.status) {
+        this.Slides = res.response
+        this.productsService.getHomeViewProducts().subscribe((res: any) => {
+          if (res.status) {
+            this.homeViewProducts = res.response;
+            this.productsService.getProducts(1, 20).subscribe((res) => {
+              if (res.status) {
+                this.products = res.response.products;
+                this.fullyLoaded = true;
+              }
+            })
+          }
+        })
+      }
+    })
   }
 
   ngOnInit(): void {

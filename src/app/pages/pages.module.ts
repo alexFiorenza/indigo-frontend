@@ -11,7 +11,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { CartProductsComponent } from './cart/cart-products/cart-products.component';
 import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SkeletonModule } from 'primeng/skeleton';
 
@@ -33,7 +33,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     ClipboardModule,
     ReactiveFormsModule,
     CheckboxModule,
-    SkeletonModule
+    SkeletonModule,
+    FormsModule
   ],
   exports: [
     HomeComponent,

@@ -20,6 +20,10 @@ interface Card {
   icon: string,
   color: string
 }
+interface City {
+  name: string,
+  code: string
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -40,7 +44,6 @@ export class HomeComponent implements OnInit {
   public skeleton = Array(3);
   public createSlideForm: FormGroup;
   public editSlideForm: FormGroup;
-  public selectedRoute;
   public availableRoutes: any[] = [];
   public colorBtn = '#707070'
   public editColorBtn;
@@ -49,7 +52,7 @@ export class HomeComponent implements OnInit {
   public selectedFile;
   public categoryName;
   public checkedSubCategories = false;
-  selectedDate: Date = {
+  selectedDate = {
     name: 'Hoy', code: 1
   };
   public uploadsUrl = environment.uploadsUrl

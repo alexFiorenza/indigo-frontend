@@ -38,6 +38,9 @@ export class CategoryService {
     return this.http.delete(`${environment.apiUrl}/categories/${id}`);
   }
   filterProductByCategory(category, subcategory, page) {
-    return this.http.get(`${environment.apiUrl}/product/filter/${1}?category=${category}&subcategory=${subcategory}`);
+    return this.http.get(`${environment.apiUrl}/product/filter/${page}?category=${category}&subcategory=${subcategory}`);
+  }
+  filterProductsByInput(input: string, page) {
+    return this.http.get(`${environment.apiUrl}/product/filter/${page}?search=${input}`)
   }
 }
