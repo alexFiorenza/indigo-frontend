@@ -37,6 +37,6 @@ import { FullPageLoaderComponent } from './components/full-page-loader/full-page
     FullPageLoaderComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [CurrencyPipe, SalesPipe]
+  providers: [CurrencyPipe, SalesPipe, ParseCurrencyPipe]
 })
 export class SharedModule { }

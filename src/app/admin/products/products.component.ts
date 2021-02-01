@@ -1,9 +1,11 @@
+import { map, debounceTime } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
-import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, QueryList, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, QueryList, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Product } from '../../shared/utilities/interfaces/product';
 import { ProductsService } from '../../core/services/http/api/products/products.service';
 import { UserService } from '../../core/services/http/api/user/user.service';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -22,6 +24,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public skeletonLoader = Array(12);
   @Output() public createProductAlert = new EventEmitter();
   @Output() public emitAlert = new EventEmitter();
+  @ViewChild('searchBar') searchBarInput: ElementRef;
   @ViewChildren('product') private productsContainer: QueryList<ElementRef>;
   constructor(private productsService: ProductsService) { }
   ngOnInit(): void {
@@ -57,8 +60,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     }
   }
   searchBar() {
-    console.log(this.searchText);
-    //manage search bar (same logic as search bar in products user side)
+    fromEvent(this.searchBarInput.nativeElement, 'input').pipe(map((event: Event) => {
+      (event.target as HTMLInputElement).value, debounceTime(2000)
+    })).subscribe((data) => {
+      //manage search bar (same logic as search bar in products user side)
+      console.log(data);
+    })
   }
   deleteProduct(deleteContainer: HTMLElement) {
     if (!this.editingProducts) {

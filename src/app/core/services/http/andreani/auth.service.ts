@@ -12,6 +12,6 @@ export class AuthService {
   }
   getCredentials() {
     const headers = this.userService.setHeaders();
-    return this.http.get(`${URL}/orders/andreani/login`, { headers });
+    return this.http.get(`${URL}/andreani/login`, { headers });
   }
 }

@@ -166,7 +166,8 @@
                       productDiscount: this.currentProduct.sale > 5
                     }"
                     class="focus:outline-none text-center"
-                    type="number"
+                    type="text"
+                    (blur)="parseCurrencyPrice($event, true)"
                     [(ngModel)]="productPrice"
                   />
                 </div>
@@ -312,7 +313,6 @@
               [dismissable]="true"
               [showCloseIcon]="true"
             >
-              <!--TODO Stylizy category overlay panel-->
               <ng-template pTemplate>
                 <div
                   class="w-full font-Josefin"
@@ -534,8 +534,9 @@
                   class="flex items-center justify-center w-full py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
                 >
                   <input
+                    (blur)="parseCurrencyPrice($event)"
                     class="focus:outline-none text-center"
-                    type="number"
+                    type="text"
                     formControlName="price"
                   />
                 </div>

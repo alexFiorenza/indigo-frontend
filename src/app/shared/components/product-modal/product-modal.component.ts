@@ -1,12 +1,13 @@
 import { environment } from './../../../../environments/environment';
 import { SalesPipe } from './../../pipes/sales.pipe';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { Component, Input, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, DoCheck } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Category, Subcategory, Product, Size, Color, Image } from '../../utilities/interfaces/product';
 import { CategoryService } from '../../../core/services/http/api/categories/category.service';
 import swal from 'sweetalert2';
 import { ProductsService } from '../../../core/services/http/api/products/products.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ParseCurrencyPipe } from '../../pipes/parse-currency.pipe';
 @Component({
   selector: 'app-product-modal',
   templateUrl: './product-modal.component.html',
@@ -16,7 +17,7 @@ export class ProductModalComponent implements OnInit {
   @Input() currentProduct: Product;
   @Input() alertShouldBeShow: Boolean = false;
   @Input() ShouldCreateProduct: Boolean = false;
-  @Input() productPrice: number;
+  @Input() productPrice;
   @ViewChild('colorPicker') colorPicker: ElementRef;
   @ViewChild('addColors') addColors: ElementRef;
   @ViewChild('editText') editColorText: ElementRef;
@@ -45,7 +46,7 @@ export class ProductModalComponent implements OnInit {
   form: FormGroup;
   uplodsUrl = environment.uploadsUrl;
   constructor(private categoryService: CategoryService, private salesPipe: SalesPipe,
-    private productService: ProductsService, private formBuilder: FormBuilder) {
+    private productService: ProductsService, private formBuilder: FormBuilder, private parseCurrency: ParseCurrencyPipe) {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -273,10 +274,18 @@ export class ProductModalComponent implements OnInit {
   /**
   ** Price and sales logic
   */
+  parseCurrencyPrice(event, update = false) {
+    if (!update) {
+      event.target.value = this.parseCurrency.transform(this.form.get('price').value)
+    } else {
+      event.target.value = this.parseCurrency.transform(this.productPrice);
+    }
+  }
   addSale(input: HTMLInputElement) {
     this.currentProduct.sale += 10;
     this.productPrice = this.salesPipe.transform(this.currentProduct.price, this.currentProduct.sale)
     this.productPrice = Math.ceil(this.productPrice);
+    this.productPrice = this.parseCurrency.transform(this.productPrice)
     input.focus();
     this.isOnFocus = true;
   }
@@ -326,6 +335,7 @@ export class ProductModalComponent implements OnInit {
       delete dataToSend.images
       delete dataToSend.color
       delete dataToSend.categories
+      delete dataToSend.packageWeight
       Object.assign(dataToSend, { color: JSON.stringify(this.currentProduct.color) })
       Object.assign(dataToSend, { categories: JSON.stringify(this.currentProduct.categories) })
       if (this.deleteFile) {

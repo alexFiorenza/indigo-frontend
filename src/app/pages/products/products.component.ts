@@ -33,6 +33,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products = [];
   totalPages: Number;
   apiUrl: string;
+  searchInput = '';
   production = environment.production;
   currentFilter: HTMLElement;
   categories = []
@@ -40,7 +41,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   skeletonLoader = Array(10);
   skeletonFilters = Array(3);
   filteredProducts: Array<Product> = [];
-  searchInputText;
   constructor(
     @Inject(DOCUMENT) public document,
     private r: Renderer2,
@@ -66,9 +66,27 @@ export class ProductsComponent implements OnInit, OnDestroy {
         fromEvent(this.searchBar.nativeElement, 'input')
           .pipe(map((event: Event) => (event.target as HTMLInputElement).value),
             debounceTime(2000))
-          .subscribe(data =>
-            //TODO create service and send data to backend to filter
-            console.log(this.searchInputText));
+          .subscribe(data => {
+            if (this.searchInput !== '' || data === '') {
+              this.deleteTag();
+            }
+            this.categoryService.filterProductsByInput(data, 1).subscribe((res: any) => {
+              if (this.currentFilter) {
+                this.currentFilter.classList.remove('selectedFilter');
+                this.currentFilter = undefined;
+                this.deleteTag();
+              }
+              if (data === '') {
+                this.filteredProducts = res.response;
+                return;
+              } else {
+                this.createTag(data);
+                this.searchInput = data;
+                this.filteredProducts = res.response;
+              }
+            })
+          }
+          );
       })
     });
   }
@@ -97,20 +115,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   filterProducts(text: HTMLElement, category?, subcategory?) {
     text.classList.toggle('selectedFilter');
-    const child = [...this.tags.nativeElement.children];
-    child.forEach((e) => {
-      if (e.textContent === this.currentFilter.textContent) {
-        this.tags.nativeElement.removeChild(e);
-      }
-    })
+    if (this.currentFilter) {
+      this.deleteTag();
+    }
     if (this.currentFilter && this.currentFilter !== text) {
       this.currentFilter.classList.remove('selectedFilter');
       this.currentFilter = text;
-      const tag = `<span
-        class="px-4 py-2 font-Josefin text-white bg-indigoPink-600 rounded-full lg:text-xs lg:py-1"
-        >${text.textContent}</span
-        >`;
-      this.tags.nativeElement.innerHTML += tag;
+      this.createTag(text.textContent);
       this.categoryService.filterProductByCategory(category, subcategory, 1).subscribe((res: any) => {
         if (res.status) {
           res.response.length <= 0 ? this.filteredProducts = [] : this.filteredProducts = res.response
@@ -123,11 +134,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.currentFilter = null;
         this.filteredProducts = [];
       } else {
-        const tag = `<span
-        class="px-4 py-2 font-Josefin text-white bg-indigoPink-600 rounded-full lg:text-xs lg:py-1"
-        >${text.textContent}</span
-        >`;
-        this.tags.nativeElement.innerHTML += tag;
+        this.createTag(text.textContent);
         this.categoryService.filterProductByCategory(category, subcategory, 1).subscribe((res: any) => {
           if (res.status) {
             this.filteredProducts = res.response;
@@ -135,7 +142,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
           }
         })
       }
-
     }
+  }
+  createTag(textToAdd: string) {
+    const tag = `<span
+    class="px-4 py-2 font-Josefin text-white bg-indigoPink-600 rounded-full lg:text-xs lg:py-1"
+    >${textToAdd}</span
+    >`;
+    this.tags.nativeElement.innerHTML += tag;
+  }
+  deleteTag() {
+    const child = [...this.tags.nativeElement.children];
+    child.forEach((e) => {
+      this.tags.nativeElement.removeChild(e);
+    })
   }
 }

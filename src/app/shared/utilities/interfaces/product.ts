@@ -11,6 +11,7 @@ export interface Product {
     _id?: string;
     categories?: Array<Category>;
     stock: boolean;
+    packageWeight: Object;
 }
 export interface Category {
     subcategories: Subcategory[];
