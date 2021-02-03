@@ -34,7 +34,7 @@ import { FullPageLoaderComponent } from './components/full-page-loader/full-page
     ColorPickerModule,
     ProductModalComponent,
     SaleProductComponent,
-    FullPageLoaderComponent
+    FullPageLoaderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [CurrencyPipe, SalesPipe, ParseCurrencyPipe]

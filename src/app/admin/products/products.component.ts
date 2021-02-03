@@ -6,6 +6,7 @@ import { Product } from '../../shared/utilities/interfaces/product';
 import { ProductsService } from '../../core/services/http/api/products/products.service';
 import { UserService } from '../../core/services/http/api/user/user.service';
 import { fromEvent } from 'rxjs';
+import { CategoryService } from '../../core/services/http/api/categories/category.service';
 
 @Component({
   selector: 'app-products',
@@ -14,6 +15,7 @@ import { fromEvent } from 'rxjs';
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
   public products: Product[] = [];
+  public filteredProducs: Product[] = [];
   public previousFilter: HTMLElement;
   public previousLine: HTMLElement;
   public uploadsUrl = environment.uploadsUrl;
@@ -26,7 +28,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   @Output() public emitAlert = new EventEmitter();
   @ViewChild('searchBar') searchBarInput: ElementRef;
   @ViewChildren('product') private productsContainer: QueryList<ElementRef>;
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService, private categoryService: CategoryService) { }
   ngOnInit(): void {
   }
   ngAfterViewInit() {
@@ -34,7 +36,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.previousLine = document.querySelector('#stockActive');
     this.productsService.getProducts(1, 12).subscribe((value) => {
       this.products = value.response.products;
+      console.log(this.products);
+      fromEvent(this.searchBarInput.nativeElement, 'input')
+        .pipe(map((event: Event) => (event.target as HTMLInputElement).value),
+          debounceTime(2000))
+        .subscribe((data: any) => {
+          this.categoryService.filterProductsByInput(data, 1).subscribe((value: any) => {
+            this.filteredProducs = value.response;
+          })
+        }
+        );
     })
+
   }
   changeFilter(textContainer: HTMLElement, activeLine: HTMLElement) {
     this.previousFilter.classList.toggle('opacity-50');
@@ -60,12 +73,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     }
   }
   searchBar() {
-    fromEvent(this.searchBarInput.nativeElement, 'input').pipe(map((event: Event) => {
-      (event.target as HTMLInputElement).value, debounceTime(2000)
-    })).subscribe((data) => {
-      //manage search bar (same logic as search bar in products user side)
-      console.log(data);
-    })
+
   }
   deleteProduct(deleteContainer: HTMLElement) {
     if (!this.editingProducts) {

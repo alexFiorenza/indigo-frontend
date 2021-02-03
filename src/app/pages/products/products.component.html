@@ -73,6 +73,43 @@
         </ng-container>
       </div>
     </div>
+    <div
+      #pageSwitcher
+      *ngIf="
+        this.totalPages &&
+        this.currentPage > 0 &&
+        this.pagesArrayNumber.length > 0
+      "
+      class="lg:mb-12 w-full z-50 lg:z-40 lg:shadow-md lg:mt-6 lg:max-w-sm lg:w-11/12 bg-white lg:py-4 lg:h-auto h-24 filtersContainer hidden lg:static bottom-0 lg:flex flex-col lg:items-start"
+    >
+      <span
+        class="hidden lg:block text-2xl font-Josefin font-light text-indigoBlack-100 px-4"
+        >Paginas</span
+      >
+      <div
+        class="font-Josefin my-3 items-center hidden filtersTextAnimation lg:flex w-4/5 lg:w-full lg:px-8 text-indigoBlack-500 justify-between"
+      >
+        <ion-icon
+          name="chevron-back-circle-outline"
+          (click)="prevPage()"
+          class="text-3xl cursor-pointer"
+        ></ion-icon>
+        <div #pages>
+          <span
+            class="mx-2 cursor-pointer"
+            [ngClass]="{ 'text-indigoPink-500': i + 1 === this.currentPage }"
+            *ngFor="let p of pagesArrayNumber; let i = index"
+          >
+            {{ i + 1 }}
+          </span>
+        </div>
+        <ion-icon
+          name="chevron-forward-circle-outline"
+          (click)="nextPage()"
+          class="text-3xl cursor-pointer"
+        ></ion-icon>
+      </div>
+    </div>
   </div>
   <div
     #skeletonContainer
@@ -106,15 +143,18 @@
   <div
     #productsContainer
     *ngIf="this.products.length > 0"
+    infiniteScroll
     class="lg:grid lg:grid-cols-3 xl:grid-cols-4 w-full lg:w-1/2 lg:items-start items-center flex flex-col relative mt-4 mb-24 lg:mt-0 lg:mx-8"
   >
-    <ng-container *ngIf="this.filteredProducts.length <= 0 && !currentFilter">
+    <ng-container
+      *ngIf="this.filteredProducts.length <= 0 && currentFilter === undefined"
+    >
       <div
         class="lg:w-40 w-10/12 lg:h-40 h-72 my-4 lg:mb-16 z-30 lg:flex lg:flex-col font-Josefin mx-4"
         *ngFor="let p of products"
       >
         <img
-          *ngIf="!this.production && this.p.images.length > 0"
+          *ngIf="!this.production && p.images.length > 0"
           [routerLink]="'/productos/' + p._id"
           [src]="this.apiUrl + p.images[0].image"
           class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
@@ -145,8 +185,9 @@
           >No se encontraron los productos</span
         >
       </div>
+
       <div
-        class="lg:w-40 w-10/12 lg:h-40 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
+        class="lg:w-40 w-10/12 lg:h-40 h-72 my-4 lg:mb-16 z-30 lg:flex lg:flex-col font-Josefin mx-4"
         *ngFor="let p of filteredProducts"
       >
         <img
@@ -159,21 +200,12 @@
           <span class="mt-2 uppercase font-light text-indigoBlack-100">{{
             p.name
           }}</span>
-          <div class="lg:flex">
-            <span
-              [ngClass]="{ productDiscount: this.p.sale > 0 }"
-              class="text-indigoBlack-500 relative"
-              >{{ p.price | parseCurrency }}</span
-            >
-            <span
-              class="ml-2 font-Josefin text-indigoBlack-500"
-              #sale
-              *ngIf="this.p.sale > 0"
-              >{{ p.price | sales: p.sale | parseCurrency }}</span
-            >
-          </div>
+          <app-sale-product class="lg:flex" [product]="p"></app-sale-product>
         </div>
       </div>
     </ng-container>
+    <div class="lg:hidden">
+      <div [ngClass]="{ hidden: !this.loadNewData }" class="loader w-20"></div>
+    </div>
   </div>
 </div>

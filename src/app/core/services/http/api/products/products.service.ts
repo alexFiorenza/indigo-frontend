@@ -1,5 +1,5 @@
 import { Product } from './../../../../../shared/utilities/interfaces/product';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { environment } from './../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

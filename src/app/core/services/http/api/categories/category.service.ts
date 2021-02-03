@@ -40,7 +40,7 @@ export class CategoryService {
   filterProductByCategory(category, subcategory, page) {
     return this.http.get(`${environment.apiUrl}/product/filter/${page}?category=${category}&subcategory=${subcategory}`);
   }
-  filterProductsByInput(input: string, page) {
-    return this.http.get(`${environment.apiUrl}/product/filter/${page}?search=${input}`)
+  filterProductsByInput(input: string, page, limit = 10) {
+    return this.http.get(`${environment.apiUrl}/product/filter/${page}?search=${input}&limit=${limit}`)
   }
 }

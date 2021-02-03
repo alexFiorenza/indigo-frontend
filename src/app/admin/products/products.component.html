@@ -12,7 +12,7 @@
       <button class="text-lg focus:outline-none">Añadir</button>
     </div>
   </div>
-  <div #productsBox class="w-11/12 shadow-md mt-12 py-4 relative">
+  <div #productsBox class="w-11/12 shadow-md mt-12 mb-6 py-4 relative">
     <div class="flex justify-end w-full items-center px-8">
       <div class="flex items-center font-Josefin my-2 text-indigoBlack-100">
         <div
@@ -35,9 +35,7 @@
           <ion-icon name="search" class="w-1/5"></ion-icon>
           <input
             type="search"
-            [(ngModel)]="searchText"
             #searchBar
-            (ngModelChange)="searchBar($event)"
             class="text-sm mt-1 mx-2 focus:outline-none w-4/5 search searchBorder"
             name="search"
             placeholder="Buscar"
@@ -47,7 +45,47 @@
     </div>
     <div class="w-full lineSeparator mb-2 opacity-25"></div>
     <div #productsContainer class="productsGridLayout px-8 py-4 font-Josefin">
-      <ng-container *ngIf="this.products.length > 0">
+      <ng-container *ngIf="this.filteredProducs.length > 0">
+        <div
+          *ngFor="let product of filteredProducs"
+          #product
+          class="relative w-full max-widthProduct cursor-pointer animate__animated animate__infinite"
+        >
+          <div
+            class="hidden absolute w-full h-48 setMaxHeight justify-center items-center"
+          >
+            <ion-icon
+              (click)="hasToEmitAlert(product)"
+              name="pencil"
+              class="absolute text-4xl z-30 text-indigoBlack-500"
+            ></ion-icon>
+            <ion-icon
+              (click)="removeProduct(product)"
+              name="trash-outline"
+              class="absolute text-4xl z-30 text-red-500 hidden"
+            ></ion-icon>
+            <div
+              class="bg-white absolute opacity-50 w-full rounded-lg h-full z-20"
+            ></div>
+          </div>
+          <img
+            class="w-full object-cover rounded-lg setMaxHeight h-48 z-10"
+            [src]="uploadsUrl + '/' + product.images[0].image"
+            alt=""
+          />
+          <div class="flex flex-col my-3">
+            <span class="text-indigoBlack-800 text-sm capitalize">{{
+              product.name
+            }}</span>
+            <span class="text-indigoBlack-400 text-xs">{{
+              product.price | parseCurrency
+            }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="this.products.length > 0 && this.filteredProducs.length <= 0"
+      >
         <div
           *ngFor="let product of products"
           #product
@@ -85,7 +123,9 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="this.products.length <= 0">
+      <ng-container
+        *ngIf="this.products.length <= 0 && this.filteredProducs.length <= 0"
+      >
         <div
           *ngFor="let skeleton of skeletonLoader"
           #product
