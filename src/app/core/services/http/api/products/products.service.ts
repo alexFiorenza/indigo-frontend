@@ -14,7 +14,7 @@ export class ProductsService {
   getProducts(actualPage, limit): Observable<any> {
     return this.http.get<Array<Product>>(
       `${environment.apiUrl}/product/${actualPage}?limit=${limit}`
-    );
+    ).pipe(delay(1500))
   }
   editProduct(body, id, image) {
     const headers = this.userService.setHeaders();

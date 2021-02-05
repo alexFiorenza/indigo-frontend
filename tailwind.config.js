@@ -41,6 +41,8 @@ module.exports = {
       },
       indigoComplementary: {
         100: "#B6DBFB",
+        200: "#fae3b6",
+        300: "#c8b6fa",
       },
       gray: {
         100: "#f7fafc",

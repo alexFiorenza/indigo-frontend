@@ -45,8 +45,8 @@ export class FavoritesComponent implements OnInit {
 
   }
   deleteFavorite(order: Order) {
-    this.userService.deleteFavorite(order).subscribe((value) => {
-      if (status) {
+    this.userService.deleteFavorite(order).subscribe((res: any) => {
+      if (res.status) {
         window.location.reload();
       }
     })

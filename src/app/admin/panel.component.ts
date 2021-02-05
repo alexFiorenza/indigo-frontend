@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
 import { DOCUMENT } from '@angular/common';
+import { OrdersService } from '../core/services/http/api/orders/orders.service';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -19,10 +20,12 @@ export class PanelComponent implements OnInit, AfterContentInit {
   constructor(private activatedRoute: ActivatedRoute,
     @Inject(DOCUMENT) document, private r: Renderer2,
     private salesPipe: SalesPipe,
+    private ordersService: OrdersService
   ) {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
+
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path

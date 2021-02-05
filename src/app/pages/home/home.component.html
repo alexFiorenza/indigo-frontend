@@ -51,7 +51,8 @@
     >
       <div *ngFor="let product of homeViewProducts">
         <img
-          class="w-full max-w-2xl imagesSelection h-full object-cover cursor-pointer"
+          [routerLink]="'/productos/' + product._id"
+          class="w-full max-w-2xl imagesSelection h-full object-cover cursor-pointer focus:outline-none"
           [src]="uploadsUrl + '/' + product.images[0].image"
           alt=""
         />
@@ -83,14 +84,16 @@
       class="flex-col w-full h-full justify-center hidden items-center lg:flex"
     >
       <swiper [config]="shoesConfigDesktop" class="my-16 xl:w-3/4 w-full">
-        <div *ngFor="let p of products">
+        <div *ngFor="let p of products" [routerLink]="'/productos/' + p._id">
           <div class="w-48 xl:w-56 changeHeight relative cursor-pointer">
             <div
               #info
               class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
             >
               <span class="uppercase text-xl">{{ p.name }}</span>
-              <span class="uppercase font-light">{{ p.price | currency }}</span>
+              <span class="uppercase font-light">{{
+                p.price | parseCurrency
+              }}</span>
             </div>
             <div
               class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
@@ -123,12 +126,15 @@
               class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
             >
               <span class="uppercase text-xl">{{ p.name }}</span>
-              <span class="uppercase font-light">{{ p.price | currency }}</span>
+              <span class="uppercase font-light">{{
+                p.price | parseCurrency
+              }}</span>
             </div>
             <div
               class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
             ></div>
             <img
+              [routerLink]="'/productos/' + p._id"
               [src]="uploadsUrl + '/' + p.images[0].image"
               class="w-full h-full object-cover rounded-xl"
               alt=""

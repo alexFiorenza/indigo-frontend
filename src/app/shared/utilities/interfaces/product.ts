@@ -12,6 +12,7 @@ export interface Product {
     categories?: Array<Category>;
     stock: boolean;
     packageWeight: Object;
+    sizes?: string;
 }
 export interface Category {
     subcategories: Subcategory[];

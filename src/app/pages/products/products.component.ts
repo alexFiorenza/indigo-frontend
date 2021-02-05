@@ -19,7 +19,7 @@ import { CategoryService } from '../../core/services/http/api/categories/categor
 import { fromEvent } from 'rxjs';
 import { products } from '../../shared/utilities/mocks/product';
 
-
+const LG_WIDTH = 1024
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -48,6 +48,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   selectedFilter;
   skeletonLoader = Array(10);
   skeletonFilters = Array(3);
+  selectedCategory;
+  selectedSubcategory;
   filteredProducts: Array<Product> = [];
   constructor(
     @Inject(DOCUMENT) public document,
@@ -59,10 +61,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
   }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth >= LG_WIDTH) {
+      this.router.navigate(['/productos'], { queryParams: { pagina: this.currentPage } })
+      if (this.currentFilter) {
+        //TODO Update array of products depending if it has filter or not
+        // this.categoryService.filterProductByCategory(this.selectedCategory, this.selectedSubcategory, this.currentPage).subscribe((res)=>{
+        // })
+      }
+    }
+  }
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
     const triggerAt = 0
-    if (this.products.length > 0 && document.body.clientWidth <= 1024 && this.moreDataToShow) {
+    if (this.products.length > 0 && document.body.clientWidth <= LG_WIDTH && this.moreDataToShow) {
       if (document.body.scrollHeight - (window.innerHeight + window.scrollY) <= triggerAt) {
         if (this.loadingData) {
           return;
@@ -70,15 +83,29 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.loadNewData = true;
         this.loadingData = true;
         this.currentPage++;
-        this.productService.getProducts(this.currentPage, 12).subscribe((resp) => {
-          this.loadNewData = false;
-          this.loadingData = false;
-          if (resp.response.products.length <= 0) {
-            this.moreDataToShow = false;
-            return;
-          }
-          this.products.push(...resp.response.products);
-        })
+        if (!this.currentFilter) {
+          this.productService.getProducts(this.currentPage, 12).subscribe((resp) => {
+            this.loadNewData = false;
+            this.loadingData = false;
+            if (resp.response.products.length <= 0) {
+              this.moreDataToShow = false;
+              this.currentPage--;
+              return;
+            }
+            this.products.push(...resp.response.products);
+          })
+        } else {
+          this.categoryService.filterProductByCategory(this.selectedCategory, this.selectedSubcategory, this.currentPage).subscribe((res: any) => {
+            this.loadNewData = false;
+            this.loadingData = false;
+            if (res.response.result.length <= 0) {
+              this.moreDataToShow = false;
+              this.currentPage--;
+              return;
+            }
+            this.filteredProducts.push(...res.response.result);
+          })
+        }
       }
     }
   }
@@ -166,6 +193,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   filterProducts(text: HTMLElement, category?, subcategory?) {
+    this.selectedCategory = category;
+    this.selectedSubcategory = subcategory;
     text.classList.toggle('selectedFilter');
     if (this.currentFilter) {
       this.deleteTag();
@@ -176,12 +205,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.createTag(text.textContent);
       this.categoryService.filterProductByCategory(category, subcategory, 1).subscribe((res: any) => {
         if (res.status) {
-          res.response.length <= 0 ? this.filteredProducts = [] : this.filteredProducts = res.response.result
+          res.response.length <= 0 ? this.filteredProducts = [] : this.filteredProducts = res.response.result;
           if (this.filteredProducts.length <= 0) {
             this.currentPage = 1;
             this.totalPages = this.totalProductsPageReference;
             this.pagesArrayNumber = Array(this.totalPages);
-
           } else {
             this.totalPages = res.response.totalPages;
             this.currentPage = 1;
@@ -193,7 +221,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       })
     } else {
       if (this.currentFilter === text) {
-        this.currentFilter = null;
+        this.currentFilter = undefined;
         this.filteredProducts = [];
         this.currentPage = 1;
         this.totalPages = this.totalProductsPageReference;

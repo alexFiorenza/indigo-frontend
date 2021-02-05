@@ -14,24 +14,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card'
 import { CarouselModule } from 'primeng/carousel';
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    ToastModule,
-    InputSwitchModule,
-    OverlayPanelModule,
-    VirtualScrollerModule,
-    SkeletonModule,
-    FileUploadModule,
-    InputTextareaModule,
-    InputTextModule,
-    DialogModule,
-    ButtonModule,
-    CardModule,
-    CarouselModule,
-  ],
   exports: [
     ToastModule,
     InputSwitchModule,
@@ -45,8 +29,7 @@ import { CarouselModule } from 'primeng/carousel';
     ButtonModule,
     CardModule,
     CarouselModule,
-    DropdownModule
-  ],
+    DropdownModule],
   providers: [MessageService]
 })
 export class PrimengModule { }

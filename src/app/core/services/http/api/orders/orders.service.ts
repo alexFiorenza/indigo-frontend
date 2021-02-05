@@ -24,4 +24,14 @@ export class OrdersService {
     const headers = this.userService.setHeaders();
     return this.http.get(`${this.apiUrl}/orders/userOrder/${id}`, { headers })
   }
+  getOrders() {
+    const headers = this.userService.setHeaders();
+    return this.http.get(`${this.apiUrl}/orders/`, { headers })
+  }
+  updateOrder(id: string, status: string) {
+    const headers = this.userService.setHeaders();
+    return this.http.put(`${this.apiUrl}/orders/update/${id}`, {
+      status
+    }, { headers })
+  }
 }

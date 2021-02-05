@@ -1,1 +1,153 @@
-<p>orders works!</p>
+<div class="flex flex-col items-start">
+  <div class="flex font-Josefin text-3xl items-center justify-start my-10">
+    <ion-icon class="mr-6" name="receipt"></ion-icon>
+    <h3 class="text-2xl text-indigoBlack-800">Pedidos pendientes</h3>
+  </div>
+  <div
+    class="w-11/12 border border-indigoBlack-200 font-Josefin"
+    *ngFor="let order of orders; let i = index"
+  >
+    <div class="bg-indigoBlack-300 py-3 px-4 mb-3 flex justify-between">
+      <div class="flex">
+        <div class="flex flex-col mx-4">
+          <span class="uppercase font-semibold text-indigoBlack-1000"
+            >total</span
+          >
+          <span class="text-indigoBlack-500 text-sm">{{
+            order.price | parseCurrency
+          }}</span>
+        </div>
+        <div class="flex flex-col mx-4">
+          <span class="uppercase font-semibold text-indigoBlack-1000"
+            >dueño</span
+          >
+          <span class="text-indigoBlack-500 text-sm capitalize">{{
+            order.user.name
+          }}</span>
+        </div>
+        <div class="flex flex-col mx-4">
+          <span class="uppercase font-semibold text-indigoBlack-1000"
+            >enviar a</span
+          >
+          <span class="text-indigoBlack-500 text-sm capitalize"
+            >{{ order.user.province }},{{ order.user.town }}-{{
+              order.user.street
+            }}</span
+          >
+        </div>
+      </div>
+      <div
+        [ngClass]="{
+          'bg-indigoBlack-100': order.status.toLowerCase() === 'activo',
+          'bg-indigoComplementary-300':
+            order.status.toLowerCase() === 'en camino',
+          'bg-yellow-500': order.status.toLowerCase() === 'pausado',
+          'bg-green-500': order.status.toLowerCase() === 'completado'
+        }"
+        class="text-white text-lg font-semibold py-2 rounded-full flex items-center justify-center"
+      >
+        <ion-icon
+          *ngIf="order.status.toLowerCase() === 'activo'"
+          name="checkmark-circle"
+          class="pl-4 mr-2 text-xl"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="order.status.toLowerCase() === 'completado'"
+          name="checkmark-done-circle"
+          class="pl-4 mr-2 text-xl"
+        ></ion-icon>
+        <ion-icon
+          class="pl-4 mr-2 text-xl"
+          *ngIf="order.status.toLowerCase() === 'en camino'"
+          name="paper-plane"
+        ></ion-icon>
+        <ion-icon
+          class="pl-4 mr-2 text-xl"
+          *ngIf="order.status.toLowerCase() === 'pausado'"
+          name="pause-circle"
+        ></ion-icon>
+        <span class="pr-4"> {{ order.status }}</span>
+      </div>
+    </div>
+    <div
+      *ngFor="let product of order.products"
+      class="px-12 my-10 flex justify-between"
+    >
+      <div class="flex">
+        <img
+          class="w-32"
+          [src]="uploadsUrl + '/' + product.images[0].image"
+          alt=""
+        />
+        <div class="flex flex-col mx-6">
+          <span class="capitalize text-indigoBlack-800">{{
+            product.name
+          }}</span>
+          <span
+            class="text-indigoBlack-400"
+            *ngIf="order.deliveryMethod !== 'andreani'"
+          >
+            Retira en sucursal - nombre de sucursal
+          </span>
+          <span
+            class="text-indigoBlack-400 mb-2"
+            *ngIf="order.deliveryMethod === 'andreani'"
+          >
+            Envio por andreani
+          </span>
+          <div class="flex">
+            <span class="text-indigoBlack-400">Color</span>
+            <div
+              [ngStyle]="{
+                'background-color': product.color
+              }"
+              class="h-6 w-6 mx-3 borderToProductColors rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+            ></div>
+          </div>
+          <div class="flex">
+            <span class="text-indigoBlack-400">Talle</span>
+            <span
+              class="cursor-pointer w-6 mx-4 h-6 bg-gray-900 rounded-full text-white text-xs flex font-light justify-center items-center"
+              >{{ product.sizes }}</span
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col font-Josefin justify-center items-center"
+        *ngIf="i === 0"
+      >
+        <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+          <div class="flex flex-col">
+            <span
+              [ngClass]="{
+                'text-yellow-400': state === 'Pausado',
+                'text-green-500': state === 'Completado',
+                'text-indigoComplementary-300': state === 'En camino'
+              }"
+              class="font-Josefin mb-2 cursor-pointer"
+              (click)="updateOrderStatus(order._id, state)"
+              *ngFor="let state of states"
+            >
+              {{ state }}
+            </span>
+          </div>
+        </p-overlayPanel>
+        <button
+          (click)="op.toggle($event)"
+          class="focus:outline-none bg-indigoPink-700 rounded-lg px-10 py-4 text-white mb-3"
+        >
+          Actualizar
+        </button>
+        <span
+          class="text-light mt-2 cursor-pointer text-sm underline text-indigoBlack-400"
+          >Ver mas información</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="flex font-Josefin text-3xl items-center justify-start mt-16">
+    <ion-icon class="mr-6" name="checkmark-done-circle"></ion-icon>
+    <h3 class="text-2xl text-indigoBlack-800">Pedidos activos</h3>
+  </div>
+</div>

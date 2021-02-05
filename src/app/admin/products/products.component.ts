@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { map, debounceTime } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
@@ -15,7 +16,10 @@ import { CategoryService } from '../../core/services/http/api/categories/categor
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
   public products: Product[] = [];
-  public filteredProducs: Product[] = [];
+  public totalPages = 0;
+  public pagesArrayNumber;
+  public currentPage;
+  public filteredProducts: Product[] = [];
   public previousFilter: HTMLElement;
   public previousLine: HTMLElement;
   public uploadsUrl = environment.uploadsUrl;
@@ -24,29 +28,52 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public alertEmmited = false;
   public searchText: string;
   public skeletonLoader = Array(12);
+  public totalProductsPageReference;
   @Output() public createProductAlert = new EventEmitter();
   @Output() public emitAlert = new EventEmitter();
   @ViewChild('searchBar') searchBarInput: ElementRef;
   @ViewChildren('product') private productsContainer: QueryList<ElementRef>;
-  constructor(private productsService: ProductsService, private categoryService: CategoryService) { }
+  constructor(private productsService: ProductsService, private categoryService: CategoryService, private router: Router, private productService: ProductsService,
+    private activatedRoute: ActivatedRoute) { }
   ngOnInit(): void {
-  }
-  ngAfterViewInit() {
-    this.previousFilter = document.querySelector('#stock');
-    this.previousLine = document.querySelector('#stockActive');
-    this.productsService.getProducts(1, 12).subscribe((value) => {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (Object.keys(params).length === 0 && params.constructor === Object) {
+        this.currentPage = 1;
+        this.router.navigate(['/administrar/productos'], { queryParams: { pagina: this.currentPage } })
+      } else {
+        this.currentPage = parseInt(params.pagina);
+      }
+    })
+    this.productsService.getProducts(this.currentPage, 12).subscribe((value) => {
       this.products = value.response.products;
-      console.log(this.products);
+      this.totalPages = value.response.totalPages;
+      this.totalProductsPageReference = this.totalPages;
+      this.pagesArrayNumber = Array(this.totalPages);
       fromEvent(this.searchBarInput.nativeElement, 'input')
         .pipe(map((event: Event) => (event.target as HTMLInputElement).value),
           debounceTime(2000))
         .subscribe((data: any) => {
           this.categoryService.filterProductsByInput(data, 1).subscribe((value: any) => {
-            this.filteredProducs = value.response;
+            this.filteredProducts = value.response.result;
+            if (value === '') {
+              this.filteredProducts = [];
+              this.totalPages = this.totalProductsPageReference;
+              this.pagesArrayNumber = Array(this.totalPages);
+              return;
+            } else {
+              this.filteredProducts = value.response.result;
+              this.totalPages = value.response.totalPages;
+              this.currentPage = 1;
+              this.pagesArrayNumber = Array(this.totalPages);
+            }
           })
         }
         );
     })
+  }
+  ngAfterViewInit() {
+
+
 
   }
   changeFilter(textContainer: HTMLElement, activeLine: HTMLElement) {
@@ -133,6 +160,31 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this.emitAlert.emit({
         showAlert: this.alertEmmited,
         product: actualProduct
+      })
+    }
+  }
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.router.navigate(['/administrar/productos'], { queryParams: { pagina: this.currentPage } })
+      this.productService.getProducts(this.currentPage, 12).subscribe((resp) => {
+        this.products = resp.response.products;
+      })
+    } else {
+      console.error('Cant go to page 0')
+      return;
+    }
+  }
+  nextPage() {
+    if (this.currentPage >= this.totalPages) {
+      console.error('Max page number reached');
+      return;
+    }
+    this.currentPage++;
+    this.router.navigate(['/administrar/productos'], { queryParams: { pagina: this.currentPage } })
+    if (this.filteredProducts.length <= 0) {
+      this.productService.getProducts(this.currentPage, 12).subscribe((resp) => {
+        this.products = resp.response.products;
       })
     }
   }

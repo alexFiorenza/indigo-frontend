@@ -45,9 +45,9 @@
     </div>
     <div class="w-full lineSeparator mb-2 opacity-25"></div>
     <div #productsContainer class="productsGridLayout px-8 py-4 font-Josefin">
-      <ng-container *ngIf="this.filteredProducs.length > 0">
+      <ng-container *ngIf="this.filteredProducts.length > 0">
         <div
-          *ngFor="let product of filteredProducs"
+          *ngFor="let product of filteredProducts"
           #product
           class="relative w-full max-widthProduct cursor-pointer animate__animated animate__infinite"
         >
@@ -84,7 +84,7 @@
         </div>
       </ng-container>
       <ng-container
-        *ngIf="this.products.length > 0 && this.filteredProducs.length <= 0"
+        *ngIf="this.products.length > 0 && this.filteredProducts.length <= 0"
       >
         <div
           *ngFor="let product of products"
@@ -124,7 +124,7 @@
         </div>
       </ng-container>
       <ng-container
-        *ngIf="this.products.length <= 0 && this.filteredProducs.length <= 0"
+        *ngIf="this.products.length <= 0 && this.filteredProducts.length <= 0"
       >
         <div
           *ngFor="let skeleton of skeletonLoader"
@@ -143,6 +143,29 @@
           </div>
         </div>
       </ng-container>
+    </div>
+  </div>
+  <div #pager class="w-11/12 shadow-md mb-6 py-6 relative flex justify-center">
+    <div class="flex w-1/4 text-indigoBlack-500 justify-between">
+      <ion-icon
+        name="chevron-back-circle-outline"
+        (click)="prevPage()"
+        class="text-3xl cursor-pointer"
+      ></ion-icon>
+      <div #pages>
+        <span
+          class="mx-2 cursor-pointer"
+          [ngClass]="{ 'text-indigoPink-500': i + 1 === this.currentPage }"
+          *ngFor="let p of pagesArrayNumber; let i = index"
+        >
+          {{ i + 1 }}
+        </span>
+      </div>
+      <ion-icon
+        name="chevron-forward-circle-outline"
+        (click)="nextPage()"
+        class="text-3xl cursor-pointer"
+      ></ion-icon>
     </div>
   </div>
 </div>

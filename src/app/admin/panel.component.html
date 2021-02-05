@@ -66,12 +66,21 @@
           id="ordersTransition"
           class="adjustWidth hidden bg-indigoPink-400 h-16 fixBordersActive absolute left-0 animate__animated animate__fadeInLeft"
         ></div>
-        <ion-icon
-          #ordersIcon
-          routerLinkActive="active"
-          name="cart-outline"
-          class="text-4xl text-indigoBlack-800 ml-20"
-        ></ion-icon>
+        <div class="ml-20 relative">
+          <ion-icon
+            #ordersIcon
+            routerLinkActive="active"
+            name="cart-outline"
+            class="text-4xl text-indigoBlack-800 relative"
+          >
+          </ion-icon>
+          <div
+            class="font-Josefin text-xs h-5 w-5 rounded-full flex justify-center items-center bg-indigoComplementary-300 absolute badge-orders text-white"
+          >
+            3
+          </div>
+        </div>
+
         <span
           routerLinkActive="active"
           class="font-normal text-indigoBlack-800 mx-8"

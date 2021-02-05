@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Product } from './product';
 export interface Order {
     name: string;
     description: string;
@@ -11,7 +12,7 @@ export interface Order {
     sale?: number;
     homeView: boolean;
     _id?: string;
-    products: Array<any>;
+    products: Array<Product>;
     status: string;
     categories: Array<any>;
     stock: boolean;
