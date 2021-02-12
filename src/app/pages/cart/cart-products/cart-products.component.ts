@@ -25,6 +25,7 @@ export class CartProductsComponent implements OnInit {
   deleteProduct(index: number) {
     this.cartService.deleteOneProduct(index);
     this.productDeleted.emit(this.cartService.getProducts());
+    this.cartComponent.costToSendCalculated = false;
     this.recalculateCostProduct();
   }
   redirectToProduct(product) {
@@ -32,12 +33,16 @@ export class CartProductsComponent implements OnInit {
     this.router.navigate(['/productos', idProduct]);
   }
   recalculateCostProduct() {
-    this.andreaniService.getCredentials().subscribe((credentials: any) => {
-      this.andreaniService.credentials = credentials.response;
-      this.andreaniService.costShipping(this.cartComponent.user.cp, this.products, 'BAR').subscribe((val) => {
-        this.cartComponent.costSend = parseInt(val.response.tarifaConIva.total);
-        this.cartComponent.total += this.cartComponent.costSend;
-      })
-    })
+    this.andreaniService.getCredentials().subscribe((credentials) => {
+      if (credentials) {
+        this.andreaniService.costShipping(this.cartComponent.user.cp, this.products, 'BAR').subscribe((val) => {
+          this.cartComponent.costSend = parseInt(val.response.tarifaConIva.total);
+          this.cartComponent.total += this.cartComponent.costSend;
+          this.cartComponent.costToSendCalculated = true;
+        })
+      }
+    }
+    )
+
   }
 }

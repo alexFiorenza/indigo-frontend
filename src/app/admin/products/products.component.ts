@@ -72,9 +72,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit() {
-
-
-
   }
   changeFilter(textContainer: HTMLElement, activeLine: HTMLElement) {
     this.previousFilter.classList.toggle('opacity-50');
@@ -98,9 +95,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         p.nativeElement.firstChild.classList.toggle('flex');
       })
     }
-  }
-  searchBar() {
-
   }
   deleteProduct(deleteContainer: HTMLElement) {
     if (!this.editingProducts) {

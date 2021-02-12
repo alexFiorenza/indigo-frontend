@@ -9,19 +9,18 @@ import { HeaderComponent } from './header/header.component';
 import { ParseCurrencyPipe } from './pipes/parse-currency.pipe';
 import { ProductModalComponent } from './components/product-modal/product-modal.component';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { BlockUIModule } from 'primeng/blockui';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SaleProductComponent } from './components/sale-product/sale-product.component';
 import { FullPageLoaderComponent } from './components/full-page-loader/full-page-loader.component';
+import { ImgPipe } from './pipes/img.pipe';
 
 @NgModule({
-  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe, ProductModalComponent, SaleProductComponent, FullPageLoaderComponent],
+  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe, ProductModalComponent, SaleProductComponent, FullPageLoaderComponent, ImgPipe],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    BlockUIModule,
     ColorPickerModule,
     ToggleButtonModule,
     PrimengModule

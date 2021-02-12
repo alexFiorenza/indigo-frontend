@@ -548,32 +548,36 @@
       *ngIf="this.slides.length > 0"
     >
       <ng-template let-slide pTemplate="item">
-        <div class="shadow rounded-xl m-1 font-Josefin relative">
-          <img
-            [src]="uploadsUrl + '/' + slide.images[0].image"
-            class="w-full object-cover h-16 border-img"
-          />
-          <div class="px-4 py-4">
-            <span class="text-sm font-semibold text-indigoBlack-500">{{
-              slide.title
-            }}</span>
-            <p class="font-light text-sm">{{ slide.description }}</p>
-            <div class="flex my-2">
-              <span class="font-semibold text-indigoBlack-500">Color:</span>
-              <div
-                [ngStyle]="{
-                  'background-color': slide.color
-                }"
-                class="h-6 fade-in mx-2 borderToProductColors w-6 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
-              ></div>
+        <div class="shadow rounded-xl m-1 h-64 font-Josefin relative mb-3">
+          <div class="h-full flex flex-col justify-between">
+            <img
+              [src]="uploadsUrl + '/' + slide.images[0].image"
+              class="w-full object-cover h-16 border-img"
+            />
+            <div class="px-4 py-4">
+              <span class="text-sm font-semibold text-indigoBlack-500">{{
+                slide.title
+              }}</span>
+              <p class="font-light text-sm h-12 overflow-hidden">
+                {{ slide.description }}
+              </p>
+              <div class="flex my-2">
+                <span class="font-semibold text-indigoBlack-500">Color:</span>
+                <div
+                  [ngStyle]="{
+                    'background-color': slide.color
+                  }"
+                  class="h-6 fade-in mx-2 borderToProductColors w-6 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                ></div>
+              </div>
             </div>
+            <button
+              (click)="editSlide(slide)"
+              class="bg-blue-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
+            >
+              Editar
+            </button>
           </div>
-          <button
-            (click)="editSlide(slide)"
-            class="bg-blue-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
-          >
-            Editar
-          </button>
         </div>
       </ng-template>
     </p-carousel>

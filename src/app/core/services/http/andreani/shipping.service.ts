@@ -26,6 +26,26 @@ export class ShippingService {
     }
   }
   getCredentials() {
-    return this.authService.getCredentials()
+    return new Observable((suscriber) => {
+      this.authService.getCredentials().subscribe((credentials: any) => {
+        this.credentials = credentials.response;
+        suscriber.next(this.credentials);
+      }
+      )
+
+    })
+
+  }
+  createOrder() {
+    return new Observable((observer) => {
+      this.authService.getCredentials().subscribe((credentials) => {
+        this.http.post(`${environment.apiUrl}/andreani/order`, {
+          credentials: credentials.response,
+
+        }).subscribe((res) => {
+          observer.next(res);
+        })
+      })
+    })
   }
 }

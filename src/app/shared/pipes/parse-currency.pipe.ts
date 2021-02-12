@@ -10,6 +10,5 @@ export class ParseCurrencyPipe implements PipeTransform {
   transform(value: any, args: any[] = undefined) {
     const parsedCurrency = this.currencyPipe.transform(value, '$', 'symbol', '1.0');
     return parsedCurrency
-    return null;
   }
 }

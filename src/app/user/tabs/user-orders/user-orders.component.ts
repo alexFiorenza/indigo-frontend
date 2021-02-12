@@ -28,6 +28,7 @@ export class UserOrdersComponent implements OnInit {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
     this.orderService.getOrdersPerUserId(this.user._id).subscribe((value: any) => {
       this.orders = value.response;
+      console.log(this.orders);
     });
   }
   openedOrder(orderInfo: HTMLElement, order: Order, orderContainer: HTMLElement, icon: HTMLElement) {

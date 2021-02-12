@@ -1,6 +1,6 @@
 import { ManageComponentsService } from './../../shared/components/manageComponents/manage-components.service';
 import { UserService } from './../../core/services/http/api/user/user.service';
-import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 @Component({
@@ -22,8 +22,7 @@ export class LoginComponent implements OnInit {
     });
 
   }
-
-  ngOnInit(): void {
+  ngOnInit() {
 
   }
   onSubmit() {

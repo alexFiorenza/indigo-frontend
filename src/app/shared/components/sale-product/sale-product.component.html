@@ -1,11 +1,13 @@
-<span
-  [ngClass]="{ productDiscount: this.product.sale > 0 }"
-  class="text-indigoBlack-500 relative font-Josefin"
-  >{{ product.price | parseCurrency }}</span
->
-<span
-  class="ml-2 font-Josefin text-indigoBlack-500"
-  #sale
-  *ngIf="this.product.sale > 0"
-  >{{ product.price | sales: product.sale | parseCurrency }}</span
->
+<div class="productDiscountContainer">
+  <span
+    [ngClass]="{ productDiscount: this.product.sale > 0 }"
+    class="text-indigoBlack-500 relative font-Josefin"
+    >{{ product.price | parseCurrency }}</span
+  >
+  <span
+    class="ml-2 font-Josefin text-indigoBlack-500"
+    #sale
+    *ngIf="this.product.sale > 0"
+    >{{ product.price | sales: product.sale | parseCurrency }}</span
+  >
+</div>

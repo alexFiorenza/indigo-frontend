@@ -1,3 +1,12 @@
+<p-blockUI [blocked]="loadingPayment">
+  <div class="flex flex-col font-Josefin text-center">
+    <div class="loader w-64 mb-4"></div>
+    <span
+      class="text-xl font-semibold text-white animate__animated animate__infinite animate__pulse"
+      >Procesando pago...</span
+    >
+  </div>
+</p-blockUI>
 <div class="w-full font-Josefin flex flex-col lg:hidden px-4 mt-10">
   <small class="text-xs text-indigoBlack-400 font-semibold">Precio total</small>
   <span class="text-5xl text-indigoPink-700 mt-1 mb-4">{{

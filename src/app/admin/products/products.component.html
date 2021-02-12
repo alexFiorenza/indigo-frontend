@@ -77,9 +77,7 @@
             <span class="text-indigoBlack-800 text-sm capitalize">{{
               product.name
             }}</span>
-            <span class="text-indigoBlack-400 text-xs">{{
-              product.price | parseCurrency
-            }}</span>
+            <app-sale-product [product]="product"></app-sale-product>
           </div>
         </div>
       </ng-container>
@@ -117,9 +115,7 @@
             <span class="text-indigoBlack-800 text-sm capitalize">{{
               product.name
             }}</span>
-            <span class="text-indigoBlack-400 text-xs">{{
-              product.price | parseCurrency
-            }}</span>
+            <app-sale-product [product]="product"></app-sale-product>
           </div>
         </div>
       </ng-container>

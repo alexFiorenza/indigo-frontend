@@ -5,6 +5,8 @@ import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
 import { DOCUMENT } from '@angular/common';
 import { OrdersService } from '../core/services/http/api/orders/orders.service';
+import { Order } from '../shared/utilities/interfaces/order';
+import { OrdersComponent } from './orders/orders.component';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -17,15 +19,16 @@ export class PanelComponent implements OnInit, AfterContentInit {
   public hasToShowProduct = false;
   public currentProduct: Product;
   public hasToCreateProduct = false;
+  ordersUnread = 0
   constructor(private activatedRoute: ActivatedRoute,
     @Inject(DOCUMENT) document, private r: Renderer2,
     private salesPipe: SalesPipe,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private ordersComponent: OrdersComponent
   ) {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
-
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path
@@ -43,6 +46,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
         this.previousDiv.classList.toggle('hidden');
         break;
     }
+    this.ordersUnread = this.ordersComponent.ordersUnread.length
   }
   transitionRouter(div: HTMLElement) {
     if (!this.previousDiv) {

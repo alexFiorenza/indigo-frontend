@@ -75,9 +75,10 @@
           >
           </ion-icon>
           <div
-            class="font-Josefin text-xs h-5 w-5 rounded-full flex justify-center items-center bg-indigoComplementary-300 absolute badge-orders text-white"
+            *ngIf="ordersUnread > 0"
+            class="font-Josefin text-xs h-5 w-5 rounded-full flex justify-center items-center bg-indigoBlack-800 absolute badge-orders text-white"
           >
-            3
+            {{ ordersUnread }}
           </div>
         </div>
 
@@ -86,13 +87,6 @@
           class="font-normal text-indigoBlack-800 mx-8"
           >Pedidos</span
         >
-      </div>
-      <div class="flex items-center mt-16 cursor-pointer">
-        <ion-icon
-          name="people-outline"
-          class="text-4xl text-indigoBlack-800 ml-20"
-        ></ion-icon>
-        <span class="font-normal text-indigoBlack-800 mx-8">Clientes</span>
       </div>
       <div
         routerLink="/inicio"

@@ -46,7 +46,6 @@ export class ProductsService {
     return this.http.post(`${environment.apiUrl}/product/`, formData, { headers })
   }
   getHomeViewProducts() {
-    const headers = this.userService.setHeaders();
-    return this.http.get<Product[]>(`${environment.apiUrl}/product/homeView`, { headers });
+    return this.http.get<Product[]>(`${environment.apiUrl}/product/homeView`);
   }
 }

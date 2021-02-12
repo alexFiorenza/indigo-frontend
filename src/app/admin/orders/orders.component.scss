@@ -1,3 +1,15 @@
 .borderToProductColors {
   border: 0.5px #a1a1a1 solid;
 }
+.maxHeightImg {
+  max-height: 126px;
+}
+.maxHeightModalImg {
+  max-height: 100px;
+}
+
+:host ::ng-deep .p-dialog-content {
+  display: flex !important;
+  align-items: center;
+  flex-direction: column !important;
+}

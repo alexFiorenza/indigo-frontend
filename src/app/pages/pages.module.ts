@@ -1,3 +1,4 @@
+import { PrimengModule } from './../shared/primeng/primeng.module';
 import { RouterModule } from '@angular/router';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SharedModule } from './../shared/shared.module';
@@ -12,8 +13,8 @@ import { CartProductsComponent } from './cart/cart-products/cart-products.compon
 import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
-import { SkeletonModule } from 'primeng/skeleton';
+import { SalesPipe } from '../shared/pipes/sales.pipe';
+import { CartSelectShippingComponent } from './cart/cart-select-shipping/cart-select-shipping.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     CartComponent,
     CartProductsComponent,
     CartUserDataComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    CartSelectShippingComponent
   ],
   imports: [
     CommonModule,
@@ -32,14 +34,15 @@ import { SkeletonModule } from 'primeng/skeleton';
     SwiperModule,
     ClipboardModule,
     ReactiveFormsModule,
-    CheckboxModule,
-    SkeletonModule,
-    FormsModule
+    FormsModule,
+    PrimengModule,
+    SharedModule
   ],
   exports: [
     HomeComponent,
     ProductsComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [SalesPipe]
 })
 export class PagesModule { }

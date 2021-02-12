@@ -18,15 +18,19 @@ export class OrdersService {
       paymentMethodId,
       price
     };
-    return this.http.post(`${this.apiUrl}/orders/proccess_payment`, body, { headers });
+    return this.http.post(`${this.apiUrl}/orders/proccess_payment`, body, { headers })
   }
   getOrdersPerUserId(id) {
     const headers = this.userService.setHeaders();
     return this.http.get(`${this.apiUrl}/orders/userOrder/${id}`, { headers })
   }
-  getOrders() {
+  getOrders(history = false) {
     const headers = this.userService.setHeaders();
-    return this.http.get(`${this.apiUrl}/orders/`, { headers })
+    if (history) {
+      return this.http.get(`${this.apiUrl}/orders?filter=history`, { headers })
+    } else {
+      return this.http.get(`${this.apiUrl}/orders/`, { headers })
+    }
   }
   updateOrder(id: string, status: string) {
     const headers = this.userService.setHeaders();
@@ -34,4 +38,5 @@ export class OrdersService {
       status
     }, { headers })
   }
+
 }

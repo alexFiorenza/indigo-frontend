@@ -26,6 +26,6 @@ import { BrowserModule } from '@angular/platform-browser';
     ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [SalesPipe]
+  providers: [SalesPipe, OrdersComponent]
 })
 export class AdminModule { }

@@ -20,4 +20,10 @@ export interface Order {
     user?: User;
     delayTime?: string;
     trackingId?: string;
+    paymentMethod: PaymentMethod;
+    createdAt: string;
+}
+interface PaymentMethod {
+    payment_method: string;
+    payment_type: string;
 }

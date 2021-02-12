@@ -4,13 +4,17 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import swal from 'sweetalert2';
-import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import lootie from 'lottie-web';
+import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit, ViewChild, OnDestroy, AfterContentInit } from '@angular/core';
+import { catchError, map } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
   @Input() public transactionAmount: Number = 0;
   // public swal: SweetAlert = swal;
   public mp;
@@ -21,6 +25,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public creditCardThumbnail;
   public identificationTypes;
   public token;
+  public loadingPayment = false;
   @ViewChild('yearContainer') private yearsInput: ElementRef;
   @ViewChild('monthContainer') private monthInput: ElementRef;
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
@@ -45,6 +50,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.generateScript();
     this.getIdentificationTypes();
+  }
+  ngAfterContentInit() {
+    lootie.loadAnimation({
+      container: document.querySelector('.loader'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://assets6.lottiefiles.com/packages/lf20_Jlvdrn.json'
+    })
   }
   ngOnDestroy() {
     this.r.setStyle(document.body, 'background-color', ' white');
@@ -205,8 +219,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           docNumber,
           docType
         };
-        this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).subscribe(resp => {
-          if (status) {
+        this.loadingPayment = true;
+
+        this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).pipe(
+          catchError((e: HttpErrorResponse) => {
+            if (!e.error.status) {
+              swal.fire({
+                title: '¡Ha ocurrido un error!',
+                text: 'Los datos introducidos no son correctos',
+                icon: 'error',
+              });
+              this.loadingPayment = !this.loadingPayment
+            }
+            return throwError(e);
+          }),
+        ).subscribe(resp => {
+          if (resp.status) {
             swal.fire({
               title: 'Confirmado',
               text: 'El pago se ha procesado correctamente',
@@ -227,7 +255,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               this.router.navigate(['profile']);
             }, 3000);
           }
-        });
+        })
       } else {
         swal.fire({
           title: 'Ha ocurrido un error',
