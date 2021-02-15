@@ -22,8 +22,17 @@ export interface Order {
     trackingId?: string;
     paymentMethod: PaymentMethod;
     createdAt: string;
+    branch_office: BranchOffice;
+    costToSend?: number;
 }
 interface PaymentMethod {
     payment_method: string;
     payment_type: string;
+}
+
+
+interface BranchOffice {
+    numero: string;
+    localidad: string;
+    calle: string;
 }

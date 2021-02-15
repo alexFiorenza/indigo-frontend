@@ -3,9 +3,9 @@ import { OrdersService } from './../../../core/services/http/api/orders/orders.s
 import { UserService } from './../../../core/services/http/api/user/user.service';
 import { Component, OnInit, ViewChild, ElementRef, Inject, Renderer2 } from '@angular/core';
 import { User } from '../../../shared/utilities/interfaces/user';
-import { Order } from '../../../shared/utilities/interfaces/order';
 import { SwiperOptions } from 'swiper';
 import { DOCUMENT } from '@angular/common';
+import { Order } from 'src/app/shared/utilities/interfaces/order';
 @Component({
   selector: 'app-user-orders',
   templateUrl: './user-orders.component.html',
@@ -13,7 +13,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class UserOrdersComponent implements OnInit {
   private user: User;
-  public orders: Order[];
+  public orders: Array<Order>;
   public uploadsUrl = environment.uploadsUrl;
   public sliderConfig: SwiperOptions = {
     direction: 'vertical',

@@ -93,13 +93,24 @@
         class="text-indigoBlack-400"
         *ngIf="currentOrder.deliveryMethod !== 'andreani'"
       >
-        Retira en sucursal - nombre de sucursal
+        Retira en sucursal - {{ currentOrder.branch_office.localidad }}
       </span>
       <span
         class="text-indigoBlack-400"
         *ngIf="currentOrder.deliveryMethod === 'andreani'"
       >
-        Envio por andreani
+        Envio por andreani - Despacho desde
+        {{ currentOrder.branch_office.localidad }}
+      </span>
+    </div>
+    <div
+      class="flex my-2 items-center"
+      *ngIf="currentOrder.deliveryMethod === 'andreani'"
+    >
+      <ion-icon class="mx-2 text-2xl" name="car"></ion-icon>
+      <span class="text-indigoBlack-800">Costo de envio: </span>
+      <span class="text-indigoBlack-400" class="mx-2">
+        {{ currentOrder.costToSend | parseCurrency }}
       </span>
     </div>
   </div>
@@ -199,7 +210,7 @@
             class="text-indigoBlack-400"
             *ngIf="order.deliveryMethod !== 'andreani'"
           >
-            Retira en sucursal - nombre de sucursal
+            Retira en sucursal - {{ currentOrder.branch_office.localidad }}
           </span>
           <span
             class="text-indigoBlack-400 mb-2"

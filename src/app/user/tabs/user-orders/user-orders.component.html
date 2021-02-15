@@ -104,7 +104,16 @@
       <div class="font-Josefin flex flex-col w-9/12 font-light">
         <div class="flex justify-between items-center w-full my-2">
           <span class="text-indigoBlack-400">Metodo de envio</span>
-          <span class="text-indigoBlack-200">{{ order.deliveryMethod }}</span>
+          <span
+            class="text-indigoBlack-200"
+            *ngIf="order.deliveryMethod !== 'andreani'"
+            >Retira en: {{ order.branch_office.localidad }}</span
+          >
+          <span
+            class="text-indigoBlack-200"
+            *ngIf="order.deliveryMethod === 'andreani'"
+            >Envio a domicilio</span
+          >
         </div>
         <div class="flex justify-between items-center w-full my-2">
           <span class="text-indigoBlack-400">A cargo de </span>

@@ -11,15 +11,18 @@ import { Injectable } from '@angular/core';
 export class ShippingService {
   credentials;
   constructor(private http: HttpClient, private authService: AuthService, private userService: UserService) { }
-  costShipping(cp: number, packages, shipping_office: string): Observable<any> {
+  costShipping(cp: number, packages, shipping_office?): Observable<any> {
     if (this.credentials) {
+      let shippingInfo = {
+        cp,
+        packages,
+      }
+      if (shipping_office) {
+        Object.assign(shippingInfo, shipping_office)
+      }
       return this.http.post(`${environment.apiUrl}/andreani/shipping`, {
         credentials: this.credentials,
-        shippingInfo: {
-          cp,
-          packages,
-          shipping_office
-        }
+        shippingInfo: shippingInfo
       })
     } else {
       console.error('credentials were not provided');
@@ -32,16 +35,18 @@ export class ShippingService {
         suscriber.next(this.credentials);
       }
       )
-
     })
-
   }
-  createOrder() {
+  createOrder(origin, destination, sender, receiver, packages) {
     return new Observable((observer) => {
       this.authService.getCredentials().subscribe((credentials) => {
         this.http.post(`${environment.apiUrl}/andreani/order`, {
           credentials: credentials.response,
-
+          origin,
+          destination,
+          sender,
+          receiver,
+          packages
         }).subscribe((res) => {
           observer.next(res);
         })

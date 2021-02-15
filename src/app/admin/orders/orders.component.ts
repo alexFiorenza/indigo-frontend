@@ -33,9 +33,9 @@ export class OrdersComponent implements OnInit {
   updateOrderStatus(order: Order, status: string) {
     if (order.status === 'Pendiente' && status === 'Activo') {
       //TODO Create order
-      this.andreaniService.createOrder().subscribe((res) => {
-        console.log(res);
-      })
+      // this.andreaniService.createOrder().subscribe((res) => {
+
+      // })
     } else {
       this.ordersService.updateOrder(order._id, status).subscribe((res: any) => {
         if (res.status) {

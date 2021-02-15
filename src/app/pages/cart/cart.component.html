@@ -1,4 +1,143 @@
 <app-header></app-header>
+<p-dialog
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [(visible)]="displayCostToSend"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-col items-start font-Josefin">
+      <span class="text-indigoBlack-700 text-2xl"> Costo de envio</span>
+      <small class="font-light underline text-sm text-blue-600 cursor-pointer"
+        >Ver más información
+      </small>
+    </div>
+  </ng-template>
+  <div class="flex items-center">
+    <span class="mr-2 text-indigoBlack-800 text-base"
+      >Envio a {{ user.street }} {{ user.numberStreet }}:</span
+    >
+    <span class="text-indigoBlack-500 font-light">{{
+      costSend | parseCurrency
+    }}</span>
+  </div>
+  <p-footer>
+    <button
+      (click)="displayCostToSend = false"
+      [disabled]="!costSend"
+      [ngClass]="{ 'opacity-50': !costSend }"
+      icon="pi pi-check"
+      class="p-button-success"
+      pButton
+      type="button"
+      label="Continuar"
+    ></button>
+  </p-footer>
+</p-dialog>
+<p-dialog
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [(visible)]="displayShipping"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-col items-start font-Josefin">
+      <span class="text-indigoBlack-700 text-lg">
+        Seleccionar un tipo de envio</span
+      >
+      <small class="font-light text-indigoBlack-500 text-base"
+        >Selecciona si queres retirar en sucursal o envio a domicilio
+      </small>
+    </div>
+  </ng-template>
+  <div class="flex flex-col">
+    <div class="flex">
+      <button
+        (click)="selected_type_shipping = 'branch_office'"
+        icon="pi pi-map-marker"
+        class="p-button-secondary"
+        pButton
+        type="button"
+        [label]="'Retirar en sucursal'"
+        [style]="{ margin: '5px' }"
+      ></button>
+      <button
+        (click)="selected_type_shipping = 'andreani'"
+        icon="pi pi-map-marker"
+        class="p-button-secondary"
+        pButton
+        type="button"
+        [label]="'Recibir en ' + user.street + ' ' + user.numberStreet"
+        [style]="{ margin: '5px' }"
+      ></button>
+    </div>
+  </div>
+
+  <p-footer>
+    <button
+      (click)="toggleModalShipping(true)"
+      [disabled]="!selected_type_shipping"
+      [ngClass]="{ 'opacity-50': !selected_type_shipping }"
+      icon="pi pi-check"
+      class="p-button-success"
+      pButton
+      type="button"
+      label="Aceptar"
+    ></button>
+  </p-footer>
+</p-dialog>
+<p-dialog
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [(visible)]="displayShowBranchOffice"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-col items-start font-Josefin">
+      <span class="text-indigoBlack-700 text-lg">
+        Seleccionar una sucursal</span
+      >
+      <small class="font-light text-indigoBlack-500 text-base"
+        >Seleccionar una sucursal desde donde se hara el despacho</small
+      >
+    </div>
+  </ng-template>
+  <div class="flex flex-col">
+    <div class="flex">
+      <button
+        (click)="selected_branch_office = branch_tandil"
+        icon="pi pi-map-marker"
+        class="p-button-secondary"
+        pButton
+        type="button"
+        label="Sucursal Tandil"
+        [style]="{ margin: '5px' }"
+      ></button>
+      <button
+        (click)="selected_branch_office = branch_pergamino"
+        icon="pi pi-map-marker"
+        class="p-button-secondary"
+        pButton
+        type="button"
+        label="Sucursal Pergamino"
+        [style]="{ margin: '5px' }"
+      ></button>
+    </div>
+  </div>
+
+  <p-footer>
+    <button
+      (click)="toggleModalBranchOffice(true)"
+      [disabled]="!selected_branch_office"
+      [ngClass]="{ 'opacity-50': !selected_branch_office }"
+      icon="pi pi-check"
+      class="p-button-success"
+      pButton
+      type="button"
+      label="Aceptar"
+    ></button>
+  </p-footer>
+</p-dialog>
 <div class="w-full lg:flex justify-center items-center">
   <div class="w-full lg:w-3/4 py-10 lg:max-w-4xl l lg:flex">
     <div
@@ -25,7 +164,6 @@
       </h3>
       <router-outlet (activate)="componentActivated($event)"></router-outlet>
     </div>
-
     <div
       *ngIf="this.products.length > 0"
       class="lg:relative lg:w-full lg:max-w-xs fixed w-full flex flex-col justify-center items-center bg-white infoPriceHeight priceContainer bottom-0 font-Josefin py-4 lg:mt-16"
@@ -39,15 +177,19 @@
           <span class="font-Josefin">Resumen de compra</span>
         </div>
         <div
-          class="lineHeight w-full opacity-25 mt-2 mb-8 hidden lg:block"
+          class="lineHeight w-full opacity-25 mt-2 mb-4 hidden lg:block"
         ></div>
         <div
+          *ngIf="
+            this.costSend &&
+            selected_type_shipping === 'andreani' &&
+            selected_branch_office
+          "
           class="w-full flex justify-between my-1 items-center text-indigoBlack-200 font-light lg:text-sm"
         >
           <p *ngIf="this.user" class="0 cursor-pointer">Costo de envio</p>
           <span *ngIf="this.user">${{ this.costSend }}</span>
         </div>
-
         <div
           class="w-full flex justify-between my-1 items-center font-light lg:text-sm"
         >
@@ -62,19 +204,28 @@
         </div>
         <button
           *ngIf="this.title === 'productos'"
-          [disabled]="!costToSendCalculated"
-          [ngClass]="{ 'opacity-25': !costToSendCalculated }"
-          routerLink="/carrito/datos"
+          (click)="toggleModalShipping()"
           class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
         >
           Siguiente
         </button>
         <button
-          *ngIf="this.title !== 'productos'"
-          (click)="checkout()"
+          *ngIf="this.title !== 'productos' && !this.selected_branch_office"
+          (click)="toggleModalBranchOffice()"
           class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
         >
-          Comprar
+          Siguiente
+        </button>
+        <button
+          *ngIf="this.title !== 'productos' && this.selected_branch_office"
+          (click)="checkout()"
+          [disabled]="!costSend && selected_type_shipping === 'andreani'"
+          [ngClass]="{
+            'opacity-50': !costSend && selected_type_shipping === 'andreani'
+          }"
+          class="bg-indigoPink-800 py-4 text-white w-full rounded-3xl my-3 focus:outline-none"
+        >
+          Pagar
         </button>
         <div class="w-full flex justify-center">
           <span

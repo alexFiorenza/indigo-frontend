@@ -18,6 +18,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
   @Input() public transactionAmount: Number = 0;
   // public swal: SweetAlert = swal;
   public mp;
+  public shippingType;
+  public branchOffice;
+  public costToSend;
   public form: FormGroup;
   public paymentMethod;
   public issuers: Array<any> = [];
@@ -46,6 +49,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
       installments: ['', Validators.required]
     });
     this.transactionAmount = this.router.getCurrentNavigation().extras.state.price
+    this.branchOffice = this.router.getCurrentNavigation().extras.state.selectedBranchOffice
+    this.shippingType = this.router.getCurrentNavigation().extras.state.shippingType
+    this.costToSend = this.router.getCurrentNavigation().extras.state.costToSend
   }
   ngOnInit(): void {
     this.generateScript();
@@ -212,15 +218,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
         //TODO Match with andreaniapi
         const paymentData = {
           products: this.cartService.getProducts(),
+          branch_office: this.branchOffice,
           date: Date.now(),
           delayTime: '1 week',
-          delivery: 'andreani',
+          delivery: this.shippingType,
           token: this.token,
           docNumber,
           docType
         };
+        if (this.costToSend) {
+          Object.assign(paymentData, { costToSend: this.costToSend })
+        }
         this.loadingPayment = true;
-
         this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).pipe(
           catchError((e: HttpErrorResponse) => {
             if (!e.error.status) {

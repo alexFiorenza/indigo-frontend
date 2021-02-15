@@ -15,6 +15,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card'
 import { CarouselModule } from 'primeng/carousel';
 import { BlockUIModule } from 'primeng/blockui';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [],
@@ -32,7 +34,8 @@ import { BlockUIModule } from 'primeng/blockui';
     CardModule,
     CarouselModule,
     DropdownModule,
-    BlockUIModule],
-  providers: [MessageService]
+    BlockUIModule,
+    ConfirmDialogModule],
+  providers: [MessageService, ConfirmationService]
 })
 export class PrimengModule { }
