@@ -18,6 +18,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
   @Input() public transactionAmount: Number = 0;
   // public swal: SweetAlert = swal;
   public mp;
+  public dniClient;
   public shippingType;
   public branchOffice;
   public costToSend;

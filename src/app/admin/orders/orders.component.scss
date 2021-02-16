@@ -11,5 +11,11 @@
 :host ::ng-deep .p-dialog-content {
   display: flex !important;
   align-items: center;
-  flex-direction: column !important;
+}
+p-dialog-content ng-tns-c82-0 {
+  display: flex !important;
+  flex-direction: row !important;
+}
+.loadingIndex {
+  z-index: 200;
 }

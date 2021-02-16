@@ -11,7 +11,7 @@ export interface Product {
     _id?: string;
     categories?: Array<Category>;
     stock: boolean;
-    packageWeight: Object;
+    packageWeight: PackageWeight;
     sizes?: string;
 }
 export interface Category {
@@ -36,4 +36,11 @@ export interface Size {
 export interface Image {
     uid: string;
     image: string;
+}
+interface PackageWeight {
+    width: number;
+    length: number;
+    height: number;
+    weight: number;
+    volume: number;
 }

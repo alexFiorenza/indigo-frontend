@@ -1,3 +1,13 @@
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-danger"
+  acceptButtonStyleClass="p-button-success"
+></p-confirmDialog>
+<!-- <p-blockUI [baseZIndex]="200" [blocked]="true">
+  <span> loading </span>
+</p-blockUI> -->
+
 <p-dialog
   [header]="'Orden numero: #' + currentOrder.trackingId"
   [draggable]="false"
@@ -6,7 +16,11 @@
   [position]="'top'"
   [maximizable]="true"
   *ngIf="currentOrder"
-  [style]="{ width: '50vw', 'border-radius': '100px' }"
+  [style]="{
+    width: '50vw',
+    'border-radius': '100px'
+  }"
+  contentStyleClass="flex-col"
 >
   <div
     class="w-11/12 shadow-md rounded-3xl px-4 py-4 flex justify-between font-Josefin mb-3"
@@ -91,13 +105,19 @@
       <ion-icon class="mx-2 text-2xl" name="paper-plane"></ion-icon>
       <span
         class="text-indigoBlack-400"
-        *ngIf="currentOrder.deliveryMethod !== 'andreani'"
+        *ngIf="
+          currentOrder.deliveryMethod !== 'andreani' &&
+          currentOrder.branch_office
+        "
       >
         Retira en sucursal - {{ currentOrder.branch_office.localidad }}
       </span>
       <span
         class="text-indigoBlack-400"
-        *ngIf="currentOrder.deliveryMethod === 'andreani'"
+        *ngIf="
+          currentOrder.deliveryMethod === 'andreani' &&
+          currentOrder.branch_office
+        "
       >
         Envio por andreani - Despacho desde
         {{ currentOrder.branch_office.localidad }}
@@ -208,7 +228,7 @@
           }}</span>
           <span
             class="text-indigoBlack-400"
-            *ngIf="order.deliveryMethod !== 'andreani'"
+            *ngIf="order.deliveryMethod !== 'andreani' && currentOrder"
           >
             Retira en sucursal - {{ currentOrder.branch_office.localidad }}
           </span>

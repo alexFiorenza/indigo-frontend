@@ -33,14 +33,16 @@ export class CartComponent implements OnInit, OnDestroy {
   public selected_branch_office;
   public selected_type_shipping;
   public branch_tandil = {
-    numero: '1832',
+    numero: '422',
     localidad: 'Tandil',
-    calle: 'San Nicolas'
+    calle: 'San Nicolas',
+    cp: 1834
   }
   public branch_pergamino = {
-    numero: '1832',
+    numero: '5322',
     localidad: 'Pergamino',
-    calle: 'San Nicolas'
+    calle: 'San Nicolas',
+    cp: 1832
   }
   constructor(
     private cartService: CartService,

@@ -13,4 +13,6 @@ export interface User {
     building: string;
     date?: string;
     favorites: Array<Order>;
+    docNumber?: number;
+    docType?: string
 };

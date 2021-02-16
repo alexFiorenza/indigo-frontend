@@ -37,14 +37,13 @@ export class ShippingService {
       )
     })
   }
-  createOrder(origin, destination, sender, receiver, packages) {
+  createOrder(origin, destination, receiver, packages) {
     return new Observable((observer) => {
       this.authService.getCredentials().subscribe((credentials) => {
         this.http.post(`${environment.apiUrl}/andreani/order`, {
           credentials: credentials.response,
           origin,
           destination,
-          sender,
           receiver,
           packages
         }).subscribe((res) => {

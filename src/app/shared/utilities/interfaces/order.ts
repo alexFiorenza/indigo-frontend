@@ -35,4 +35,6 @@ interface BranchOffice {
     numero: string;
     localidad: string;
     calle: string;
+    cp: number;
 }
+
