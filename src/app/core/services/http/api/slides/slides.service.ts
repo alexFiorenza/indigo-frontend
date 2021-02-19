@@ -12,8 +12,11 @@ export class SlidesService {
   createSlide(body, image) {
     const formData = new FormData();
     for (const key in body) {
-      formData.append(key, body[key]);
+      if (key !== 'btnDirection') {
+        formData.append(key, body[key]);
+      }
     }
+    formData.append('btnDirection', JSON.stringify(body.btnDirection))
     formData.append('image', image);
     const headers = this.userService.setHeaders();
     return this.http.post(`${environment.apiUrl}/slides`, formData, { headers })
@@ -24,12 +27,21 @@ export class SlidesService {
   updateSlides(id, body, image = undefined) {
     const formData = new FormData();
     for (const key in body) {
-      formData.append(key, body[key]);
+      if (key !== 'btnDirection') {
+        formData.append(key, body[key]);
+      }
     }
     if (image) {
       formData.append('image', image);
     }
+    if (body.btnDirection) {
+      formData.append('btnDirection', JSON.stringify(body.btnDirection))
+    }
     const headers = this.userService.setHeaders();
     return this.http.put(`${environment.apiUrl}/slides/${id}`, formData, { headers })
+  }
+  deleteSlide(id: string) {
+    const headers = this.userService.setHeaders();
+    return this.http.delete(`${environment.apiUrl}/slides/${id}`, { headers })
   }
 }

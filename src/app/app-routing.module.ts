@@ -14,10 +14,6 @@ const routes: Routes = [
     component: SingleProductComponent,
   },
   {
-    path: 'loader',
-    component: FullPageLoaderComponent
-  },
-  {
     path: '',
     redirectTo: 'inicio',
     pathMatch: 'full',

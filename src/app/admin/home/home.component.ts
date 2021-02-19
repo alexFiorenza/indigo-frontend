@@ -49,9 +49,13 @@ export class HomeComponent implements OnInit {
   public editColorBtn;
   public editColorTexts;
   public colorTexts = '#ffff'
+  public deleteMode = false;
   public selectedFile;
   public categoryName;
+  public editRouteSelected;
   public checkedSubCategories = false;
+  public custom_route_edit;
+  public custom_route_create;
   selectedDate = {
     name: 'Hoy', code: 1
   };
@@ -70,13 +74,19 @@ export class HomeComponent implements OnInit {
       { name: '2 semanas', code: 14 },
       { name: '1 mes', code: 30 },
     ];
+    this.availableRoutes.push({
+      name: 'Añadir ruta',
+      code: 'custom_route'
+    })
     this.router.config.forEach((r) => {
       const id = r.path.indexOf(':id');
       if (!r.canActivate && id < 0) {
-        this.availableRoutes.push({
-          name: r.path,
-          code: r.path
-        })
+        if (r.path !== '') {
+          this.availableRoutes.push({
+            name: r.path,
+            code: r.path
+          })
+        }
       }
     })
     this.createSlideForm = this.formBuilder.group({
@@ -287,8 +297,26 @@ export class HomeComponent implements OnInit {
   }
   addSlide() {
     const body = this.createSlideForm.value;
-    delete body.selectedRoute;
-    Object.assign(body, { btnDirection: this.createSlideForm.get('selectedRoute').value.code })
+    // delete body.selectedRoute;
+    console.log(body);
+    console.log(this.custom_route_create);
+    if (body.selectedRoute.code === 'custom_route') {
+      Object.assign(body, {
+        btnDirection:
+        {
+          url: this.custom_route_create,
+          custom: true
+        }
+      })
+    } else {
+      Object.assign(body, {
+        btnDirection:
+        {
+          url: this.createSlideForm.get('selectedRoute').value.code,
+          custom: false
+        }
+      })
+    }
     Object.assign(body, { color: this.colorBtn, wordsColor: this.colorTexts })
     this.slidesService.createSlide(this.createSlideForm.value, this.selectedFile).subscribe((response: any) => {
       if (response.status) {
@@ -318,16 +346,44 @@ export class HomeComponent implements OnInit {
   }
   editSlide(slide) {
     this.selectedSlide = slide;
-    console.log(this.selectedSlide.btnDirection);
+    console.log(this.selectedSlide.btnDirection.url)
     this.editSlideForm = this.formBuilder.group({
       title: [this.selectedSlide.title, [Validators.required]],
       description: [this.selectedSlide.description, [Validators.required]],
       button: [this.selectedSlide.button, [Validators.required]],
-      selectedRoute: [this.selectedSlide.btnDirection, [Validators.required]]
+      btnDirection: [this.selectedSlide.btnDirection.url, [Validators.required]]
     })
     this.isEditSlideOpen = true;
     this.editColorBtn = this.selectedSlide.color;
     this.editColorTexts = this.selectedSlide.wordsColor;
+  }
+  deleteSlide(id: string) {
+    swal.fire({
+      title: '¿Estas seguro?',
+      text: `Estas por eliminar esta diapositiva`,
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.slidesService.deleteSlide(id).subscribe((res: any) => {
+          if (res.status) {
+            swal.fire({
+              title: 'Confirmado',
+              text: 'La diapositiva se ha eliminado correctamente',
+              icon: 'success',
+            }).then((res) => {
+              if (res.isDismissed || res.isConfirmed) {
+                window.location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
+
   }
   saveChangesSlide() {
     const body = this.editSlideForm.value;
@@ -338,6 +394,23 @@ export class HomeComponent implements OnInit {
     if (this.fileToBeDeleted && this.selectedFile) {
       Object.assign(body, { deleteFile: this.fileToBeDeleted })
     }
+    if (body.btnDirection.code === 'custom_route') {
+      delete body.btnDirection
+      Object.assign(body, {
+        btnDirection: {
+          url: this.custom_route_edit,
+          custom: true
+        }
+      })
+    } else {
+      Object.assign(body, {
+        btnDirection: {
+          url: this.editSlideForm.get('btnDirection').value,
+          custom: false
+        }
+      })
+    }
+
     //Update slide
     this.slidesService.updateSlides(this.selectedSlide._id, body, this.selectedFile).subscribe((response: any) => {
       if (response.status) {

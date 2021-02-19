@@ -26,12 +26,22 @@
             {{ slide.description }}
           </p>
           <button
-            [routerLink]="'/' + slide.btnDirection"
+            *ngIf="!slide.btnDirection.custom"
+            [routerLink]="'/' + slide.btnDirection.url"
             [ngStyle]="{ 'background-color': slide.color }"
             class="mt-4 px-16 lg:px-32 py-3 lg:text-xl text-lg bg-indigoPink-600 text-white font-Josefin focus:outline-none"
           >
             {{ slide.button }}
           </button>
+          <a
+            *ngIf="slide.btnDirection.custom"
+            [href]="slide.btnDirection.url"
+            target="_blank"
+            [ngStyle]="{ 'background-color': slide.color }"
+            class="mt-4 px-16 lg:px-32 py-3 lg:text-xl text-lg bg-indigoPink-600 text-white font-Josefin focus:outline-none"
+          >
+            {{ slide.button }}
+          </a>
         </div>
       </div>
     </div>

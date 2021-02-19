@@ -35,7 +35,8 @@ export class CheckLocationComponent implements OnInit {
         street: ['', [Validators.required]],
         numberStreet: ['', [Validators.required]],
         instructions: [''],
-        building: [''],
+        floor: [''],
+        department: [''],
         cp: ['', [Validators.required]]
       });
       this.government.getDepartment(this.defaultProvince.id).subscribe(departaments => {
@@ -51,7 +52,6 @@ export class CheckLocationComponent implements OnInit {
     Object.assign(this.user, this.form.value);
     const containerRef = this.loaders.instantiateBtnLoader(this.loader, this.textBtn, this.status);
     this.userService.registerUser(this.user).subscribe((res: any) => {
-      console.log(res);
       if (res.status) {
         this.status = 'completed';
         containerRef.instance.status = this.status;

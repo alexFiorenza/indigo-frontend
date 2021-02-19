@@ -5,6 +5,6 @@ export interface Slides {
     description?: string;
     button?: string;
     color?: string;
-    btnDirection?: string;
+    btnDirection?: Object;
     wordsColor?: string;
 };

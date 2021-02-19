@@ -205,13 +205,28 @@
         <h3 class="colorLabel my-3">Redirección del botón</h3>
         <p-dropdown
           appendTo="body"
-          [placeholder]="selectedSlide.btnDirection"
+          [placeholder]="selectedSlide.btnDirection.url"
           [options]="availableRoutes"
           optionLabel="name"
           autoWidth="false"
+          formControlName="btnDirection"
           [style]="{ width: '100%' }"
         ></p-dropdown>
       </div>
+      <div
+        class="mb-4 w-full"
+        *ngIf="editSlideForm.get('btnDirection').value.code === 'custom_route'"
+      >
+        <input
+          type="text"
+          pInputText
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="custom_route_edit"
+          class="w-full"
+          placeholder="Añadir url completo de la redirección"
+        />
+      </div>
+
       <div class="w-full mb-6 flex flex-col font-Josefin">
         <p-fileUpload
           (onSelect)="fileCharged($event, true)"
@@ -389,6 +404,21 @@
           [style]="{ width: '100%' }"
         ></p-dropdown>
       </div>
+      <div
+        class="mb-4 w-full"
+        *ngIf="
+          createSlideForm.get('selectedRoute').value.code === 'custom_route'
+        "
+      >
+        <input
+          type="text"
+          pInputText
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="custom_route_create"
+          class="w-full"
+          placeholder="Añadir url completo de la redirección"
+        />
+      </div>
       <div class="w-full mb-6 flex items-center">
         <p-fileUpload
           (onSelect)="fileCharged($event)"
@@ -525,13 +555,23 @@
           >Diapositivas inicio</span
         >
       </div>
-      <button
-        (click)="showDialog()"
-        pButton
-        type="button"
-        icon="pi pi-plus"
-        class="p-button-outlined p-button-raised p-button-rounded"
-      ></button>
+      <div class="flex">
+        <button
+          (click)="showDialog()"
+          pButton
+          type="button"
+          icon="pi pi-plus"
+          class="p-button-outlined p-button-success p-button-raised p-button-rounded"
+        ></button>
+        <button
+          pButton
+          type="button"
+          (click)="deleteMode = !deleteMode"
+          icon="pi pi-minus"
+          [style]="{ margin: '0px 8px' }"
+          class="p-button-outlined p-button-danger p-button-raised p-button-rounded"
+        ></button>
+      </div>
     </div>
     <div class="flex mt-4" *ngIf="this.slides.length <= 0" #skeletonSliders>
       <div *ngFor="let s of skeleton" class="ml-8 flex flex-col">
@@ -573,9 +613,17 @@
             </div>
             <button
               (click)="editSlide(slide)"
-              class="bg-blue-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
+              *ngIf="!deleteMode"
+              class="p-button-success bg-blue-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
             >
               Editar
+            </button>
+            <button
+              *ngIf="deleteMode"
+              (click)="deleteSlide(slide._id)"
+              class="bg-red-500 borderCardEdit focus:outline-none text-white py-3 w-full flex justify-center"
+            >
+              Eliminar
             </button>
           </div>
         </div>

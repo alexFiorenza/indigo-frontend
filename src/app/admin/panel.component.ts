@@ -24,11 +24,14 @@ export class PanelComponent implements OnInit, AfterContentInit {
     @Inject(DOCUMENT) document, private r: Renderer2,
     private salesPipe: SalesPipe,
     private ordersService: OrdersService,
-    private ordersComponent: OrdersComponent
   ) {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
+    this.ordersService.getOrders().subscribe((res: any) => {
+      const pendingOrders = res.response.filter((e) => e.status !== 'Completado')
+      this.ordersUnread = pendingOrders.filter((e) => e.status === 'Pendiente').length;
+    })
   }
   ngAfterContentInit() {
     this.actualRoute = this.activatedRoute.snapshot.firstChild.routeConfig.path
@@ -46,7 +49,7 @@ export class PanelComponent implements OnInit, AfterContentInit {
         this.previousDiv.classList.toggle('hidden');
         break;
     }
-    this.ordersUnread = this.ordersComponent.ordersUnread.length
+
   }
   transitionRouter(div: HTMLElement) {
     if (!this.previousDiv) {

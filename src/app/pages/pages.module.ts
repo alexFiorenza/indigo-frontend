@@ -14,7 +14,6 @@ import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.comp
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SalesPipe } from '../shared/pipes/sales.pipe';
-import { CartSelectShippingComponent } from './cart/cart-select-shipping/cart-select-shipping.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { CartSelectShippingComponent } from './cart/cart-select-shipping/cart-se
     CartProductsComponent,
     CartUserDataComponent,
     CheckoutComponent,
-    CartSelectShippingComponent
   ],
   imports: [
     CommonModule,

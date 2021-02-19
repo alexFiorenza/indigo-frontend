@@ -199,85 +199,95 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
     }
   }
   onFormSubmit() {
-    const generateTokenObjs = {
-      cardNumber: this.form.get('creditCardNumber').value,
-      cardExpirationMonth: this.form.get('expireDateMM').value,
-      cardExpirationYear: this.form.get('expireDateYY').value,
-      securityCode: this.form.get('securityCode').value,
-      cardholderName: this.form.get('cardholderName').value,
-      docType: this.form.get('docType').value,
-      docNumber: this.form.get('docNumber').value,
-      issuer: this.form.get('selectedIssuer').value
-    };
-    this.mp.createToken(generateTokenObjs, async (status, response) => {
-      if (status === 200 || status === 201) {
-        this.token = response.id;
-        const installments = this.form.get('installments').value;
-        const paymentMethodId = this.form.get('paymentMethodId').value;
-        const docNumber = this.form.get('docNumber').value;
-        const docType = this.form.get('docType').value;
-        //TODO Match with andreaniapi
-        const paymentData = {
-          products: this.cartService.getProducts(),
-          branch_office: this.branchOffice,
-          date: Date.now(),
-          delayTime: '1 week',
-          delivery: this.shippingType,
-          token: this.token,
-          docNumber,
-          docType
+    swal.fire({
+      title: '¿Estas seguro?',
+      text: `Luego de realizar la compra no aceptamos reembolsos`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#F086A3',
+      cancelButtonColor: '#f56565',
+      confirmButtonText: 'Si,estoy seguro!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const generateTokenObjs = {
+          cardNumber: this.form.get('creditCardNumber').value,
+          cardExpirationMonth: this.form.get('expireDateMM').value,
+          cardExpirationYear: this.form.get('expireDateYY').value,
+          securityCode: this.form.get('securityCode').value,
+          cardholderName: this.form.get('cardholderName').value,
+          docType: this.form.get('docType').value,
+          docNumber: this.form.get('docNumber').value,
+          issuer: this.form.get('selectedIssuer').value
         };
-        if (this.costToSend) {
-          Object.assign(paymentData, { costToSend: this.costToSend })
-        }
-        this.loadingPayment = true;
-        this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).pipe(
-          catchError((e: HttpErrorResponse) => {
-            if (!e.error.status) {
-              swal.fire({
-                title: '¡Ha ocurrido un error!',
-                text: 'Los datos introducidos no son correctos',
-                icon: 'error',
-              });
-              this.loadingPayment = !this.loadingPayment
+        this.mp.createToken(generateTokenObjs, async (status, response) => {
+          if (status === 200 || status === 201) {
+            this.token = response.id;
+            const installments = this.form.get('installments').value;
+            const paymentMethodId = this.form.get('paymentMethodId').value;
+            const docNumber = this.form.get('docNumber').value;
+            const docType = this.form.get('docType').value;
+            const paymentData = {
+              products: this.cartService.getProducts(),
+              branch_office: this.branchOffice,
+              date: Date.now(),
+              delayTime: '1 week',
+              delivery: this.shippingType,
+              token: this.token,
+              docNumber,
+              docType
+            };
+            if (this.costToSend) {
+              Object.assign(paymentData, { costToSend: this.costToSend })
             }
-            return throwError(e);
-          }),
-        ).subscribe(resp => {
-          if (resp.status) {
-            swal.fire({
-              title: 'Confirmado',
-              text: 'El pago se ha procesado correctamente',
-              icon: 'success',
-            });
-            setTimeout(() => {
-              //TODO Redirect to order process
-              this.router.navigate(['/panel/pedidos']);
-            }, 2000);
+            this.loadingPayment = true;
+            this.orderService.processPayment(paymentData, installments, paymentMethodId, this.transactionAmount).pipe(
+              catchError((e: HttpErrorResponse) => {
+                if (!e.error.status) {
+                  swal.fire({
+                    title: '¡Ha ocurrido un error!',
+                    text: 'Los datos introducidos no son correctos',
+                    icon: 'error',
+                  });
+                  this.loadingPayment = !this.loadingPayment
+                }
+                return throwError(e);
+              }),
+            ).subscribe(resp => {
+              if (resp.status) {
+                swal.fire({
+                  title: 'Confirmado',
+                  text: 'El pago se ha procesado correctamente',
+                  icon: 'success',
+                }).then((res) => {
+                  if (res.isDismissed || res.isConfirmed) {
+                    this.router.navigate(['/panel/pedidos']);
+                  }
+                })
+              } else {
+                swal.fire({
+                  title: '¡Ha ocurrido un error!',
+                  text: 'Los datos introducidos no son correctos',
+                  icon: 'error',
+                })
+              }
+            })
           } else {
             swal.fire({
-              title: '¡Ha ocurrido un error!',
-              text: 'Los datos introducidos no son correctos',
+              title: 'Ha ocurrido un error',
+              text: 'Los datos no pudieron ser validados',
               icon: 'error',
             });
             setTimeout(() => {
-              //TODO Redirect to order process
-              this.router.navigate(['profile']);
-            }, 3000);
+              swal.close();
+              this.router.navigate(['carrito']);
+            }, 2500);
           }
-        })
-      } else {
-        swal.fire({
-          title: 'Ha ocurrido un error',
-          text: 'Los datos no pudieron ser validados',
-          icon: 'error',
         });
-        setTimeout(() => {
-          swal.close();
-          this.router.navigate(['carrito']);
-        }, 2500);
       }
-    });
+    })
+
+
   }
 
   async getIdentificationTypes() {

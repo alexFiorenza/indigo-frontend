@@ -10,7 +10,8 @@ export interface User {
     phone: number;
     street: string;
     numberStreet: number;
-    building: string;
+    floor?: string;
+    department?: string;
     date?: string;
     favorites: Array<Order>;
     docNumber?: number;

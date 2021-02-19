@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { CheckoutGuard } from '../core/guards/checkout.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { HomeComponent } from './home/home.component';
-import { CartSelectShippingComponent } from './cart/cart-select-shipping/cart-select-shipping.component';
 
 const routes: Routes = [
   {

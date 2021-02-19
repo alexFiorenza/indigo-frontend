@@ -20,14 +20,17 @@ export interface Order {
     user?: User;
     delayTime?: string;
     trackingId?: string;
-    paymentMethod: PaymentMethod;
+    paymentData: PaymentData;
     createdAt: string;
     branch_office: BranchOffice;
     costToSend?: number;
 }
-interface PaymentMethod {
+interface PaymentData {
     payment_method: string;
     payment_type: string;
+    payment_id: number;
+    payment_card: Paymentcard;
+    payment_installments: number;
 }
 
 
@@ -37,4 +40,23 @@ interface BranchOffice {
     calle: string;
     cp: number;
 }
+interface Paymentcard {
+    id?: any;
+    first_six_digits: string;
+    last_four_digits: string;
+    expiration_month: number;
+    expiration_year: number;
+    date_created: string;
+    date_last_updated: string;
+    cardholder: Cardholder;
+}
 
+interface Cardholder {
+    name: string;
+    identification: Identification;
+}
+
+interface Identification {
+    number: string;
+    type: string;
+}

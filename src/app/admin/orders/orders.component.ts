@@ -12,12 +12,13 @@ import { ShippingService } from '../../core/services/http/andreani/shipping.serv
 export class OrdersComponent implements OnInit {
   pendingOrders: Order[] = [];
   history: Order[] = [];
-  states = ['Completado', 'En camino', , 'Pausado', 'Activo']
+  states = ['Completado', 'En camino', , 'Pausado']
   uploadsUrl = environment.uploadsUrl;
   ordersUnread: Order[] = [];
   creditCardThumbnail: string;
   showInfoProduct = false;
   currentOrder: Order;
+  seeMoreInfoPaymentData = false;
   loadingOrderAndreani = false;
   constructor(private ordersService: OrdersService,
     private andreaniService: ShippingService, private confirmationService: ConfirmationService) { }
@@ -35,59 +36,81 @@ export class OrdersComponent implements OnInit {
   updateOrderStatus(order: Order, status: string) {
     if (status === 'Activo') {
       this.confirmationService.confirm({
-        message: 'Al momento de aceptar el pedido, se creara la orden automaticamente',
+        message: 'Al momento de aceptar el pedido, se creara la orden y no podras cancelarla',
         header: "Confirmación",
         acceptLabel: 'Si',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          //Actual logic to perform a confirmation
-          this.loadingOrderAndreani = true;
-          //TODO Create order
-          const origin = {
-            postal: {
-              codigoPostal: order.branch_office.cp.toString(),
-              calle: order.branch_office.calle,
-              numero: order.branch_office.numero,
-              localidad: order.branch_office.localidad,
-              pais: "Argentina"
+          if (order.deliveryMethod === 'andreani') {
+            //Actual logic to perform a confirmation
+            this.loadingOrderAndreani = true;
+            const origin = {
+              postal: {
+                codigoPostal: order.branch_office.cp.toString(),
+                calle: order.branch_office.calle,
+                numero: order.branch_office.numero,
+                localidad: order.branch_office.localidad,
+                pais: "Argentina"
+              }
             }
-          }
-          //TODO Integrate flat destination
-          const destination = {
-            postal: {
-              codigoPostal: order.user.cp.toString(),
-              calle: order.user.street,
-              numero: order.user.numberStreet,
-              localidad: order.user.town,
-              pais: "Argentina"
+            //TODO Integrate flat destination
+            const destination = {
+              postal: {
+                codigoPostal: order.user.cp.toString(),
+                calle: order.user.street,
+                numero: order.user.numberStreet,
+                localidad: order.user.town,
+                pais: "Argentina"
+              }
             }
-          }
-          const receiver = [{
-            nombreCompleto: order.user.name,
-            email: order.user.email,
-            documentoTipo: order.user.docType,
-            documentoNumero: order.user.docNumber.toString(),
-            // telefonos: [
-            //   {
-            //     tipo: 1,
-            //     numero: order.user.phone.toString()
-            //   }
-            // ]
-          }]
-          var packages = [];
-          for (const product of order.products) {
-            let tmpProduct = {
-              kilos: product.packageWeight.weight,
-              largoCm: product.packageWeight.length,
-              anchoCm: product.packageWeight.width,
-              altoCm: product.packageWeight.height,
-              volumenCm: product.packageWeight.volume
+            const receiver = [{
+              nombreCompleto: order.user.name,
+              email: order.user.email,
+              documentoTipo: order.user.docType,
+              documentoNumero: order.user.docNumber.toString(),
+              telefonos: [
+                {
+                  tipo: 1,
+                  numero: order.user.phone.toString()
+                }
+              ]
+            }]
+            if (order.user.department) {
+              Object.assign(destination.postal, {
+                componentesDeDireccion: [{
+                  meta: "piso",
+                  contenido: order.user.floor
+                },
+                {
+                  meta: "departamento",
+                  contenido: order.user.department
+                }]
+              })
             }
-            packages.push(tmpProduct);
+            var packages = [];
+            for (const product of order.products) {
+              let tmpProduct = {
+                kilos: product.packageWeight.weight,
+                largoCm: product.packageWeight.length,
+                anchoCm: product.packageWeight.width,
+                altoCm: product.packageWeight.height,
+                volumenCm: product.packageWeight.volume
+              }
+              packages.push(tmpProduct);
+            }
+            this.andreaniService.createOrder(origin, destination, receiver, packages).subscribe((res) => {
+              console.log(res);
+            })
+          } else {
+            this.ordersService.updateOrder(order._id, status).subscribe((res: any) => {
+              if (res.status) {
+                window.location.reload();
+              } else {
+                console.error('An error has occured')
+              }
+            })
           }
-          this.andreaniService.createOrder(origin, destination, receiver, packages).subscribe((res) => {
-            console.log(res);
-          })
+
         },
         reject: () => {
 
@@ -107,7 +130,7 @@ export class OrdersComponent implements OnInit {
   }
   seeMoreInfoProduct(order: Order) {
     this.currentOrder = order;
-    switch (this.currentOrder.paymentMethod.payment_method) {
+    switch (this.currentOrder.paymentData.payment_method) {
       case 'master':
         this.creditCardThumbnail = '../../../../assets/mastercard.svg';
         break;

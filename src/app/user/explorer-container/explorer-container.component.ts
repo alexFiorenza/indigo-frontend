@@ -1,6 +1,6 @@
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { Component, OnInit, AfterViewInit, Inject, Renderer2, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, Renderer2, AfterContentInit, OnDestroy } from '@angular/core';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Component({
@@ -8,7 +8,7 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
   templateUrl: './explorer-container.component.html',
   styleUrls: ['./explorer-container.component.scss']
 })
-export class ExplorerContainerComponent implements OnInit, AfterContentInit {
+export class ExplorerContainerComponent implements OnInit, AfterContentInit, OnDestroy {
 
   constructor(@Inject(DOCUMENT) private document, private r: Renderer2, private router: ActivatedRoute) { }
   ngAfterContentInit() {
@@ -16,6 +16,9 @@ export class ExplorerContainerComponent implements OnInit, AfterContentInit {
   }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'background-color', '#F3F3F3');
+  }
+  ngOnDestroy() {
+    this.r.setStyle(document.body, 'background-color', 'white');
   }
   addClass(elem) {
     // tslint:disable-next-line: prefer-for-of

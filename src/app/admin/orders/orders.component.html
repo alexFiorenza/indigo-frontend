@@ -37,12 +37,6 @@
           product.name
         }}</span>
         <span
-          class="text-indigoBlack-400 text-sm"
-          *ngIf="currentOrder.deliveryMethod !== 'andreani'"
-        >
-          Retira en sucursal - nombre de sucursal
-        </span>
-        <span
           class="text-indigoBlack-400 mb-2 text-sm"
           *ngIf="currentOrder.deliveryMethod === 'andreani'"
         >
@@ -80,19 +74,62 @@
         currentOrder.user.name
       }}</span>
     </div>
-    <div class="flex font-Josefin items-center my-2">
-      <ion-icon name="card" class="mx-2 text-2xl"></ion-icon>
-      <span class="text-indigoBlack-800">Medio de pago: </span>
-      <!-- <div class="w-12 mx-2 flip-in-ver-left" *ngIf="this.creditCardThumbnail">
-        <img [src]="this.creditCardThumbnail" alt="" class="object-cover" />
-      </div> -->
-      <!--TODO Store installments in db-->
+    <div class="w-full flex font-Josefin justify-between items-center my-2">
+      <div class="flex items-center">
+        <ion-icon name="card" class="mx-2 text-2xl"></ion-icon>
+        <span class="text-indigoBlack-800">Medio de pago: </span>
+
+        <!--TODO Store installments in db-->
+        <span
+          *ngIf="currentOrder.paymentData.payment_type === 'credit_card'"
+          class="mx-2 text-indigoBlack-400"
+        >
+          Tarjeta de crédito
+        </span>
+      </div>
       <span
-        *ngIf="currentOrder.paymentMethod.payment_type === 'credit_card'"
-        class="mx-2 text-indigoBlack-400"
+        (click)="seeMoreInfoPaymentData = !seeMoreInfoPaymentData"
+        *ngIf="!seeMoreInfoPaymentData"
+        class="text-indigoPink-700 underline cursor-pointer"
+        >Ver más</span
       >
-        Tarjeta de crédito
-      </span>
+      <span
+        (click)="seeMoreInfoPaymentData = !seeMoreInfoPaymentData"
+        *ngIf="seeMoreInfoPaymentData"
+        class="text-indigoPink-700 underline cursor-pointer"
+        >Ver menos</span
+      >
+    </div>
+    <div #seeMorePaymentData *ngIf="seeMoreInfoPaymentData" class="mx-8 w-full">
+      <div class="my-2">
+        <span class="text-indigoBlack-00 mr-2">Dueño: </span>
+        <span class="text-indigoBlack-400">
+          {{ currentOrder.paymentData.payment_card.cardholder.name }}</span
+        >
+      </div>
+      <div class="my-2">
+        <span class="text-indigoBlack-700 mr-2">Vencimiento: </span>
+        <span class="text-indigoBlack-400"
+          >{{ currentOrder.paymentData.payment_card.expiration_month }}/{{
+            currentOrder.paymentData.payment_card.expiration_year
+          }}</span
+        >
+      </div>
+      <div class="my-2">
+        <span class="text-indigoBlack-700 mr-2">Cantidad de cuotas: </span>
+        <span class="text-indigoBlack-400">
+          {{ currentOrder.paymentData.payment_installments }} cuotas</span
+        >
+      </div>
+      <div class="flex my-2 items-center">
+        <span class="text-indigoBlack-00 mr-2">Tipo de tarjeta: </span>
+        <div class="w-12 mx-2" *ngIf="this.creditCardThumbnail">
+          <img [src]="this.creditCardThumbnail" alt="" class="object-cover" />
+        </div>
+        <span class="text-indigoBlack-400">
+          {{ currentOrder.paymentData.payment_method }}</span
+        >
+      </div>
     </div>
     <div class="flex items-center my-2">
       <ion-icon class="mx-2 text-2xl" name="time"></ion-icon>
@@ -228,9 +265,9 @@
           }}</span>
           <span
             class="text-indigoBlack-400"
-            *ngIf="order.deliveryMethod !== 'andreani' && currentOrder"
+            *ngIf="order.deliveryMethod !== 'andreani'"
           >
-            Retira en sucursal - {{ currentOrder.branch_office.localidad }}
+            Retira en sucursal - {{ order.branch_office.localidad }}
           </span>
           <span
             class="text-indigoBlack-400 mb-2"
@@ -263,17 +300,25 @@
       >
         <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
           <div class="flex flex-col">
+            <ng-container *ngFor="let state of states">
+              <span
+                *ngIf="order.status !== 'Pendiente'"
+                [ngClass]="{
+                  'text-yellow-400': state === 'Pausado',
+                  'text-green-500': state === 'Completado',
+                  'text-indigoComplementary-300': state === 'En camino'
+                }"
+                class="font-Josefin mb-2 cursor-pointer"
+                (click)="updateOrderStatus(order, state)"
+              >
+                {{ state }}
+              </span>
+            </ng-container>
             <span
-              [ngClass]="{
-                'text-yellow-400': state === 'Pausado',
-                'text-green-500': state === 'Completado',
-                'text-indigoComplementary-300': state === 'En camino'
-              }"
-              class="font-Josefin mb-2 cursor-pointer"
-              (click)="updateOrderStatus(order, state)"
-              *ngFor="let state of states"
+              *ngIf="order.status === 'Pendiente'"
+              class="font-Josefin cursor-pointer"
             >
-              {{ state }}
+              Activo
             </span>
           </div>
         </p-overlayPanel>
