@@ -24,6 +24,7 @@ export interface Order {
     createdAt: string;
     branch_office: BranchOffice;
     costToSend?: number;
+    trackingDeliveryData?: Array<TrackingDeliveryData>;
 }
 interface PaymentData {
     payment_method: string;
@@ -59,4 +60,16 @@ interface Cardholder {
 interface Identification {
     number: string;
     type: string;
+}
+
+interface TrackingDeliveryData {
+    numeroDeBulto: string;
+    numeroDeEnvio: string;
+    totalizador: string;
+    linking: Linking[];
+}
+
+interface Linking {
+    meta: string;
+    contenido: string;
 }

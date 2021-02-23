@@ -171,6 +171,27 @@
       </span>
     </div>
   </div>
+  <div
+    *ngIf="currentOrder.deliveryMethod === 'andreani'"
+    class="w-11/12 shadow-md rounded-3xl px-8 py-6 flex flex-col items-start font-Josefin mb-3"
+  >
+    <!--trackingDeliveryData-->
+    <span class="text-indigoBlack-700">Datos de envio de andreani</span>
+    <div
+      *ngFor="let deliveryData of currentOrder.trackingDeliveryData"
+      class="flex"
+    >
+      <span class="text-indigoBlack-700"
+        >#{{ deliveryData.numeroDeBulto }} Numero de envio:</span
+      >
+      <span
+        (click)="getCurrentOrderState(deliveryData.numeroDeEnvio)"
+        class="mx-2 text-indigoBlack-400 underline cursor-pointer"
+      >
+        {{ deliveryData.numeroDeEnvio }}</span
+      >
+    </div>
+  </div>
 </p-dialog>
 <div class="flex flex-col items-start">
   <div class="flex font-Josefin text-3xl items-center justify-start my-10">
@@ -315,6 +336,7 @@
               </span>
             </ng-container>
             <span
+              (click)="updateOrderStatus(order, 'Activo')"
               *ngIf="order.status === 'Pendiente'"
               class="font-Josefin cursor-pointer"
             >

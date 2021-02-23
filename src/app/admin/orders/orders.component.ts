@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from '../../shared/utilities/interfaces/order';
 import { OrdersService } from '../../core/services/http/api/orders/orders.service';
 import { ShippingService } from '../../core/services/http/andreani/shipping.service';
+import swal from 'sweetalert2'
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -98,8 +99,27 @@ export class OrdersComponent implements OnInit {
               }
               packages.push(tmpProduct);
             }
-            this.andreaniService.createOrder(origin, destination, receiver, packages).subscribe((res) => {
+            this.andreaniService.createOrder(origin, destination, receiver, packages).subscribe((res: any) => {
               console.log(res);
+              if (res.status) {
+                let trackingDeliveryData = [];
+                res.response.bultos.forEach(element => {
+                  trackingDeliveryData.push(element);
+                });
+                this.ordersService.updateOrder(order._id, { trackingDeliveryData, status: 'Activo' }).subscribe((response: any) => {
+                  if (response.status) {
+                    swal.fire({
+                      title: 'Confirmado',
+                      text: 'La orden a andreani se ha generado correctamente',
+                      icon: 'success',
+                    }).then((res) => {
+                      if (res.isDismissed || res.isConfirmed) {
+                        window.location.reload();
+                      }
+                    })
+                  }
+                })
+              }
             })
           } else {
             this.ordersService.updateOrder(order._id, status).subscribe((res: any) => {
@@ -110,7 +130,6 @@ export class OrdersComponent implements OnInit {
               }
             })
           }
-
         },
         reject: () => {
 
@@ -142,6 +161,11 @@ export class OrdersComponent implements OnInit {
         break;
     }
     this.showInfoProduct = !this.showInfoProduct;
+  }
+  getCurrentOrderState(id: string) {
+    this.andreaniService.getCurrenOrderState(id).subscribe((res: any) => {
+      console.log(res);
+    })
   }
 }
 

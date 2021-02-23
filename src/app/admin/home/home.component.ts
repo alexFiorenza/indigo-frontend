@@ -383,7 +383,6 @@ export class HomeComponent implements OnInit {
         })
       }
     })
-
   }
   saveChangesSlide() {
     const body = this.editSlideForm.value;

@@ -52,4 +52,7 @@ export class ShippingService {
       })
     })
   }
+  getCurrenOrderState(id) {
+    return this.http.get(`${environment.apiUrl}/andreani/orderState/${id}`,)
+  }
 }

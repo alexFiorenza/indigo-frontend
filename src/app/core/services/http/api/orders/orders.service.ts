@@ -32,11 +32,11 @@ export class OrdersService {
       return this.http.get(`${this.apiUrl}/orders/`, { headers })
     }
   }
-  updateOrder(id: string, status: string) {
+  updateOrder(id: string, body) {
     const headers = this.userService.setHeaders();
-    return this.http.put(`${this.apiUrl}/orders/update/${id}`, {
-      status
-    }, { headers })
+    return this.http.put(`${this.apiUrl}/orders/update/${id}`,
+      body
+      , { headers })
   }
 
 }
