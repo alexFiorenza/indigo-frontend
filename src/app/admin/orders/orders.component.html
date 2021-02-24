@@ -1,5 +1,5 @@
 <p-confirmDialog
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '70vw' }"
   [baseZIndex]="10000"
   rejectButtonStyleClass="p-button-danger"
   acceptButtonStyleClass="p-button-success"
@@ -7,7 +7,6 @@
 <!-- <p-blockUI [baseZIndex]="200" [blocked]="true">
   <span> loading </span>
 </p-blockUI> -->
-
 <p-dialog
   [header]="'Orden numero: #' + currentOrder.trackingId"
   [draggable]="false"
@@ -17,8 +16,7 @@
   [maximizable]="true"
   *ngIf="currentOrder"
   [style]="{
-    width: '50vw',
-    'border-radius': '100px'
+    width: '70vw'
   }"
   contentStyleClass="flex-col"
 >
@@ -190,6 +188,7 @@
       >
         {{ deliveryData.numeroDeEnvio }}</span
       >
+      <a href="" *ngIf="pdfFile">download</a>
     </div>
   </div>
 </p-dialog>

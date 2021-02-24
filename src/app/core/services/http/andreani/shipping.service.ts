@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { environment } from './../../../../../environments/environment';
 import { UserService } from './../api/user/user.service';
 import { AuthService } from './auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -51,6 +51,9 @@ export class ShippingService {
         })
       })
     })
+  }
+  getPdfOrderState(id: string) {
+    return this.http.get(`${environment.apiUrl}/andreani/orderPdfState/${id}`)
   }
   getCurrenOrderState(id) {
     return this.http.get(`${environment.apiUrl}/andreani/orderState/${id}`,)

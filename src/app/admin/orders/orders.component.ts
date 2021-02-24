@@ -5,6 +5,7 @@ import { Order } from '../../shared/utilities/interfaces/order';
 import { OrdersService } from '../../core/services/http/api/orders/orders.service';
 import { ShippingService } from '../../core/services/http/andreani/shipping.service';
 import swal from 'sweetalert2'
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -20,7 +21,9 @@ export class OrdersComponent implements OnInit {
   showInfoProduct = false;
   currentOrder: Order;
   seeMoreInfoPaymentData = false;
+  pdfFile;
   loadingOrderAndreani = false;
+  showAndreaniOrderState = false;
   constructor(private ordersService: OrdersService,
     private andreaniService: ShippingService, private confirmationService: ConfirmationService) { }
   ngOnInit(): void {
@@ -100,7 +103,7 @@ export class OrdersComponent implements OnInit {
               packages.push(tmpProduct);
             }
             this.andreaniService.createOrder(origin, destination, receiver, packages).subscribe((res: any) => {
-              console.log(res);
+
               if (res.status) {
                 let trackingDeliveryData = [];
                 res.response.bultos.forEach(element => {
@@ -163,8 +166,13 @@ export class OrdersComponent implements OnInit {
     this.showInfoProduct = !this.showInfoProduct;
   }
   getCurrentOrderState(id: string) {
-    this.andreaniService.getCurrenOrderState(id).subscribe((res: any) => {
-      console.log(res);
+    this.andreaniService.getPdfOrderState(id).subscribe((value: any) => {
+      if (value.status) {
+        let link = document.createElement('a');
+        link.href = `${environment.uploadsUrl}/${id}.pdf`;
+        link.target = '__blank';
+        link.click();
+      }
     })
   }
 }
