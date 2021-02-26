@@ -34,9 +34,7 @@ export class OrdersService {
   }
   updateOrder(id: string, body) {
     const headers = this.userService.setHeaders();
-    return this.http.put(`${this.apiUrl}/orders/update/${id}`,
-      body
-      , { headers })
+    return this.http.post(`${this.apiUrl}/orders/update/${id}`, body, { headers })
   }
 
 }

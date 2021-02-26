@@ -6,6 +6,7 @@ import { OrdersService } from '../../core/services/http/api/orders/orders.servic
 import { ShippingService } from '../../core/services/http/andreani/shipping.service';
 import swal from 'sweetalert2'
 import { HttpErrorResponse } from '@angular/common/http';
+import { EmailApiService } from '../../core/services/http/api/email/email-api.service';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -25,7 +26,7 @@ export class OrdersComponent implements OnInit {
   loadingOrderAndreani = false;
   showAndreaniOrderState = false;
   constructor(private ordersService: OrdersService,
-    private andreaniService: ShippingService, private confirmationService: ConfirmationService) { }
+    private andreaniService: ShippingService, private confirmationService: ConfirmationService, private emailService: EmailApiService) { }
   ngOnInit(): void {
     this.ordersService.getOrders().subscribe((res: any) => {
       //TODO Create order when status is active
@@ -38,6 +39,7 @@ export class OrdersComponent implements OnInit {
     })
   }
   updateOrderStatus(order: Order, status: string) {
+
     if (status === 'Activo') {
       this.confirmationService.confirm({
         message: 'Al momento de aceptar el pedido, se creara la orden y no podras cancelarla',
@@ -103,24 +105,27 @@ export class OrdersComponent implements OnInit {
               packages.push(tmpProduct);
             }
             this.andreaniService.createOrder(origin, destination, receiver, packages).subscribe((res: any) => {
-
               if (res.status) {
                 let trackingDeliveryData = [];
                 res.response.bultos.forEach(element => {
                   trackingDeliveryData.push(element);
                 });
                 this.ordersService.updateOrder(order._id, { trackingDeliveryData, status: 'Activo' }).subscribe((response: any) => {
-                  if (response.status) {
-                    swal.fire({
-                      title: 'Confirmado',
-                      text: 'La orden a andreani se ha generado correctamente',
-                      icon: 'success',
-                    }).then((res) => {
-                      if (res.isDismissed || res.isConfirmed) {
-                        window.location.reload();
+                  this.emailService.updateOrderStatus(response.response.documentUpdated).subscribe((emailResponse: any) => {
+                    if (emailResponse.status) {
+                      if (response.status) {
+                        swal.fire({
+                          title: 'Confirmado',
+                          text: 'La orden a andreani se ha generado correctamente',
+                          icon: 'success',
+                        }).then((res) => {
+                          if (res.isDismissed || res.isConfirmed) {
+                            window.location.reload();
+                          }
+                        })
                       }
-                    })
-                  }
+                    }
+                  })
                 })
               }
             })
@@ -140,9 +145,13 @@ export class OrdersComponent implements OnInit {
       });
 
     } else {
-      this.ordersService.updateOrder(order._id, status).subscribe((res: any) => {
+      this.ordersService.updateOrder(order._id, { status }).subscribe((res: any) => {
         if (res.status) {
-          window.location.reload();
+          this.emailService.updateOrderStatus(res.response.documentUpdated).subscribe((response: any) => {
+            if (response.status) {
+              window.location.reload();
+            }
+          })
         } else {
           console.error('An error has occured')
         }

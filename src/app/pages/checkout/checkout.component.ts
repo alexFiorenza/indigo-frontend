@@ -9,6 +9,7 @@ import { Component, OnInit, Renderer2, Input, Inject, ElementRef, AfterViewInit,
 import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { EmailApiService } from '../../core/services/http/api/email/email-api.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -35,7 +36,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
   private mpScript = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js';
   constructor(private r: Renderer2, @Inject(DOCUMENT) public document,
-    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService, private cartService: CartService) {
+    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService, private cartService: CartService, private emailService: EmailApiService) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.form = this.formBuilder.group({
       creditCardNumber: ['', Validators.required],
@@ -249,21 +250,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
                     text: 'Los datos introducidos no son correctos',
                     icon: 'error',
                   });
-                  this.loadingPayment = !this.loadingPayment
+                  this.loadingPayment = false;
                 }
                 return throwError(e);
               }),
             ).subscribe(resp => {
               if (resp.status) {
-                swal.fire({
-                  title: 'Confirmado',
-                  text: 'El pago se ha procesado correctamente',
-                  icon: 'success',
-                }).then((res) => {
-                  if (res.isDismissed || res.isConfirmed) {
-                    this.router.navigate(['/panel/pedidos']);
-                  }
-                })
+                if (resp.response.order) {
+                  this.emailService.sendTransactionAcceptedEmail(resp.response.order).subscribe((res: any) => {
+                    this.loadingPayment = false;
+                    if (res.status) {
+                      swal.fire({
+                        title: 'Confirmado',
+                        text: 'El pago se ha procesado correctamente',
+                        icon: 'success',
+                      }).then((res) => {
+                        if (res.isDismissed || res.isConfirmed) {
+                          this.router.navigate(['/panel/pedidos']);
+                        }
+                      })
+                    }
+                  })
+                }
               } else {
                 swal.fire({
                   title: '¡Ha ocurrido un error!',
