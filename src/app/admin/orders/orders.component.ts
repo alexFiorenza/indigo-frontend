@@ -130,9 +130,13 @@ export class OrdersComponent implements OnInit {
               }
             })
           } else {
-            this.ordersService.updateOrder(order._id, status).subscribe((res: any) => {
+            this.ordersService.updateOrder(order._id, { status }).subscribe((res: any) => {
               if (res.status) {
-                window.location.reload();
+                this.emailService.updateOrderStatus(res.response.documentUpdated).subscribe((response: any) => {
+                  if (response.status) {
+                    window.location.reload();
+                  }
+                })
               } else {
                 console.error('An error has occured')
               }
@@ -143,7 +147,6 @@ export class OrdersComponent implements OnInit {
 
         }
       });
-
     } else {
       this.ordersService.updateOrder(order._id, { status }).subscribe((res: any) => {
         if (res.status) {
@@ -157,7 +160,6 @@ export class OrdersComponent implements OnInit {
         }
       })
     }
-    //sweet alert
   }
   seeMoreInfoProduct(order: Order) {
     this.currentOrder = order;

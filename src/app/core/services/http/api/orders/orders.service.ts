@@ -36,5 +36,4 @@ export class OrdersService {
     const headers = this.userService.setHeaders();
     return this.http.post(`${this.apiUrl}/orders/update/${id}`, body, { headers })
   }
-
 }
