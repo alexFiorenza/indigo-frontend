@@ -57,7 +57,7 @@
               userLogedIn.name
             }}</span>
             <small class="font-Josefin text-sm text-indigoBlack-200 -mt-2"
-              >1 mes con nosotros</small
+              >Creado en: {{ this.userLogedIn.createdAt | date }}</small
             >
           </div>
         </div>
@@ -92,7 +92,11 @@
             >Productos</span
           >
         </div>
-        <div class="mt-8 flex items-center" routerLinkActive="active">
+        <div
+          *ngIf="this.userLogedIn"
+          class="mt-8 flex items-center"
+          routerLinkActive="active"
+        >
           <ion-icon name="heart-outline" class="text-3xl"></ion-icon>
           <span
             routerLink="/panel/favoritos"
@@ -100,9 +104,10 @@
             >Favoritos</span
           >
         </div>
-        <div class="mt-8 flex items-center">
+        <div class="mt-8 flex items-center" routerLinkActive="active">
           <ion-icon name="call-outline" class="text-3xl"></ion-icon>
           <span
+            routerLink="/contacto"
             class="text-xl ml-4 font-light focus:outline-none cursor-pointer"
             >Contacto</span
           >

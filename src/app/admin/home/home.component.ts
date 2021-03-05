@@ -260,7 +260,6 @@ export class HomeComponent implements OnInit {
     this.slidesService.getAllSlides().subscribe((response: any) => {
       this.slides = response.response;
     })
-    //TODO Create custom currency pipe 
     this.productService.getHomeViewProducts().subscribe((res: any) => {
       this.products = res.response;
     })
@@ -272,7 +271,6 @@ export class HomeComponent implements OnInit {
     if (!this.selectedDate) {
       return;
     } else {
-      console.log(this.selectedDate.code)
       this.analyticsService.getCardsData(this.selectedDate.code).subscribe((res: any) => {
         this.cards = [{
           "data": res.response.users.count,
@@ -298,8 +296,6 @@ export class HomeComponent implements OnInit {
   addSlide() {
     const body = this.createSlideForm.value;
     // delete body.selectedRoute;
-    console.log(body);
-    console.log(this.custom_route_create);
     if (body.selectedRoute.code === 'custom_route') {
       Object.assign(body, {
         btnDirection:
@@ -346,7 +342,6 @@ export class HomeComponent implements OnInit {
   }
   editSlide(slide) {
     this.selectedSlide = slide;
-    console.log(this.selectedSlide.btnDirection.url)
     this.editSlideForm = this.formBuilder.group({
       title: [this.selectedSlide.title, [Validators.required]],
       description: [this.selectedSlide.description, [Validators.required]],
@@ -446,7 +441,6 @@ export class HomeComponent implements OnInit {
     }
     const uploadedFile = file.currentFiles[0];
     this.selectedFile = uploadedFile;
-    console.log(this.selectedFile);
   }
   reloadView() {
     window.location.reload();

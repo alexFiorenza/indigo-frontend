@@ -76,8 +76,6 @@
       <div class="flex items-center">
         <ion-icon name="card" class="mx-2 text-2xl"></ion-icon>
         <span class="text-indigoBlack-800">Medio de pago: </span>
-
-        <!--TODO Store installments in db-->
         <span
           *ngIf="currentOrder.paymentData.payment_type === 'credit_card'"
           class="mx-2 text-indigoBlack-400"
@@ -365,7 +363,16 @@
       <h3 class="text-2xl text-indigoBlack-800">Historial de pedidos</h3>
     </div>
 
-    <div class="flex flex-col w-full mt-4">
+    <div class="flex flex-col w-full mt-4 mb-8">
+      <div
+        *ngIf="history.length <= 0"
+        class="w-full flex flex-col items-center justify-center"
+      >
+        <img class="w-48" src="../../../assets/analytics.svg" alt="" />
+        <span class="text-lg mt-3 text-indigoBlack-400"
+          >¡El historial de pedido se encuentra vacio!</span
+        >
+      </div>
       <div
         *ngFor="let order of history"
         class="w-11/12 border border-indigoBlack-200 mb-6 font-Josefin py-4 px-6 rounded-3xl"

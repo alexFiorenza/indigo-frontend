@@ -4,12 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order } from '../../../../../shared/utilities/interfaces/order';
-
+import { JwtHelperService } from "@auth0/angular-jwt";
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http: HttpClient) { }
   addToFavorites(product: Partial<Order>) {
     const headers = this.setHeaders();
@@ -34,6 +33,7 @@ export class UserService {
   setHeaders() {
     const token = this.loadToken();
     if (token) {
+      this.refreshToken(token)
       const headers = new HttpHeaders().set('Authorization', token);
       return headers;
     } else {
@@ -59,5 +59,13 @@ export class UserService {
   }
   registerUser(userData: User) {
     return this.http.post(`${environment.apiUrl}/user/register`, userData);
+  }
+  refreshToken(token: string) {
+    const payload = this.loadPayload();
+    const helper = new JwtHelperService();
+    if (!helper.isTokenExpired(token)) {
+
+      // this.saveUserSession(res.response.payload, res.response.token);
+    }
   }
 }

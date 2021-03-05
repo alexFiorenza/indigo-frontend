@@ -11,7 +11,6 @@ export class EmailApiService {
   sendTransactionAcceptedEmail(order: Order) {
     return this.http.post(`${environment.apiUrl}/email/transaction-accepted`, { order })
   }
-  //TODO update client with status of order
   updateOrderStatus(order: Order) {
     return this.http.post(`${environment.apiUrl}/email/update-order-status`, { order })
   }

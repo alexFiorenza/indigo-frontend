@@ -3,6 +3,10 @@ import { UserService } from './../../core/services/http/api/user/user.service';
 import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import swal from 'sweetalert2'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,9 +32,26 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const dataToSend = this.form.value;
     const componentRef = this.loaders.instantiateBtnLoader(this.loader, this.textBtn, this.status);
-    this.userService.logIn(dataToSend).subscribe(data => {
-      this.userService.saveUserSession(data.response.payload, data.response.token);
+    this.userService.logIn(dataToSend).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (!err.error.status) {
+          // handle error
+          swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Al parecer la contraseña o email son incorrectos',
+            footer: '<a href>Reintenta con otra contraseña o email</a>'
+          }).then((dismiss) => {
+            if (dismiss.isDismissed || dismiss.isConfirmed) {
+              window.location.reload();
+            }
+          })
+        }
+        return throwError(err);
+      })
+    ).subscribe(data => {
       if (data.status) {
+        this.userService.saveUserSession(data.response.payload, data.response.token);
         this.status = 'completed';
         componentRef.instance.status = this.status;
         setTimeout(() => {
@@ -39,9 +60,8 @@ export class LoginComponent implements OnInit {
       } else {
         this.status = 'error';
         componentRef.instance.status = this.status;
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
-
 }

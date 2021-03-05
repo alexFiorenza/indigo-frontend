@@ -16,4 +16,5 @@ export interface User {
     favorites: Array<Order>;
     docNumber?: number;
     docType?: string
+    createdAt: Date;
 };

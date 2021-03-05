@@ -10,6 +10,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { EmailApiService } from '../../core/services/http/api/email/email-api.service';
+import { UserService } from '../../core/services/http/api/user/user.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -36,7 +37,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
   private mpPublickKey = 'TEST-670fd7e7-cb6d-4220-944e-95c0e38825cd';
   private mpScript = 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js';
   constructor(private r: Renderer2, @Inject(DOCUMENT) public document,
-    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService, private cartService: CartService, private emailService: EmailApiService) {
+    private formBuilder: FormBuilder, private router: Router, private orderService: OrdersService, private cartService: CartService, private emailService: EmailApiService, private userService: UserService) {
     this.r.setStyle(document.body, 'background-color', ' #f3f3f3');
     this.form = this.formBuilder.group({
       creditCardNumber: ['', Validators.required],
@@ -58,6 +59,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
   ngOnInit(): void {
     this.generateScript();
     this.getIdentificationTypes();
+    const token = this.userService.getToken();
+    if (token) {
+      this.userService.refreshToken(token);
+    }
   }
   ngAfterContentInit() {
     lootie.loadAnimation({

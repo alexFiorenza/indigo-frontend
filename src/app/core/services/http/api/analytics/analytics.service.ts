@@ -15,7 +15,6 @@ export class AnalyticsService {
 
   constructor(private http: HttpClient) { }
   getCardsData(date) {
-    //TODO Implement http request 
     return this.http.get(`${environment.apiUrl}/analytics/general-data/${date}`)
   }
 }

@@ -13,8 +13,9 @@ import { Order } from 'src/app/shared/utilities/interfaces/order';
 })
 export class UserOrdersComponent implements OnInit {
   private user: User;
-  public orders: Array<Order>;
+  public orders: Array<Order> = [];
   public uploadsUrl = environment.uploadsUrl;
+  public loading = true;
   public sliderConfig: SwiperOptions = {
     direction: 'vertical',
     slidesPerView: 1,
@@ -28,7 +29,7 @@ export class UserOrdersComponent implements OnInit {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
     this.orderService.getOrdersPerUserId(this.user._id).subscribe((value: any) => {
       this.orders = value.response;
-      console.log(this.orders);
+      this.loading = false;
     });
   }
   openedOrder(orderInfo: HTMLElement, order: Order, orderContainer: HTMLElement, icon: HTMLElement) {

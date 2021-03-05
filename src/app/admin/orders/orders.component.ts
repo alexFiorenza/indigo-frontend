@@ -29,8 +29,6 @@ export class OrdersComponent implements OnInit {
     private andreaniService: ShippingService, private confirmationService: ConfirmationService, private emailService: EmailApiService) { }
   ngOnInit(): void {
     this.ordersService.getOrders().subscribe((res: any) => {
-      //TODO Create order when status is active
-      //? May accept orders or create order in andreani automatically
       this.pendingOrders = res.response.filter((e) => e.status !== 'Completado')
       this.ordersUnread = this.pendingOrders.filter((e) => e.status === 'Pendiente');
       this.ordersService.getOrders(true).subscribe((res: any) => {

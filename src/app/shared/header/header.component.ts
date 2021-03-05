@@ -19,6 +19,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(private userService: UserService, private route: Router, private activatedRoute: ActivatedRoute,
     private cartService: CartService) {
     this.userLogedIn = this.userService.loadPayload();
+    if (this.userLogedIn) {
+      const token = this.userService.getToken();
+      this.userService.refreshToken(token);
+    }
   }
   ngAfterViewInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {

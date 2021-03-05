@@ -4,12 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { HomeComponent } from './home/home.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AdminGuard } from '../core/guards/admin.guard';
 
 
 const routes: Routes = [
   {
     path: 'administrar',
     component: PanelComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: '',

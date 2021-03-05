@@ -121,9 +121,11 @@
         class="lg:w-40 w-10/12 lg:h-40 lg:mb-16 h-72 my-4 z-30 lg:flex lg:flex-col font-Josefin mx-4"
         *ngFor="let skeleton of skeletonLoader"
       >
-        <div class="hidden lg:static lg:h-40 h-72 lg:w-40 w-10/12">
-          <p-skeleton width="100%" height="100%"></p-skeleton>
-        </div>
+        <p-skeleton
+          class="hidden lg:block"
+          width="10rem"
+          height="10rem"
+        ></p-skeleton>
         <div class="lg:hidden lg:h-40 h-72 lg:w-40 w-10/12">
           <p-skeleton
             width="100%"

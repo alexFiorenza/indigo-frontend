@@ -13,9 +13,20 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SaleProductComponent } from './components/sale-product/sale-product.component';
 import { FullPageLoaderComponent } from './components/full-page-loader/full-page-loader.component';
 import { ImgPipe } from './pipes/img.pipe';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [HeaderComponent, SalesPipe, LoaderBtnComponent, ParseCurrencyPipe, ProductModalComponent, SaleProductComponent, FullPageLoaderComponent, ImgPipe],
+  declarations: [
+    HeaderComponent,
+    SalesPipe,
+    LoaderBtnComponent,
+    ParseCurrencyPipe,
+    ProductModalComponent,
+    SaleProductComponent,
+    FullPageLoaderComponent,
+    ImgPipe,
+    FooterComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -34,6 +45,7 @@ import { ImgPipe } from './pipes/img.pipe';
     ProductModalComponent,
     SaleProductComponent,
     FullPageLoaderComponent,
+    FooterComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [CurrencyPipe, SalesPipe, ParseCurrencyPipe]

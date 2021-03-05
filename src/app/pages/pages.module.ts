@@ -14,6 +14,7 @@ import { CartUserDataComponent } from './cart/cart-user-data/cart-user-data.comp
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SalesPipe } from '../shared/pipes/sales.pipe';
+import { ContactModule } from './contact/contact.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SalesPipe } from '../shared/pipes/sales.pipe';
     ReactiveFormsModule,
     FormsModule,
     PrimengModule,
-    SharedModule
+    SharedModule,
+    ContactModule
   ],
   exports: [
     HomeComponent,

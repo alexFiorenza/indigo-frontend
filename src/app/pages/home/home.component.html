@@ -5,7 +5,7 @@
 <!--Home view-->
 <ng-container *ngIf="this.fullyLoaded">
   <app-header></app-header>
-  <swiper [config]="homeConfigSlider" #slider>
+  <swiper *ngIf="Slides.length > 0" [config]="homeConfigSlider" #slider>
     <div class="slideHeight w-full z-30 relative" *ngFor="let slide of Slides">
       <div id="blur" class="w-full h-full bg-white absolute z-30"></div>
       <img
@@ -47,120 +47,124 @@
     </div>
   </swiper>
   <div class="swiper-pagination"></div>
-
-  <div class="mt-16 mb-10 flex justify-center w-full" #selectionTitle>
-    <h2
-      class="font-Josefin uppercase text-2xl lg:text-3xl text-indigoPink-700 font-light"
-    >
-      Nuestra selección
-    </h2>
-  </div>
-  <div class="w-full flex flex-col items-center mb-48" #selectionProducts>
-    <div
-      class="w-5/6 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center"
-    >
-      <div *ngFor="let product of homeViewProducts">
-        <img
-          [routerLink]="'/productos/' + product._id"
-          class="w-full max-w-2xl imagesSelection h-full object-cover cursor-pointer focus:outline-none"
-          [src]="uploadsUrl + '/' + product.images[0].image"
-          alt=""
-        />
-        <div #info class="flex flex-col">
-          <span class="uppercase font-Josefin text-indigoBlack-100">{{
-            product.name
-          }}</span>
-          <div #priceContainer>
-            <app-sale-product [product]="product"></app-sale-product>
+  <ng-container *ngIf="homeViewProducts.length > 0">
+    <div class="mt-16 mb-10 flex justify-center w-full" #selectionTitle>
+      <h2
+        class="font-Josefin uppercase text-2xl lg:text-3xl text-indigoPink-700 font-light"
+      >
+        Nuestra selección
+      </h2>
+    </div>
+    <div class="w-full flex flex-col items-center mb-48" #selectionProducts>
+      <div
+        class="w-5/6 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center"
+      >
+        <div *ngFor="let product of homeViewProducts">
+          <img
+            [routerLink]="'/productos/' + product._id"
+            class="w-full max-w-2xl imagesSelection h-full object-cover cursor-pointer focus:outline-none"
+            [src]="uploadsUrl + '/' + product.images[0].image"
+            alt=""
+          />
+          <div #info class="flex flex-col">
+            <span class="uppercase font-Josefin text-indigoBlack-100">{{
+              product.name
+            }}</span>
+            <div #priceContainer>
+              <app-sale-product [product]="product"></app-sale-product>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="w-full flex justify-center">
-    <h2
-      class="font-Josefin uppercase font-light text-indigoPink-700 text-4xl z-40"
-    >
-      Calzados
-    </h2>
-  </div>
-  <div
-    class="w-full relative h-72 md:h-80 bg-no-repeat bg-cover md:bg-cover"
-    style="background-image: url(../../assets/vector-brush.svg)"
-    #shoes
-  >
+  </ng-container>
+  <ng-container *ngIf="this.products.length > 0">
+    <div class="w-full flex justify-center">
+      <h2
+        class="font-Josefin uppercase font-light text-indigoPink-700 text-4xl z-40"
+      >
+        Calzados
+      </h2>
+    </div>
     <div
-      #containerDesktop
-      class="flex-col w-full h-full justify-center hidden items-center lg:flex"
+      class="w-full relative h-72 md:h-80 bg-no-repeat bg-cover md:bg-cover"
+      style="background-image: url(../../assets/vector-brush.svg)"
+      #shoes
     >
-      <swiper [config]="shoesConfigDesktop" class="my-16 xl:w-3/4 w-full">
-        <div *ngFor="let p of products" [routerLink]="'/productos/' + p._id">
-          <div class="w-48 xl:w-56 changeHeight relative cursor-pointer">
-            <div
-              #info
-              class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
-            >
-              <span class="uppercase text-xl">{{ p.name }}</span>
-              <span class="uppercase font-light">{{
-                p.price | parseCurrency
-              }}</span>
+      <div
+        #containerDesktop
+        class="flex-col w-full h-full justify-center hidden items-center lg:flex"
+      >
+        <swiper [config]="shoesConfigDesktop" class="my-16 xl:w-3/4 w-full">
+          <div *ngFor="let p of products" [routerLink]="'/productos/' + p._id">
+            <div class="w-48 xl:w-56 changeHeight relative cursor-pointer">
+              <div
+                #info
+                class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
+              >
+                <span class="uppercase text-xl">{{ p.name }}</span>
+                <span class="uppercase font-light">{{
+                  p.price | parseCurrency
+                }}</span>
+              </div>
+              <div
+                class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
+              ></div>
+              <img
+                [src]="uploadsUrl + '/' + p.images[0].image"
+                class="w-full h-full object-cover rounded-xl"
+                alt=""
+              />
             </div>
-            <div
-              class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
-            ></div>
-            <img
-              [src]="uploadsUrl + '/' + p.images[0].image"
-              class="w-full h-full object-cover rounded-xl"
-              alt=""
-            />
           </div>
+        </swiper>
+        <div class="w-full flex justify-center">
+          <button
+            class="px-24 bg-indigoComplementary-100 py-6 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
+          >
+            Ver más
+          </button>
         </div>
-      </swiper>
-      <div class="w-full flex justify-center">
+      </div>
+      <div
+        #containerMobile
+        class="flex flex-col w-full h-full justify-center lg:hidden"
+      >
+        <swiper [config]="shoesConfigMobile">
+          <div *ngFor="let p of products" class="flex w-full justify-center">
+            <div class="w-1/2 changeHeight flex relative cursor-pointer">
+              <div
+                #info
+                class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
+              >
+                <span class="uppercase text-xl">{{ p.name }}</span>
+                <span class="uppercase font-light">{{
+                  p.price | parseCurrency
+                }}</span>
+              </div>
+              <div
+                class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
+              ></div>
+              <img
+                [routerLink]="'/productos/' + p._id"
+                [src]="uploadsUrl + '/' + p.images[0].image"
+                class="w-full h-full object-cover rounded-xl"
+                alt=""
+              />
+            </div>
+          </div>
+        </swiper>
+      </div>
+      <div class="w-full flex justify-center lg:hidden">
         <button
-          class="px-24 bg-indigoComplementary-100 py-6 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
+          class="px-24 bg-indigoComplementary-100 py-2 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
         >
           Ver más
         </button>
       </div>
     </div>
-    <div
-      #containerMobile
-      class="flex flex-col w-full h-full justify-center lg:hidden"
-    >
-      <swiper [config]="shoesConfigMobile">
-        <div *ngFor="let p of products" class="flex w-full justify-center">
-          <div class="w-1/2 changeHeight flex relative cursor-pointer">
-            <div
-              #info
-              class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
-            >
-              <span class="uppercase text-xl">{{ p.name }}</span>
-              <span class="uppercase font-light">{{
-                p.price | parseCurrency
-              }}</span>
-            </div>
-            <div
-              class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
-            ></div>
-            <img
-              [routerLink]="'/productos/' + p._id"
-              [src]="uploadsUrl + '/' + p.images[0].image"
-              class="w-full h-full object-cover rounded-xl"
-              alt=""
-            />
-          </div>
-        </div>
-      </swiper>
-    </div>
-    <div class="w-full flex justify-center lg:hidden">
-      <button
-        class="px-24 bg-indigoComplementary-100 py-2 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
-      >
-        Ver más
-      </button>
-    </div>
-  </div>
+  </ng-container>
+
   <div
     #aboutus
     class="my-48 flex flex-col lg:flex-row w-full justify-center items-center"
@@ -234,4 +238,5 @@
       alt=""
     />
   </div>
+  <app-footer></app-footer>
 </ng-container>

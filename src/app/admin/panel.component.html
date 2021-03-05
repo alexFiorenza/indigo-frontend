@@ -1,3 +1,11 @@
+<div
+  class="font-Josefin lg:hidden absolute z-50 w-screen h-screen bg-indigoBlack-200"
+>
+  <div id="notAvailable"></div>
+  <p class="text-indigoBlack-700 w-full text-center">
+    El panel de administrador no esta soportado en este dispositivo
+  </p>
+</div>
 <app-product-modal
   [currentProduct]="currentProduct"
   [alertShouldBeShow]="hasToShowProduct"
@@ -7,7 +15,7 @@
 ></app-product-modal>
 <!--Panel-->
 <div class="w-screen font-Josefin flex">
-  <div class="w-2/6 max-w-xs h-screen">
+  <div class="w-5/12 max-w-xs h-screen">
     <div #navPanel class="h-full flex flex-col fixed">
       <h2 class="text-indigoBlack-400 text-5xl uppercase ml-20 mt-20">
         indigo
@@ -96,7 +104,7 @@
           name="log-out-outline"
           class="text-4xl text-indigoBlack-800 rotateLogOutIcon ml-20"
         ></ion-icon>
-        <span class="font-normal text-indigoBlack-800 mx-8"
+        <span class="font-normal text-indigoBlack-800 ml-4"
           >Volver a la pagina</span
         >
       </div>

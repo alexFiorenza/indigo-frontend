@@ -2,6 +2,7 @@ import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, AfterViewInit, Inject, Renderer2, AfterContentInit, OnDestroy } from '@angular/core';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { UserService } from '../../core/services/http/api/user/user.service';
 
 @Component({
   selector: 'app-explorer-container',
@@ -10,7 +11,7 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 })
 export class ExplorerContainerComponent implements OnInit, AfterContentInit, OnDestroy {
 
-  constructor(@Inject(DOCUMENT) private document, private r: Renderer2, private router: ActivatedRoute) { }
+  constructor(@Inject(DOCUMENT) private document, private r: Renderer2, private router: ActivatedRoute, private userService: UserService) { }
   ngAfterContentInit() {
     this.addClass(document.querySelectorAll('.link'));
   }

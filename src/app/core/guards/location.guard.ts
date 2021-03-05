@@ -6,7 +6,6 @@ import { CanActivate, Router } from '@angular/router';
 })
 export class LocationGuard implements CanActivate {
   constructor(private router: Router) {
-    console.log();
   }
 
   canActivate() {

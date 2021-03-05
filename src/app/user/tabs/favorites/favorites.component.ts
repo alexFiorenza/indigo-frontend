@@ -19,7 +19,6 @@ export class FavoritesComponent implements OnInit {
     this.userService.getFavorites().subscribe((value) => {
       this.loading = false;
       this.favorites = value.response.favorites;
-      console.log(this.favorites);
     });
   }
   chargeLoader() {

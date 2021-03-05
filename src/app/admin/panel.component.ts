@@ -1,18 +1,17 @@
 import { SalesPipe } from './../shared/pipes/sales.pipe';
-import { Component, OnInit, AfterContentInit, Inject, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterContentInit, Inject, Renderer2, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { Product } from '../shared/utilities/interfaces/product';
 import { DOCUMENT } from '@angular/common';
 import { OrdersService } from '../core/services/http/api/orders/orders.service';
-import { Order } from '../shared/utilities/interfaces/order';
-import { OrdersComponent } from './orders/orders.component';
+import lootie from 'lottie-web'
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit, AfterContentInit {
+export class PanelComponent implements OnInit, AfterContentInit, OnDestroy {
   productPrice: number;
   public previousDiv: HTMLElement;
   public actualRoute;
@@ -26,8 +25,21 @@ export class PanelComponent implements OnInit, AfterContentInit {
     private ordersService: OrdersService,
   ) {
   }
+  ngOnDestroy() {
+    this.r.setStyle(document.body, 'overflow-y', 'visible');
+  }
   ngOnInit(): void {
     this.r.setStyle(document.body, 'overflow-x', 'hidden');
+    if (window.screen.width < 1024) {
+      lootie.loadAnimation({
+        container: document.querySelector('#notAvailable'),
+        path: 'https://assets1.lottiefiles.com/temp/lf20_ps4HOJ.json',
+        renderer: 'svg',
+        autoplay: true,
+        loop: true
+      })
+      this.r.setStyle(document.body, 'overflow-y', 'hidden');
+    }
     this.ordersService.getOrders().subscribe((res: any) => {
       const pendingOrders = res.response.filter((e) => e.status !== 'Completado')
       this.ordersUnread = pendingOrders.filter((e) => e.status === 'Pendiente').length;
@@ -65,7 +77,6 @@ export class PanelComponent implements OnInit, AfterContentInit {
       component.emitAlert.subscribe((value) => {
         if (value.showAlert) {
           this.hasToShowProduct = value.showAlert;
-          console.log(this.hasToShowProduct);
           this.currentProduct = value.product;
           this.productPrice = this.currentProduct.price;
           if (this.currentProduct.sale > 0) {

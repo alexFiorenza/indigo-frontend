@@ -56,6 +56,5 @@ export class HomeComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
   }
   ngAfterContentInit() {
-    console.log('loaded');
   }
 }

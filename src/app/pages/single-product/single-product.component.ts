@@ -74,7 +74,6 @@ export class SingleProductComponent implements OnInit {
         }
       });
     }
-    //TODO default selectedColor
   }
 
   addToFavorites() {

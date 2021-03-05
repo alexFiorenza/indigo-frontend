@@ -5,6 +5,19 @@
 </h2>
 <div class="w-full flex items-center flex-col font-Josefin">
   <div
+    *ngIf="this.orders.length <= 0 && !this.loading"
+    class="flex flex-col items-center font-Josefin mt-20"
+  >
+    <img
+      src="../../../../assets/order.svg"
+      alt=""
+      class="w-1/2 setMaxHeightSvg"
+    />
+    <span class="text-indigoPink-700 text-lg text-center my-4"
+      >¡Al parecer no has comprado ningun producto todavia!</span
+    >
+  </div>
+  <div
     class="w-full flex flex-col items-center"
     *ngFor="let order of orders"
     #orderContainer
@@ -84,7 +97,9 @@
             <div class="flex justify-center items-center w-full h-full">
               {{ p.name }}
             </div>
-            <div class="flex justify-center items-center w-full h-full">
+            <div
+              class="flex justify-center text-center items-center w-full h-full"
+            >
               {{ p.description }}
             </div>
             <div class="flex justify-center items-center w-full h-full">
@@ -120,10 +135,6 @@
           <span class="text-indigoBlack-200 capitalize">{{
             order.user.name
           }}</span>
-        </div>
-        <div class="flex justify-between items-center w-full my-2">
-          <span class="text-indigoBlack-400">Demora</span>
-          <span class="text-indigoBlack-200">{{ order.delayTime }}</span>
         </div>
         <div class="flex justify-between items-center w-full my-2">
           <span class="text-indigoBlack-400">Numero de orden</span>

@@ -68,6 +68,10 @@ export class CartComponent implements OnInit, OnDestroy {
     });
     this.calculateCostProduct();
     this.user = this.userService.loadPayload();
+    if (this.user) {
+      const token = this.userService.getToken();
+      this.userService.refreshToken(token);
+    }
   }
   ngOnDestroy() {
     this.r.setStyle(document.body, 'background-color', 'white');
