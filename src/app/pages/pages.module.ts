@@ -15,6 +15,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SalesPipe } from '../shared/pipes/sales.pipe';
 import { ContactModule } from './contact/contact.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ContactModule } from './contact/contact.module';
     CartProductsComponent,
     CartUserDataComponent,
     CheckoutComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,

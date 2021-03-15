@@ -20,34 +20,20 @@
         <span class="text-indigoBlack-100 mt-1">Términos y condiciones</span>
       </div>
     </div>
-    <div class="w-full my-4 cursor-pointer">
-      <div class="lineHeight w-full mb-8"></div>
-      <div
-        class="w-full flex mb-8 items-center justify-start focus:outline-none"
-        routerLink="/contacto/privacidad"
-      >
-        <ion-icon
-          name="eye"
-          class="text-indigoBlack-100 mx-4 text-lg"
-        ></ion-icon>
-        <span class="text-indigoBlack-100 mt-1">Politicas de privacidad</span>
-      </div>
-    </div>
-    <div class="w-full my-4 cursor-pointer">
+    <div class="w-full my-4 cursor-pointer" (click)="logOut()">
       <div class="lineHeight w-full mb-8"></div>
       <div class="w-full flex mb-8 items-center justify-start">
-        <ion-icon
-          name="log-out"
-          class="text-indigoBlack-100 mx-4 text-lg"
-        ></ion-icon>
-        <span class="text-indigoBlack-100 mt-1">Cerrar sesión</span>
+        <ion-icon name="log-out" class="text-blue-400 mx-4 text-lg"></ion-icon>
+        <span class="text-blue-400 mt-1">Cerrar sesión</span>
       </div>
     </div>
     <div class="w-full my-4 cursor-pointer">
       <div class="lineHeight w-full mb-8"></div>
       <div class="w-full flex mb-8 items-center justify-start">
         <ion-icon name="trash" class="text-red-500 mx-4 text-lg"></ion-icon>
-        <span class="text-red-500 mt-1">Eliminar cuenta</span>
+        <span class="text-red-500 mt-1" (click)="deleteUser()"
+          >Eliminar cuenta</span
+        >
       </div>
     </div>
   </div>

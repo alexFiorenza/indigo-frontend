@@ -54,10 +54,6 @@ const routes: Routes = [
         component: TermsConditionsComponent
       },
       {
-        path: 'privacidad',
-        component: PrivacyComponent
-      },
-      {
         path: 'informacion',
         component: InformationComponent
       }

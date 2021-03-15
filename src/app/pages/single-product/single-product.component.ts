@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 import { Order } from './../../shared/utilities/interfaces/order';
 import { CartService } from './../../core/services/cart/cart.service';
@@ -5,10 +7,11 @@ import { SwiperOptions } from 'swiper';
 import { environment } from './../../../environments/environment';
 import { ProductsService } from './../../core/services/http/api/products/products.service';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import { UserService } from '../../core/services/http/api/user/user.service';
 import { User } from '../../shared/utilities/interfaces/user';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-single-product',
@@ -43,11 +46,16 @@ export class SingleProductComponent implements OnInit {
     private cartService: CartService,
     private clipboardService: ClipboardService,
     private userService: UserService,
-    private r: Renderer2
+    private r: Renderer2,
+    private router: Router
   ) {
     this.r.setStyle(document.body, 'background-color', 'white');
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.productService.getSingleProduct(params.id).subscribe((resp: any) => {
+      this.productService.getSingleProduct(params.id).pipe(catchError((err: HttpErrorResponse) => {
+        console.error('Product was not found or unexpected error')
+        this.router.navigate(['/404'])
+        return throwError(err)
+      })).subscribe((resp: any) => {
         this.product = resp.response;
         if (!this.production) {
           this.apiUrl = `${environment.uploadsUrl}/`;

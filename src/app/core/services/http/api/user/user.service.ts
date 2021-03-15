@@ -1,10 +1,11 @@
 import { User } from './../../../../../shared/utilities/interfaces/user';
 import { environment } from './../../../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Order } from '../../../../../shared/utilities/interfaces/order';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -61,11 +62,27 @@ export class UserService {
     return this.http.post(`${environment.apiUrl}/user/register`, userData);
   }
   refreshToken(token: string) {
-    const payload = this.loadPayload();
     const helper = new JwtHelperService();
+    console.log(helper.isTokenExpired(token))
     if (!helper.isTokenExpired(token)) {
-
-      // this.saveUserSession(res.response.payload, res.response.token);
+      const payload = this.loadPayload();
+      this.http.put(`${environment.apiUrl}/user/updateToken`, payload).pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (!err.error.status) {
+            // handle error
+            this.clearSession();
+            window.location.reload();
+          }
+          return throwError(err);
+        })
+      ).subscribe((res: any) => {
+        if (res.response.payload || res.response.token) {
+          this.saveUserSession(res.response.payload, res.response.token);
+        }
+      })
     }
+  }
+  deleteUser(id) {
+    return this.http.delete(`${environment.apiUrl}/user/deleteUser/${id}`)
   }
 }
