@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { ContactComponent } from './contact/contact.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
-import { PrivacyComponent } from './privacy/privacy.component';
 import { InformationComponent } from './information/information.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 
 
 @NgModule({
-  declarations: [ContactComponent, TermsConditionsComponent, PrivacyComponent, InformationComponent],
+  declarations: [ContactComponent, TermsConditionsComponent, InformationComponent, PrivacyComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -19,7 +19,7 @@ import { InformationComponent } from './information/information.component';
   exports: [
     ContactComponent,
     TermsConditionsComponent,
-    PrivacyComponent,
+    PrivacyComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

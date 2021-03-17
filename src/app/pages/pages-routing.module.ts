@@ -8,8 +8,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact/contact.component';
 import { TermsConditionsComponent } from './contact/terms-conditions/terms-conditions.component';
-import { PrivacyComponent } from './contact/privacy/privacy.component';
 import { InformationComponent } from './contact/information/information.component';
+import { PrivacyComponent } from './contact/privacy/privacy.component';
 
 const routes: Routes = [
   {
@@ -56,6 +56,10 @@ const routes: Routes = [
       {
         path: 'informacion',
         component: InformationComponent
+      },
+      {
+        path: 'privacidad',
+        component: PrivacyComponent
       }
     ]
   }
