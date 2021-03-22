@@ -12,7 +12,7 @@
 - 🍬 [Sweetalert 2](https://sweetalert2.github.io/)
 - 🦁 [Primeng](https://www.primefaces.org/primeng/showcase/#/setup)
 
-####API (indigo-backend)
+#### API (indigo-backend)
 The app must be running simultaneously with the [Indigo backend](https://github.com/alexFiorenza/Indigo-API)
 ###Design (Template)
 The general design was made with Adobe XD
