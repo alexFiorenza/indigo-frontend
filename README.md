@@ -2,13 +2,13 @@
 
 ### Dependencies | features
 
--     	  [Lootie web](https://github.com/airbnb/lottie-web)
--     	  [Swiper](https://swiperjs.com/)
--     	  [Tailwindcss](https://tailwindcss.com/)
--     	  [Animatecss](https://animate.style/)
--     	  [Ionic icons](https://ionicons.com/)
--     	  [Ngx clipboard](https://www.npmjs.com/package/ngx-clipboard)
--     	  [Ngx colorpicker](https://www.npmjs.com/package/ngx-color-picker)
+- [Lootie web](https://github.com/airbnb/lottie-web)
+- [Swiper](https://swiperjs.com/)
+- [Tailwindcss](https://tailwindcss.com/)
+- [Animatecss](https://animate.style/)
+- [Ionic icons](https://ionicons.com/)
+- [Ngx clipboard](https://www.npmjs.com/package/ngx-clipboard)
+- [Ngx colorpicker](https://www.npmjs.com/package/ngx-color-picker)
 - 🍬 [Sweetalert 2](https://sweetalert2.github.io/)
 - 🦁 [Primeng](https://www.primefaces.org/primeng/showcase/#/setup)
 
