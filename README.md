@@ -14,7 +14,7 @@
 
 #### API (indigo-backend)
 The app must be running simultaneously with the [Indigo backend](https://github.com/alexFiorenza/Indigo-API)
-###Design (Template)
+### Design (Template)
 The general design was made with Adobe XD
 
 - 📝 [AdobeXD Template](https://xd.adobe.com/view/822b2843-3c43-4558-99f2-418f2fc65eea-d778/grid/)
