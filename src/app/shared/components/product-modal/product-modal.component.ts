@@ -143,7 +143,6 @@ export class ProductModalComponent implements OnInit {
       available: true,
       size: this.sizeToChange.toString()
     })
-    console.log(this.selectedColor);
     this.addedSizes.push({
       available: true,
       size: this.sizeToChange.toString()
@@ -176,7 +175,6 @@ export class ProductModalComponent implements OnInit {
       sizes: []
     });
     this.colorPicker.nativeElement.classList.add('hidden');
-    console.log(this.addedColors);
   }
   editColors(text: string) {
     this.sizes.length > 0 ? this.sizes = [] : false;
@@ -329,6 +327,7 @@ export class ProductModalComponent implements OnInit {
           }
         })
       }
+      this.currentProduct.price = this.productPrice;
       const dataToSend = {
         ...this.currentProduct,
       }
@@ -344,6 +343,7 @@ export class ProductModalComponent implements OnInit {
       if (!this.currentProduct.sale) {
         this.currentProduct.sale = 0;
       }
+
       this.productService.editProduct(dataToSend, this.currentProduct._id, this.imagesToUpload).subscribe((response: any) => {
         if (response.status) {
           swal.fire({

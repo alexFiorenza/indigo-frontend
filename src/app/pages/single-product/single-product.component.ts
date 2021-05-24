@@ -22,7 +22,6 @@ export class SingleProductComponent implements OnInit {
   public productId: string;
   public product: Order;
   public apiUrl: string;
-  public production = environment.production;
   public currentImage;
   public selectedColor: string;
   public selectedSize: string;
@@ -57,12 +56,7 @@ export class SingleProductComponent implements OnInit {
         return throwError(err)
       })).subscribe((resp: any) => {
         this.product = resp.response;
-        if (!this.production) {
-          this.apiUrl = `${environment.uploadsUrl}/`;
-        } else {
-          //do staff with gcp service
-        }
-        this.currentImage = `${this.apiUrl}${this.product.images[0].image}`;
+        this.currentImage = `${this.product.images[0].image}`;
       });
     });
   }
@@ -103,7 +97,7 @@ export class SingleProductComponent implements OnInit {
     }
   }
   changeCurrentImage(index: number) {
-    this.currentImage = `${this.apiUrl}${this.product.images[index].image}`;
+    this.currentImage = `${this.product.images[index].image}`;
   }
   addToCart() {
     if (this.cartBtn.nativeElement.classList.contains('added')) {

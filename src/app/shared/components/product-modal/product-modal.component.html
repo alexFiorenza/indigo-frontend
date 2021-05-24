@@ -9,7 +9,18 @@
   >
     <div class="w-full bg-white rounded-lg animate__animated animate__zoomIn">
       <div
-        class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase py-4 flex justify-center"
+        class="
+          w-full
+          bg-indigoPink-500
+          headerModule
+          font-bold
+          text-xl
+          items-center
+          uppercase
+          py-4
+          flex
+          justify-center
+        "
       >
         Editar producto
       </div>
@@ -24,7 +35,17 @@
               <input
                 [(ngModel)]="this.currentProduct.name"
                 type="text"
-                class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
+                class="
+                  py-5
+                  my-4
+                  w-full
+                  boxShadowInputs
+                  bg-white
+                  rounded-2xl
+                  px-4
+                  focus:outline-none
+                  text-indigoBlack-200
+                "
               />
             </div>
             <div #colorProduct class="flex flex-col w-full my-4 font-Josefin">
@@ -49,7 +70,20 @@
                     [ngStyle]="{
                       'background-color': c.color
                     }"
-                    class="h-8 w-8 borderToProductColors rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                    class="
+                      h-8
+                      w-8
+                      borderToProductColors
+                      rounded-full
+                      cursor-pointer
+                      mb-2
+                      relative
+                      flex
+                      justify-center
+                      items-center
+                      text-white
+                      changeStroke
+                    "
                   >
                     <ion-icon
                       #deleteColors
@@ -67,7 +101,21 @@
                     [ngStyle]="{
                       'background-color': c.color
                     }"
-                    class="h-8 fade-in borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                    class="
+                      h-8
+                      fade-in
+                      borderToProductColors
+                      w-8
+                      rounded-full
+                      cursor-pointer
+                      mb-2
+                      relative
+                      flex
+                      justify-center
+                      items-center
+                      text-white
+                      changeStroke
+                    "
                   >
                     <ion-icon
                       #deleteColors
@@ -85,7 +133,15 @@
                     'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
                   "
                   (colorPickerSelect)="colorChanged($event)"
-                  class="borderToProductColors h-8 w-8 rounded-full hidden cursor-pointer focus:outline-none"
+                  class="
+                    borderToProductColors
+                    h-8
+                    w-8
+                    rounded-full
+                    hidden
+                    cursor-pointer
+                    focus:outline-none
+                  "
                   [(colorPicker)]="color"
                   [style.background]="color"
                 />
@@ -93,7 +149,12 @@
                   (click)="addColorPicker()"
                   #addColors
                   name="add-circle"
-                  class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
+                  class="
+                    text-indigoBlack-800
+                    opacity-25
+                    text-4xl
+                    cursor-pointer
+                  "
                 ></ion-icon>
               </div>
             </div>
@@ -121,13 +182,30 @@
                     (click)="selectSize($event, s)"
                     #sizesContainer
                     *ngIf="s.available"
-                    class="cursor-pointer focus:outline-none boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base text-center"
+                    class="
+                      cursor-pointer
+                      focus:outline-none
+                      boxShadowSizes
+                      w-8
+                      mr-1
+                      h-8
+                      bg-indigoBlack-800
+                      rounded-full
+                      font-medium
+                      text-white text-base text-center
+                    "
                   />
                 </div>
                 <ion-icon
                   name="add-circle"
                   (click)="addSize()"
-                  class="text-indigoBlack-800 opacity-25 text-4xl my-4 cursor-pointer"
+                  class="
+                    text-indigoBlack-800
+                    opacity-25
+                    text-4xl
+                    my-4
+                    cursor-pointer
+                  "
                 ></ion-icon>
               </div>
             </div>
@@ -145,7 +223,18 @@
               ></div>
               <textarea
                 [(ngModel)]="currentProduct.description"
-                class="my-2 bg-white w-full focus:outline-none rounded-lg descriptionInput px-3 py-2 text-indigoBlack-200 boxShadowInputs"
+                class="
+                  my-2
+                  bg-white
+                  w-full
+                  focus:outline-none
+                  rounded-lg
+                  descriptionInput
+                  px-3
+                  py-2
+                  text-indigoBlack-200
+                  boxShadowInputs
+                "
               ></textarea>
             </div>
             <div #priceProduct class="flex flex-col w-full my-4 font-Josefin">
@@ -159,7 +248,17 @@
               ></div>
               <div class="w-full flex my-2">
                 <div
-                  class="flex justify-center w-1/2 py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
+                  class="
+                    flex
+                    justify-center
+                    w-1/2
+                    py-3
+                    text-2xl
+                    boxShadowInputs
+                    mr-2
+                    rounded-md
+                    text-indigoBlack-200
+                  "
                 >
                   <input
                     [ngClass]="{
@@ -176,7 +275,17 @@
                   [ngClass]="{
                     hidden: this.currentProduct.sale <= 0 && !isOnFocus
                   }"
-                  class="flex justify-center w-1/2 py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoPink-700"
+                  class="
+                    flex
+                    justify-center
+                    w-1/2
+                    py-3
+                    text-2xl
+                    boxShadowInputs
+                    mr-2
+                    rounded-md
+                    text-indigoPink-700
+                  "
                 >
                   <span>%</span>
                   <input
@@ -190,7 +299,16 @@
                 <div
                   (click)="addSale(discountInput)"
                   *ngIf="this.currentProduct.sale <= 0 && !isOnFocus"
-                  class="w-1/2 bg-white flex justify-center items-center boxShadowInputs rounded-xl cursor-pointer"
+                  class="
+                    w-1/2
+                    bg-white
+                    flex
+                    justify-center
+                    items-center
+                    boxShadowInputs
+                    rounded-xl
+                    cursor-pointer
+                  "
                 >
                   <ion-icon
                     class="text-indigoBlack-800 text-3xl"
@@ -216,14 +334,22 @@
             <div class="w-full flex my-4">
               <ng-container *ngIf="this.currentProduct.images.length > 0">
                 <div
-                  class="w-24 h-24 relative flex items-center mx-2 justify-center"
+                  class="
+                    w-24
+                    h-24
+                    relative
+                    flex
+                    items-center
+                    mx-2
+                    justify-center
+                  "
                   #imgContainer
                   *ngFor="let image of currentProduct.images"
                 >
                   <img
                     #productImages
                     class="w-full object-cover rounded-xl h-full"
-                    [src]="uplodsUrl + '/' + image.image"
+                    [src]="image.image | img"
                     alt=""
                   />
                   <ion-icon
@@ -236,7 +362,17 @@
               </ng-container>
               <div
                 *ngIf="!this.isEditing"
-                class="w-24 h-24 rounded-xl addInputsColor relative mx-4 flex justify-center items-center"
+                class="
+                  w-24
+                  h-24
+                  rounded-xl
+                  addInputsColor
+                  relative
+                  mx-4
+                  flex
+                  justify-center
+                  items-center
+                "
               >
                 <input
                   (change)="getImagePreview($event)"
@@ -245,7 +381,13 @@
                 />
                 <ion-icon
                   name="add-circle"
-                  class="text-indigoBlack-800 opacity-25 h-full text-4xl cursor-pointer"
+                  class="
+                    text-indigoBlack-800
+                    opacity-25
+                    h-full
+                    text-4xl
+                    cursor-pointer
+                  "
                 ></ion-icon>
               </div>
             </div>
@@ -253,7 +395,16 @@
               <div
                 #previewIMGContainer
                 *ngFor="let i of previewImages"
-                class="w-24 h-24 mr-2 rounded-xl relative flex justify-center items-center"
+                class="
+                  w-24
+                  h-24
+                  mr-2
+                  rounded-xl
+                  relative
+                  flex
+                  justify-center
+                  items-center
+                "
               >
                 <ion-icon
                   name="cloud-upload-outline"
@@ -261,7 +412,15 @@
                 ></ion-icon>
                 <img
                   #previewImages
-                  class="w-full rounded-xl opacity-50 absolute h-full z-30 object-cover"
+                  class="
+                    w-full
+                    rounded-xl
+                    opacity-50
+                    absolute
+                    h-full
+                    z-30
+                    object-cover
+                  "
                   [src]="i"
                   alt=""
                 />
@@ -288,7 +447,18 @@
             <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
             <div *ngFor="let c of currentProduct.categories">
               <div
-                class="w-full my-2 flex py-4 px-4 justify-between text-indigoBlack-800 boxShadowInputs bg-white rounded-xl"
+                class="
+                  w-full
+                  my-2
+                  flex
+                  py-4
+                  px-4
+                  justify-between
+                  text-indigoBlack-800
+                  boxShadowInputs
+                  bg-white
+                  rounded-xl
+                "
               >
                 {{ c.name }}
                 <ion-icon
@@ -326,7 +496,13 @@
                   <div
                     *ngFor="let subcategory of category.subcategories"
                     (click)="addSubCategory(category, subcategory)"
-                    class="font-light my-2 cursor-pointer text-indigoBlack-400 mx-3"
+                    class="
+                      font-light
+                      my-2
+                      cursor-pointer
+                      text-indigoBlack-400
+                      mx-3
+                    "
                   >
                     {{ subcategory.name }}
                   </div>
@@ -335,7 +511,20 @@
             </p-overlayPanel>
 
             <div
-              class="w-full items-center capitalize py-4 flex justify-center px-4 my-2 rounded-xl bg-white boxShadowInputs text-indigoBlack-800"
+              class="
+                w-full
+                items-center
+                capitalize
+                py-4
+                flex
+                justify-center
+                px-4
+                my-2
+                rounded-xl
+                bg-white
+                boxShadowInputs
+                text-indigoBlack-800
+              "
             >
               <ion-icon
                 (click)="loadCategories(op, $event)"
@@ -349,7 +538,16 @@
               [ngClass]="{ 'opacity-50': isEditing }"
               [disabled]="isEditing"
               (click)="updateProduct()"
-              class="w-full py-4 saveShadow focus:outline-none bg-indigoPink-800 text-white uppercase rounded-xl"
+              class="
+                w-full
+                py-4
+                saveShadow
+                focus:outline-none
+                bg-indigoPink-800
+                text-white
+                uppercase
+                rounded-xl
+              "
             >
               Guardar
             </button>
@@ -380,7 +578,18 @@
         class="w-10/12 bg-white rounded-lg animate__animated animate__zoomIn"
       >
         <div
-          class="w-full bg-indigoPink-500 headerModule font-bold text-xl items-center uppercase h-12 flex justify-center"
+          class="
+            w-full
+            bg-indigoPink-500
+            headerModule
+            font-bold
+            text-xl
+            items-center
+            uppercase
+            h-12
+            flex
+            justify-center
+          "
         >
           Crear producto
         </div>
@@ -397,7 +606,17 @@
                     formControlName="name"
                     placeholder="Nombre del producto"
                     type="text"
-                    class="py-5 my-4 w-full boxShadowInputs bg-white rounded-2xl px-4 focus:outline-none text-indigoBlack-200"
+                    class="
+                      py-5
+                      my-4
+                      w-full
+                      boxShadowInputs
+                      bg-white
+                      rounded-2xl
+                      px-4
+                      focus:outline-none
+                      text-indigoBlack-200
+                    "
                   />
                   <span
                     class="text-indigoPink-700 text-xl"
@@ -433,12 +652,33 @@
                       [ngStyle]="{
                         'background-color': c.color
                       }"
-                      class="h-8 fade-in borderToProductColors w-8 rounded-full cursor-pointer mb-2 relative flex justify-center items-center text-white changeStroke"
+                      class="
+                        h-8
+                        fade-in
+                        borderToProductColors
+                        w-8
+                        rounded-full
+                        cursor-pointer
+                        mb-2
+                        relative
+                        flex
+                        justify-center
+                        items-center
+                        text-white
+                        changeStroke
+                      "
                     >
                       <ion-icon
                         #deleteColors
                         (click)="deleteColor(c)"
-                        class="absolute z-50 w-full h-full hidden cursor-pointer"
+                        class="
+                          absolute
+                          z-50
+                          w-full
+                          h-full
+                          hidden
+                          cursor-pointer
+                        "
                         name="close"
                       ></ion-icon>
                     </div>
@@ -451,7 +691,15 @@
                       'px-2 py-1 bg-indigoPink-500 cursor-pointer text-white focus:outline-none'
                     "
                     (colorPickerSelect)="colorChanged($event)"
-                    class="borderToProductColors h-8 w-8 rounded-full hidden cursor-pointer focus:outline-none"
+                    class="
+                      borderToProductColors
+                      h-8
+                      w-8
+                      rounded-full
+                      hidden
+                      cursor-pointer
+                      focus:outline-none
+                    "
                     [(colorPicker)]="color"
                     [style.background]="color"
                   />
@@ -459,7 +707,12 @@
                     (click)="addColorPicker()"
                     #addColors
                     name="add-circle"
-                    class="text-indigoBlack-800 opacity-25 text-4xl cursor-pointer"
+                    class="
+                      text-indigoBlack-800
+                      opacity-25
+                      text-4xl
+                      cursor-pointer
+                    "
                   ></ion-icon>
                 </div>
               </div>
@@ -491,13 +744,30 @@
                       (click)="selectSize($event, s)"
                       #sizesContainer
                       *ngIf="s.available"
-                      class="cursor-pointer focus:outline-none boxShadowSizes w-8 mr-1 h-8 bg-indigoBlack-800 rounded-full font-medium text-white text-base text-center"
+                      class="
+                        cursor-pointer
+                        focus:outline-none
+                        boxShadowSizes
+                        w-8
+                        mr-1
+                        h-8
+                        bg-indigoBlack-800
+                        rounded-full
+                        font-medium
+                        text-white text-base text-center
+                      "
                     />
                   </div>
                   <ion-icon
                     name="add-circle"
                     (click)="addSize()"
-                    class="text-indigoBlack-800 opacity-25 text-4xl my-4 cursor-pointer"
+                    class="
+                      text-indigoBlack-800
+                      opacity-25
+                      text-4xl
+                      my-4
+                      cursor-pointer
+                    "
                   ></ion-icon>
                 </div>
               </div>
@@ -517,7 +787,18 @@
                   <textarea
                     formControlName="description"
                     placeholder="Descripción del producto"
-                    class="my-2 bg-white w-full focus:outline-none rounded-lg descriptionInput px-3 py-2 text-indigoBlack-200 boxShadowInputs"
+                    class="
+                      my-2
+                      bg-white
+                      w-full
+                      focus:outline-none
+                      rounded-lg
+                      descriptionInput
+                      px-3
+                      py-2
+                      text-indigoBlack-200
+                      boxShadowInputs
+                    "
                   ></textarea>
                   <span
                     class="text-indigoPink-700 text-xl"
@@ -542,7 +823,18 @@
                   class="w-full flex flex-col items-center justify-center my-2"
                 >
                   <div
-                    class="flex items-center justify-center w-full py-3 text-2xl boxShadowInputs mr-2 rounded-md text-indigoBlack-200"
+                    class="
+                      flex
+                      items-center
+                      justify-center
+                      w-full
+                      py-3
+                      text-2xl
+                      boxShadowInputs
+                      mr-2
+                      rounded-md
+                      text-indigoBlack-200
+                    "
                   >
                     <input
                       (blur)="parseCurrencyPrice($event)"
@@ -595,7 +887,16 @@
                 <div
                   #previewIMGContainer
                   *ngFor="let img of previewImages; let i = index"
-                  class="w-24 h-24 mr-2 rounded-xl relative flex justify-center items-center"
+                  class="
+                    w-24
+                    h-24
+                    mr-2
+                    rounded-xl
+                    relative
+                    flex
+                    justify-center
+                    items-center
+                  "
                 >
                   <ion-icon
                     name="trash"
@@ -608,14 +909,31 @@
                   ></ion-icon>
                   <img
                     #previewImages
-                    class="w-full rounded-xl opacity-50 absolute h-full z-30 object-cover"
+                    class="
+                      w-full
+                      rounded-xl
+                      opacity-50
+                      absolute
+                      h-full
+                      z-30
+                      object-cover
+                    "
                     [src]="img"
                     alt=""
                   />
                 </div>
                 <div
                   *ngIf="!this.isEditing"
-                  class="w-24 h-24 rounded-xl addInputsColor relative flex justify-center items-center"
+                  class="
+                    w-24
+                    h-24
+                    rounded-xl
+                    addInputsColor
+                    relative
+                    flex
+                    justify-center
+                    items-center
+                  "
                 >
                   <input
                     (change)="getImagePreview($event)"
@@ -624,7 +942,13 @@
                   />
                   <ion-icon
                     name="add-circle"
-                    class="text-indigoBlack-800 opacity-25 h-full text-4xl cursor-pointer"
+                    class="
+                      text-indigoBlack-800
+                      opacity-25
+                      h-full
+                      text-4xl
+                      cursor-pointer
+                    "
                   ></ion-icon>
                 </div>
               </div>
@@ -637,7 +961,16 @@
             <div class="w-full lineHeight bg-indigoBlack-500 opacity-25"></div>
             <div class="flex w-full">
               <div
-                class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+                class="
+                  flex
+                  text-indigoBlack-200
+                  my-4
+                  w-1/2
+                  bg-white
+                  mx-2
+                  boxShadowInputs
+                  rounded-2xl
+                "
               >
                 <input
                   type="number"
@@ -646,13 +979,31 @@
                   class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
                 />
                 <span
-                  class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                  class="
+                    h-full
+                    text-indigoBlack-400
+                    w-2/12
+                    bg-indigoBlack-300
+                    magnitudeRounded
+                    flex flex-col
+                    items-center
+                    justify-center
+                  "
                   >cm</span
                 >
               </div>
 
               <div
-                class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+                class="
+                  flex
+                  text-indigoBlack-200
+                  my-4
+                  w-1/2
+                  bg-white
+                  mx-2
+                  boxShadowInputs
+                  rounded-2xl
+                "
               >
                 <input
                   type="number"
@@ -661,14 +1012,32 @@
                   class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
                 />
                 <span
-                  class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                  class="
+                    h-full
+                    text-indigoBlack-400
+                    w-2/12
+                    bg-indigoBlack-300
+                    magnitudeRounded
+                    flex flex-col
+                    items-center
+                    justify-center
+                  "
                   >cm</span
                 >
               </div>
             </div>
             <div class="flex w-full">
               <div
-                class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+                class="
+                  flex
+                  text-indigoBlack-200
+                  my-4
+                  w-1/2
+                  bg-white
+                  mx-2
+                  boxShadowInputs
+                  rounded-2xl
+                "
               >
                 <input
                   type="number"
@@ -677,12 +1046,30 @@
                   class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
                 />
                 <span
-                  class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                  class="
+                    h-full
+                    text-indigoBlack-400
+                    w-2/12
+                    bg-indigoBlack-300
+                    magnitudeRounded
+                    flex flex-col
+                    items-center
+                    justify-center
+                  "
                   >cm</span
                 >
               </div>
               <div
-                class="flex text-indigoBlack-200 my-4 w-1/2 bg-white mx-2 boxShadowInputs rounded-2xl"
+                class="
+                  flex
+                  text-indigoBlack-200
+                  my-4
+                  w-1/2
+                  bg-white
+                  mx-2
+                  boxShadowInputs
+                  rounded-2xl
+                "
               >
                 <input
                   type="number"
@@ -691,7 +1078,16 @@
                   class="bg-transparent py-5 px-4 w-5/6 focus:outline-none"
                 />
                 <span
-                  class="h-full text-indigoBlack-400 w-2/12 bg-indigoBlack-300 magnitudeRounded flex flex-col items-center justify-center"
+                  class="
+                    h-full
+                    text-indigoBlack-400
+                    w-2/12
+                    bg-indigoBlack-300
+                    magnitudeRounded
+                    flex flex-col
+                    items-center
+                    justify-center
+                  "
                   >kg</span
                 >
               </div>
@@ -709,7 +1105,16 @@
                   this.form.invalid
                 "
                 (click)="updateProduct(true)"
-                class="w-full py-4 saveShadow focus:outline-none bg-indigoPink-800 text-white uppercase rounded-xl"
+                class="
+                  w-full
+                  py-4
+                  saveShadow
+                  focus:outline-none
+                  bg-indigoPink-800
+                  text-white
+                  uppercase
+                  rounded-xl
+                "
               >
                 Guardar
               </button>

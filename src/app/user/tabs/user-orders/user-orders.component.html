@@ -31,7 +31,7 @@
         <div class="w-32 relative">
           <img
             class="w-full object-cover rounded-xl borderRightFirst"
-            [src]="this.uploadsUrl + '/' + order.products[0].images[0].image"
+            [src]="order.products[0].images[0].image | img"
             alt=""
           />
           <div
@@ -111,7 +111,7 @@
           ></div>
           <img
             class="object-cover w-full h-20 rounded-xl"
-            [src]="this.uploadsUrl + '/' + p.images[0].image"
+            [src]="p.images[0].image | img"
           />
         </div>
       </div>

@@ -49,7 +49,7 @@
     <div>
       <img
         class="w-20 rounded-full"
-        [src]="uploadUrl + '/' + f.product.images[0].image"
+        [src]="f.product.images[0].image | img"
         alt=""
       />
     </div>

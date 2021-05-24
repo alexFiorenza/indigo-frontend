@@ -45,7 +45,8 @@ import { FooterComponent } from './footer/footer.component';
     ProductModalComponent,
     SaleProductComponent,
     FullPageLoaderComponent,
-    FooterComponent
+    FooterComponent,
+    ImgPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [CurrencyPipe, SalesPipe, ParseCurrencyPipe]

@@ -1,5 +1,4 @@
 import { ConfirmationService } from 'primeng/api';
-import { delay } from 'rxjs/operators';
 import { ShippingService } from './../../core/services/http/andreani/shipping.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './../../core/services/http/api/user/user.service';

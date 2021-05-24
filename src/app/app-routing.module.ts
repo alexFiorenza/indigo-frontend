@@ -18,15 +18,16 @@ const routes: Routes = [
     redirectTo: 'inicio',
     pathMatch: 'full',
   },
-  {
-    path: '404',
-    component: NotFoundComponent
-  },
-  {
-    path: '**',
-    redirectTo: '404',
-    pathMatch: 'full'
-  }
+  //TODO Check redirecto 404 page in admin
+  // {
+  //   path: '404',
+  //   component: NotFoundComponent
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: '404',
+  //   pathMatch: 'full'
+  // },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

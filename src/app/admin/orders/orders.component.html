@@ -27,7 +27,7 @@
     <div class="flex items-center">
       <img
         class="w-24 maxHeightModalImg object-cover rounded-2xl"
-        [src]="uploadsUrl + '/' + product.images[0].image"
+        [src]="product.images[0].image | img"
         alt=""
       />
       <div class="flex flex-col mx-6">
@@ -274,7 +274,7 @@
       <div class="flex">
         <img
           class="w-32 maxHeightImg"
-          [src]="uploadsUrl + '/' + product.images[0].image"
+          [src]="product.images[0].image | img"
           alt=""
         />
         <div class="flex flex-col mx-6">
@@ -384,7 +384,7 @@
           <div class="flex">
             <img
               class="w-32 rounded-3xl object-cover maxHeightImg"
-              [src]="uploadsUrl + '/' + order.products[0].images[0].image"
+              [src]="order.products[0].images[0].image | img"
               alt=""
             />
             <div class="flex flex-col mx-6">

@@ -26,7 +26,7 @@
       class="productImages top-0 relative overflow-hidden animate__animated animate__zoomIn"
     >
       <img
-        [src]="this.apiUrl + slide.image"
+        [src]="slide.image | img"
         class="opacity-75 absolute object-cover z-20 w-screen"
         alt=""
       />
@@ -39,8 +39,8 @@
           <img
             (click)="changeCurrentImage(i)"
             class="w-40 opacity-25 cursor-pointer"
-            *ngIf="!this.production && this.product.images.length > 0"
-            [src]="this.apiUrl + img.image"
+            *ngIf="this.product.images.length > 0"
+            [src]="img.image | img"
             alt=""
           />
         </div>
@@ -52,8 +52,8 @@
       >
         <img
           class="w-80 zoom object-cover zoomImg"
-          *ngIf="!this.production && this.product.images.length > 0"
-          [src]="this.currentImage"
+          *ngIf="this.product.images.length > 0"
+          [src]="currentImage | img"
           alt=""
         />
       </div>

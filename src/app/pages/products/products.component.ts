@@ -42,7 +42,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   apiUrl: string;
   searchInput = '';
   totalProductsPageReference = 0;
-  production = environment.production;
   currentFilter: HTMLElement;
   categories = []
   selectedFilter;
@@ -113,11 +112,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.r.removeStyle(document.body, 'background-color')
   }
   ngOnInit(): void {
-    if (!this.production) {
-      this.apiUrl = `${environment.uploadsUrl}/`;
-    } else {
-      // do staff with gcp service
-    }
     this.activatedRoute.queryParams.subscribe((params) => {
       if (Object.keys(params).length === 0 && params.constructor === Object) {
         this.currentPage = 1;

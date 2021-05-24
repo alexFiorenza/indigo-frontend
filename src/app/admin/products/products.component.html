@@ -70,7 +70,7 @@
           </div>
           <img
             class="w-full object-cover rounded-lg setMaxHeight h-48 z-10"
-            [src]="uploadsUrl + '/' + product.images[0].image"
+            [src]="product.images[0].image | img"
             alt=""
           />
           <div class="flex flex-col my-3">
@@ -108,7 +108,7 @@
           </div>
           <img
             class="w-full object-cover rounded-lg setMaxHeight h-48 z-10"
-            [src]="uploadsUrl + '/' + product.images[0].image"
+            [src]="product.images[0].image | img"
             alt=""
           />
           <div class="flex flex-col my-3">

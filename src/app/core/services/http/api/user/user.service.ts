@@ -63,7 +63,6 @@ export class UserService {
   }
   refreshToken(token: string) {
     const helper = new JwtHelperService();
-    console.log(helper.isTokenExpired(token))
     if (!helper.isTokenExpired(token)) {
       const payload = this.loadPayload();
       this.http.put(`${environment.apiUrl}/user/updateToken`, payload).pipe(

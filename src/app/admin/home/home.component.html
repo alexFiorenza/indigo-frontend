@@ -241,7 +241,7 @@
         <span class="colorLabel mt-3 mb-2">Imagen actual de diapositiva</span>
         <img
           class="w-40 rounded-lg"
-          [src]="uploadsUrl + '/' + selectedSlide.images[0].image"
+          [src]="selectedSlide.images[0].image | img"
           alt=""
         />
       </div>
@@ -591,7 +591,7 @@
         <div class="shadow rounded-xl m-1 h-64 font-Josefin relative mb-3">
           <div class="h-full flex flex-col justify-between">
             <img
-              [src]="uploadsUrl + '/' + slide.images[0].image"
+              [src]="slide.images[0].image | img"
               class="w-full object-cover h-16 border-img"
             />
             <div class="px-4 py-4">
@@ -652,7 +652,7 @@
       <div class="w-full flex my-4 font-Josefin">
         <div class="w-40 h-32 mx-4">
           <img
-            [src]="uploadsUrl + '/' + product.images[0].image"
+            [src]="product.images[0].image | img"
             class="w-full object-cover h-full shadow-sm"
           />
         </div>

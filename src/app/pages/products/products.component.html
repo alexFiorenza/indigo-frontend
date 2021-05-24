@@ -156,9 +156,9 @@
         *ngFor="let p of products"
       >
         <img
-          *ngIf="!this.production && p.images.length > 0"
+          *ngIf="p.images.length > 0"
           [routerLink]="'/productos/' + p._id"
-          [src]="this.apiUrl + p.images[0].image"
+          [src]="p.images[0].image | img"
           class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
         />
         <div class="hidden lg:flex flex-col">
@@ -193,9 +193,9 @@
         *ngFor="let p of filteredProducts"
       >
         <img
-          *ngIf="!this.production && this.p.images.length > 0"
+          *ngIf="this.p.images.length > 0"
           [routerLink]="'/productos/' + p._id"
-          [src]="this.apiUrl + p.images[0].image"
+          [src]="p.images[0].image | img"
           class="h-full object-cover productRound borderLeft cursor-pointer w-full focus:outline-none"
         />
         <div class="hidden lg:flex flex-col">

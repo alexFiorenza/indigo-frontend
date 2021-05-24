@@ -165,9 +165,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterContentInit {
 
   setInstallments(status, response) {
     if (status === 200) {
-      // this.form.get('installments').setValue(this.defaultInstallments);
       this.installments = response[0].payer_costs;
-
     } else {
       console.log(`installments method info error: ${response}`);
     }

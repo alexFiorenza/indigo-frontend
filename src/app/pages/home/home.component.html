@@ -10,7 +10,7 @@
       <div id="blur" class="w-full h-full bg-white absolute z-30"></div>
       <img
         class="object-cover absolute w-full h-full"
-        [src]="uploadsUrl + '/' + slide.images[0].image"
+        [src]="slide.images[0].image | img"
         alt=""
       />
       <div
@@ -63,7 +63,7 @@
           <img
             [routerLink]="'/productos/' + product._id"
             class="w-full max-w-2xl imagesSelection h-full object-cover cursor-pointer focus:outline-none"
-            [src]="uploadsUrl + '/' + product.images[0].image"
+            [src]="product.images[0].image | img"
             alt=""
           />
           <div #info class="flex flex-col">
@@ -111,7 +111,7 @@
                 class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
               ></div>
               <img
-                [src]="uploadsUrl + '/' + p.images[0].image"
+                [src]="p.images[0].image | img"
                 class="w-full h-full object-cover rounded-xl"
                 alt=""
               />
@@ -148,7 +148,7 @@
               ></div>
               <img
                 [routerLink]="'/productos/' + p._id"
-                [src]="uploadsUrl + '/' + p.images[0].image"
+                [src]="p.images[0].image | img"
                 class="w-full h-full object-cover rounded-xl"
                 alt=""
               />
