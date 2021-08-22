@@ -14,11 +14,28 @@
         alt=""
       />
       <div
-        class="h-full w-full absolute z-40 flex items-center justify-items-start px-8 lg:px-32 lg:py-16"
+        class="
+          h-full
+          w-full
+          absolute
+          z-40
+          flex
+          items-center
+          justify-items-start
+          px-8
+          lg:px-32
+          lg:py-16
+        "
       >
         <div class="flex flex-col items-start">
           <h2
-            class="font-Josefin uppercase text-indigoBlack-700 text-5xl lg:text-6xl font-light"
+            class="
+              font-Josefin
+              uppercase
+              text-indigoBlack-700 text-5xl
+              lg:text-6xl
+              font-light
+            "
           >
             {{ slide.title }}
           </h2>
@@ -29,7 +46,18 @@
             *ngIf="!slide.btnDirection.custom"
             [routerLink]="'/' + slide.btnDirection.url"
             [ngStyle]="{ 'background-color': slide.color }"
-            class="mt-4 px-16 lg:px-32 py-3 lg:text-xl text-lg bg-indigoPink-600 text-white font-Josefin focus:outline-none"
+            class="
+              mt-4
+              px-16
+              lg:px-32
+              py-3
+              lg:text-xl
+              text-lg
+              bg-indigoPink-600
+              text-white
+              font-Josefin
+              focus:outline-none
+            "
           >
             {{ slide.button }}
           </button>
@@ -38,7 +66,18 @@
             [href]="slide.btnDirection.url"
             target="_blank"
             [ngStyle]="{ 'background-color': slide.color }"
-            class="mt-4 px-16 lg:px-32 py-3 lg:text-xl text-lg bg-indigoPink-600 text-white font-Josefin focus:outline-none"
+            class="
+              mt-4
+              px-16
+              lg:px-32
+              py-3
+              lg:text-xl
+              text-lg
+              bg-indigoPink-600
+              text-white
+              font-Josefin
+              focus:outline-none
+            "
           >
             {{ slide.button }}
           </a>
@@ -50,19 +89,41 @@
   <ng-container *ngIf="homeViewProducts.length > 0">
     <div class="mt-16 mb-10 flex justify-center w-full" #selectionTitle>
       <h2
-        class="font-Josefin uppercase text-2xl lg:text-3xl text-indigoPink-700 font-light"
+        class="
+          font-Josefin
+          uppercase
+          text-2xl
+          lg:text-3xl
+          text-indigoPink-700
+          font-light
+        "
       >
         Nuestra selección
       </h2>
     </div>
     <div class="w-full flex flex-col items-center mb-48" #selectionProducts>
       <div
-        class="w-5/6 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center"
+        class="
+          w-5/6
+          gap-6
+          grid grid-cols-1
+          sm:grid-cols-2
+          lg:grid-cols-4
+          justify-center
+        "
       >
         <div *ngFor="let product of homeViewProducts">
           <img
             [routerLink]="'/productos/' + product._id"
-            class="w-full max-w-2xl imagesSelection h-full object-cover cursor-pointer focus:outline-none"
+            class="
+              w-full
+              max-w-2xl
+              imagesSelection
+              h-full
+              object-cover
+              cursor-pointer
+              focus:outline-none
+            "
             [src]="product.images[0].image | img"
             alt=""
           />
@@ -81,7 +142,13 @@
   <ng-container *ngIf="this.products.length > 0">
     <div class="w-full flex justify-center">
       <h2
-        class="font-Josefin uppercase font-light text-indigoPink-700 text-4xl z-40"
+        class="
+          font-Josefin
+          uppercase
+          font-light
+          text-indigoPink-700 text-4xl
+          z-40
+        "
       >
         Calzados
       </h2>
@@ -93,14 +160,32 @@
     >
       <div
         #containerDesktop
-        class="flex-col w-full h-full justify-center hidden items-center lg:flex"
+        class="
+          flex-col
+          w-full
+          h-full
+          justify-center
+          hidden
+          items-center
+          lg:flex
+        "
       >
         <swiper [config]="shoesConfigDesktop" class="my-16 xl:w-3/4 w-full">
           <div *ngFor="let p of products" [routerLink]="'/productos/' + p._id">
             <div class="w-48 xl:w-56 changeHeight relative cursor-pointer">
               <div
                 #info
-                class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
+                class="
+                  absolute
+                  z-50
+                  text-white
+                  font-Josefin
+                  w-full
+                  h-full
+                  justify-center
+                  flex flex-col
+                  items-center
+                "
               >
                 <span class="uppercase text-xl">{{ p.name }}</span>
                 <span class="uppercase font-light">{{
@@ -108,7 +193,15 @@
                 }}</span>
               </div>
               <div
-                class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
+                class="
+                  bg-black
+                  opacity-50
+                  w-full
+                  h-full
+                  absolute
+                  rounded-xl
+                  z-30
+                "
               ></div>
               <img
                 [src]="p.images[0].image | img"
@@ -121,7 +214,17 @@
         <div class="w-full flex justify-center">
           <button
             routerLink="/productos"
-            class="px-24 bg-indigoComplementary-100 py-6 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
+            class="
+              px-24
+              bg-indigoComplementary-100
+              py-6
+              rounded-sm
+              font-Josefin
+              text-white
+              font-light
+              text-2xl
+              focus:outline-none
+            "
           >
             Ver más
           </button>
@@ -136,7 +239,17 @@
             <div class="w-1/2 changeHeight flex relative cursor-pointer">
               <div
                 #info
-                class="absolute z-50 text-white font-Josefin w-full h-full justify-center flex flex-col items-center"
+                class="
+                  absolute
+                  z-50
+                  text-white
+                  font-Josefin
+                  w-full
+                  h-full
+                  justify-center
+                  flex flex-col
+                  items-center
+                "
               >
                 <span class="uppercase text-xl">{{ p.name }}</span>
                 <span class="uppercase font-light">{{
@@ -144,7 +257,15 @@
                 }}</span>
               </div>
               <div
-                class="bg-black opacity-50 w-full h-full absolute rounded-xl z-30"
+                class="
+                  bg-black
+                  opacity-50
+                  w-full
+                  h-full
+                  absolute
+                  rounded-xl
+                  z-30
+                "
               ></div>
               <img
                 [routerLink]="'/productos/' + p._id"
@@ -158,7 +279,17 @@
       </div>
       <div class="w-full flex justify-center lg:hidden">
         <button
-          class="px-24 bg-indigoComplementary-100 py-2 rounded-sm font-Josefin text-white font-light text-2xl focus:outline-none"
+          class="
+            px-24
+            bg-indigoComplementary-100
+            py-2
+            rounded-sm
+            font-Josefin
+            text-white
+            font-light
+            text-2xl
+            focus:outline-none
+          "
         >
           Ver más
         </button>
@@ -177,14 +308,18 @@
     />
     <div class="flex flex-col items-center">
       <p
-        class="font-Josefin w-10/12 md:text-2xl max-w-5xl text-lg text-center text-indigoBlack-500 font-light"
+        class="
+          font-Josefin
+          w-10/12
+          md:text-2xl
+          max-w-5xl
+          text-lg text-center text-indigoBlack-500
+          font-light
+        "
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In justo erat,
-        porttitor nec lacinia nec, sollicitudin id lorem. Ut a leo non mi
-        ultricies hendrerit in sit amet enim. Duis pretium accumsan dolor
-        laoreet ornare. Cras sit amet urna porta, dictum sem quis, fringilla
-        leo. Suspendisse et lacus pellentesque, ullamcorper nulla sit amet,
-        lacinia magna.
+        La vida no cuenta los pasos que has dado,ni los zapatos que has usado,
+        sino las huellas que has dejado. Somos indigo calzados. Gracias por
+        elegirnos... Te damos la bienvenida.
       </p>
       <div class="flex mt-4">
         <a href="https://www.instagram.com/indigocalzados/" target="_blank">
@@ -204,15 +339,39 @@
   </div>
   <div #locations class="w-full relative mt-20 h-72 lg:h-80">
     <div
-      class="absolute h-full flex flex-col items-center justify-center z-40 w-full"
+      class="
+        absolute
+        h-full
+        flex flex-col
+        items-center
+        justify-center
+        z-40
+        w-full
+      "
     >
       <div class="w-5/6 max-w-3xl relative">
         <div
-          class="w-full bg-white mb-4 py-6 px-2 rounded-md flex items-center borderPink"
+          class="
+            w-full
+            bg-white
+            mb-4
+            py-6
+            px-2
+            rounded-md
+            flex
+            items-center
+            borderPink
+          "
         >
           <ion-icon name="location-outline" class="text-5xl"></ion-icon>
           <span
-            class="font-Josefin text-sm text-indigoBlack-500 font-light ml-2 md:text-2xl"
+            class="
+              font-Josefin
+              text-sm text-indigoBlack-500
+              font-light
+              ml-2
+              md:text-2xl
+            "
             >San nicolas 427- San Nicolas 674, Pergamino, Buenos Aires
             2700</span
           >
@@ -225,8 +384,14 @@
             class="text-3xl md:text-5xl"
           ></ion-icon>
           <span
-            class="font-Josefin text-base text-indigoBlack-500 font-light ml-2 md:text-3xl"
-            >San Martín 679 - Rodríguez 749</span
+            class="
+              font-Josefin
+              text-base text-indigoBlack-500
+              font-light
+              ml-2
+              md:text-3xl
+            "
+            >San Martín 679 - Rodríguez 749, Tandil, Buenos Aires 2000</span
           >
         </div>
       </div>
